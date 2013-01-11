@@ -6,6 +6,7 @@ law.
 
 --]]
 
+gameState = "menu"
 
 function draw_map()
    for y=1, map_display_h do
@@ -89,7 +90,7 @@ function love.load()
         
     tile = {}
     for i=0,3 do -- change 3 to the number of tile images minus 1.
-       tile[i] = love.graphics.newImage( "tile"..i..".png" )
+       tile[i] = love.graphics.newImage( "textures/tile"..i..".png" )
     end
 
    
@@ -107,62 +108,66 @@ function love.load()
 end
 
 function love.keypressed(key, unicode)
-    if key == 'up' then
-        if testMap(0, -1) then
-            map_y = map_y - 1
-            player.grid_y = player.grid_y - 16
-            if map_y < 0 then 
-                map_y = 0;
-                player.y = player.y - 16
+    if gameState == "playing" then
+        if key == 'up' then
+            if testMap(0, -1) then
+                map_y = map_y - 1
+                player.grid_y = player.grid_y - 16
+                if map_y < 0 then 
+                    map_y = 0;
+                    player.y = player.y - 16
+                end
             end
         end
-    end
 
-    if key == 'down' then
-        if testMap(0, 1) then
-            map_y = map_y + 1
-            player.grid_y = player.grid_y + 16
-            if map_y > 14 then 
-                map_y = 14;
-                player.y = player.y + 16
+        if key == 'down' then
+            if testMap(0, 1) then
+                map_y = map_y + 1
+                player.grid_y = player.grid_y + 16
+                if map_y > 14 then 
+                    map_y = 14;
+                    player.y = player.y + 16
+                end
             end
         end
-    end
-   
-    if key == 'left' then
-        if testMap(-1, 0) then
-            player.grid_x = player.grid_x - 16
-            if math.max(map_x - 1, 0) == map_x - 1 then
-                map_x = map_x - 1
-            elseif math.max(map_x - 1, 0) == 0 then
-                map_x = 0
-                player.x = player.x - 16
+       
+        if key == 'left' then
+            if testMap(-1, 0) then
+                player.grid_x = player.grid_x - 16
+                if math.max(map_x - 1, 0) == map_x - 1 then
+                    map_x = map_x - 1
+                elseif math.max(map_x - 1, 0) == 0 then
+                    map_x = 0
+                    player.x = player.x - 16
+                end
             end
         end
-    end
 
-    if key == 'right' then
-        if testMap(1, 0) then
-            player.grid_x = player.grid_x + 16
-            if math.min(map_x + 1, 19) == map_x + 1 then --for some reason, map_w - map_display_w does not work for the second param
-                map_x = map_x + 1
-            elseif math.min(map_x + 1, 19) == 19 then
-                map_x = 19
-                player.x = player.x + 16
-            end 
+        if key == 'right' then
+            if testMap(1, 0) then
+                player.grid_x = player.grid_x + 16
+                if math.min(map_x + 1, 19) == map_x + 1 then --for some reason, map_w - map_display_w does not work for the second param
+                    map_x = map_x + 1
+                elseif math.min(map_x + 1, 19) == 19 then
+                    map_x = 19
+                    player.x = player.x + 16
+                end 
+            end
         end
     end
 end
 
 function love.draw()
-    draw_map()
-    love.graphics.print("@", player.x, player.y)
-    
-    --debug info
-    love.graphics.print("map_h:" .. table.getn(map), 16, 2)
-    love.graphics.print("map_w:" .. table.getn(map[1]), 100, 2)
-    love.graphics.print("map_x:" ..map_x, 180, 2)
-    love.graphics.print("test_coord:" .. (player.grid_y / 16) + 1 .. " " .. (player.grid_x / 16) + 1, 250, 2)
-    love.graphics.print("test_map:" .. tostring(testMap(0, 1)), 390, 2)
+    if gameState == "playing" then
+        draw_map()
+        love.graphics.print("@", player.x, player.y)
+        
+        --debug info
+        love.graphics.print("map_h:" .. table.getn(map), 16, 2)
+        love.graphics.print("map_w:" .. table.getn(map[1]), 100, 2)
+        love.graphics.print("map_x:" ..map_x, 180, 2)
+        love.graphics.print("test_coord:" .. (player.grid_y / 16) + 1 .. " " .. (player.grid_x / 16) + 1, 250, 2)
+        love.graphics.print("test_map:" .. tostring(testMap(0, 1)), 390, 2)
+    end
 end
 
