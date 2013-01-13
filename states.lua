@@ -1,9 +1,6 @@
---[[
-Code originally created by Michael Enger and was under the zlib license
-This code is copyrighted Jack Stouffer. Any use of this code without the
-express permission of Jack Stouffer will suffer the consequences of the
-law.
---]]
+
+smallFont = love.graphics.newFont(12)
+mediumFont = love.graphics.newFont(32)
 
 -- Menu State
 -- Main menu...
@@ -217,7 +214,7 @@ end
 function Game:draw()
 	
 	draw_map()
-	love.graphics.setFont(love.graphics.newFont(12))
+	love.graphics.setFont(smallFont)
     love.graphics.print("@", player.x, player.y)
     
     --debug info

@@ -1,9 +1,3 @@
---[[
-Code originally created by Michael Enger and was under the zlib license
-This code is copyrighted Jack Stouffer. Any use of this code without the
-express permission of Jack Stouffer will suffer the consequences of the
-law.
---]]
 
 Button = {}
 Button.__index = Button
@@ -15,8 +9,8 @@ function Button.create(text,x,y)
 	temp.hover = false -- whether the mouse is hovering over the button
 	temp.click = false -- whether the mouse has been clicked on the button
 	temp.text = text -- the text in the button
-	temp.width = love.graphics.newFont(32):getWidth(text)
-	temp.height = love.graphics.newFont(32):getHeight()
+	temp.width = mediumFont:getWidth(text)
+	temp.height = mediumFont:getHeight()
 	temp.x = x - (temp.width / 2)
 	temp.y = y
 	return temp
@@ -25,7 +19,7 @@ end
 
 function Button:draw()
 	
-	love.graphics.setFont(love.graphics.newFont(32))
+	love.graphics.setFont(mediumFont)
 	-- if self.hover then love.graphics.setColor(unpack(color["main"]))
 	-- else love.graphics.setColor(unpack(color["text"])) end
 	love.graphics.print(self.text, self.x, self.y-self.height)
