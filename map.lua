@@ -1,10 +1,3 @@
---[[
-
-This code is copyrighted Jack Stouffer. Any use of this code without the
-express permission of Jack Stouffer will suffer the consequences of the
-law.
-
---]]
 
 function draw_map()
    for y=1, map_display_h do

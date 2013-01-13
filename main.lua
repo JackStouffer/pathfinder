@@ -1,11 +1,3 @@
---[[
-
-This code is property of Jack Stouffer. Any use of this code without the
-express permission of Jack Stouffer will suffer the consequences of the
-law.
-
---]]
-
 require "states"
 require "button"
 require "map"
@@ -16,6 +8,9 @@ function love.load()
     state = Menu.create()   -- current game state
 
     love.keyboard.setKeyRepeat(0.01, 0.1)
+
+    smallFont = love.graphics.newFont(12)
+    mediumFont = love.graphics.newFont(32)
 
     player = {
         x = 352,
