@@ -1,6 +1,11 @@
-
+-- fonts
 smallFont = love.graphics.newFont(12)
-mediumFont = love.graphics.newFont(32)
+mediumFont = love.graphics.newFont(18)
+largeFont = love.graphics.newFont(32)
+
+--Music/Sound
+menuMusic = love.audio.newSource("music/AlaFlair.ogg")
+clickSound = love.audio.newSource("sounds/click1.wav")
 
 -- Menu State
 -- Main menu...
@@ -10,18 +15,22 @@ Menu.__index = Menu
 function Menu.create()
 	local temp = {}
 	setmetatable(temp, Menu)
-	temp.button = {	new = Button.create("New Game", 400, 250),
-					instructions = Button.create("Instructions", 400, 300),
-					options = Button.create("Options", 400, 350),
-					quit = Button.create("Quit", 400, 550) }
+	love.audio.play(menuMusic)
+	logoImage = love.graphics.newImage("textures/logo.png")
+	temp.button = {	new = Button.create("New Game", 360, 270),
+					instructions = Button.create("Instructions", 360, 320),
+					options = Button.create("Options", 360, 370),
+					quit = Button.create("Quit", 360, 420) }
 	return temp
 end
 
 function Menu:draw()
-	
+
 	for n,b in pairs(self.button) do
 		b:draw()
 	end
+	love.graphics.setColor(255, 255, 255)
+	love.graphics.draw(logoImage, 60, 50)
 
 end
 
@@ -66,17 +75,13 @@ Instructions.__index = Instructions
 function Instructions.create()
 	local temp = {}
 	setmetatable(temp, Instructions)
-	temp.button = {	back = Button.create("Back", 400, 550) }
+	temp.button = {	back = Button.create("Back", 350, 200) }
 	return temp
 end
 
 function Instructions:draw()
-
-	-- love.graphics.draw(graphics["logo"], 400, 125, 0, 1, 1, 100, 75)
-	
-	-- love.graphics.setColor(unpack(color["text"]))
-	-- love.graphics.setFont(font["small"])
-	love.graphics.printf("The point of this game is to fill out a standard, randomly generated, nonogram by using the mouse. The left mouse button fills in (or \"un-fills\") an area whilst the right mouse button is used to set hints where you think an area shouldn't be filled.\nUse the escape key to pause the game.\n\nGood luck.", 100, 250, 600, "center")
+	love.graphics.setFont(smallFont)
+	love.graphics.printf("This is filler text yo", 50, 50, 600, "center")
 	
 	for n,b in pairs(self.button) do
 		b:draw()
@@ -121,32 +126,11 @@ Options.__index = Options
 function Options.create()
 	local temp = {}
 	setmetatable(temp, Options)
-	temp.button = {	on = Button.create("On", 425, 300),
-					off = Button.create("Off", 550, 300),
-					five = Button.create(" 5 ", 375, 375),
-					six = Button.create(" 6 ", 425, 375),
-					seven = Button.create(" 7 ", 475, 375),
-					eight = Button.create(" 8 ", 525, 375),
-					--nine = Button.create(" 9 ", 575, 375),
-					back = Button.create("Back", 400, 550) }
+	temp.button = {back = Button.create("Back", 350, 200)}
 	return temp
 end
 
 function Options:draw()
-
-	love.graphics.print("Audio:", 250, 270)
-	love.graphics.print("Level:", 250, 345)
-	
-	-- love.graphics.setColor(unpack(color["main"]))
-	love.graphics.setLine(4, "rough")
-	
-	if audio then
-		love.graphics.line(400,305,450,305)
-	else
-		love.graphics.line(525,305,575,305)
-	end
-	
-	love.graphics.line(360+((size-5)*50),380,390+((size-5)*50),380)
 	
 	for n,b in pairs(self.button) do
 		b:draw()
@@ -166,23 +150,7 @@ function Options:mousepressed(x,y,button)
 	
 	for n,b in pairs(self.button) do
 		if b:mousepressed(x,y,button) then
-			if n == "on" then
-				audio = true
-				love.audio.resume()
-			elseif n == "off" then
-				audio = false
-				love.audio.pause()
-			elseif n == "five" then
-				size = 5
-			elseif n == "six" then
-				size = 6
-			elseif n == "seven" then
-				size = 7
-			elseif n == "eight" then
-				size = 8
-			elseif n == "nine" then
-				size = 9
-			elseif n == "back" then
+			if n == "back" then
 				state = Menu.create()
 			end
 		end
@@ -207,7 +175,8 @@ Game.__index = Game
 function Game.create()
 	local temp = {}
 	setmetatable(temp, Game)
-
+	love.audio.stop(menuMusic)
+	love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
 	return temp
 end
 
