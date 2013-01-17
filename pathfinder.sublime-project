@@ -1,0 +1,26 @@
+{
+    "folders": [
+        {
+            "path": "/Users/lego/Documents/gamedev/love2d/rougelike"
+        }
+    ], 
+    "build_systems": [
+        {
+            "cmd": [
+                "love2d", 
+                "--console", 
+                "$project_path"
+            ], 
+            "name": "LOVE", 
+            "target": "run_love2d"
+        }, 
+        {
+            "cmd": [
+                "love2d_jit_dll", 
+                "$project_path"
+            ], 
+            "name": "LOVE JIT Dll", 
+            "target": "run_love2d"
+        }
+    ]
+}

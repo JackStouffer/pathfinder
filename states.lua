@@ -181,18 +181,18 @@ function Game.create()
 end
 
 function Game:draw()
-	
-	draw_map()
 	love.graphics.setFont(smallFont)
-    love.graphics.print("@", player.x, player.y)
-    
+    love.graphics.push()
+    	love.graphics.translate(player.translate_x, player.translate_y)
+        drawMap()
+        love.graphics.print("@", player.x, player.y)
+    love.graphics.pop()
     --debug info
-    love.graphics.print("map_h:" .. table.getn(map), 16, 2)
-    love.graphics.print("map_w:" .. table.getn(map[1]), 100, 2)
-    love.graphics.print("map_x:" ..map_x, 180, 2)
-    love.graphics.print("test_coord:" .. (player.grid_y / 16) + 1 .. " " .. (player.grid_x / 16) + 1, 250, 2)
-    love.graphics.print("test_map:" .. tostring(testMap(0, 1)), 390, 2)
-	
+    love.graphics.print("tile above:" .. tostring(testCollisionTile(0, -1)), 8, 2)
+    love.graphics.print("player x:" .. player.x, 120, 2)
+    love.graphics.print("player y:" .. player.y, 210, 2)
+    love.graphics.print("translate_y:" .. player.translate_y, 300, 2)
+    love.graphics.print("test:" .. player.y/16 + 1 - 1, 400, 2)
 end
 
 function Game:update(dt)
@@ -204,49 +204,31 @@ function Game:mousepressed(x, y, button)
 end
 
 function Game:keypressed(key)
-    if key == 'up' then
-        if testMap(0, -1) then
-            map_y = map_y - 1
-            player.grid_y = player.grid_y - 16
-            if map_y < 0 then 
-                map_y = 0;
-                player.y = player.y - 16
-            end
+    if key == 'up' and testMapEdge(0, -16) == false then -- if the player pushes up and is not at the end of the world
+        if testCollisionTile(0, -1) == false then --then check for collision, this is done this way so testCollisionTile won't try to index a value that doesn't exist
+            player.y = player.y - 16
+            player.translate_y = player.translate_y + 16
         end
     end
 
-    if key == 'down' then
-        if testMap(0, 1) then
-            map_y = map_y + 1
-            player.grid_y = player.grid_y + 16
-            if map_y > 14 then 
-                map_y = 14;
-                player.y = player.y + 16
-            end
+    if key == 'down' and testMapEdge(0, 16) == false then
+        if testCollisionTile(0, 1) == false then
+            player.y = player.y + 16
+            player.translate_y = player.translate_y - 16
         end
     end
    
-    if key == 'left' then
-        if testMap(-1, 0) then
-            player.grid_x = player.grid_x - 16
-            if math.max(map_x - 1, 0) == map_x - 1 then
-                map_x = map_x - 1
-            elseif math.max(map_x - 1, 0) == 0 then
-                map_x = 0
-                player.x = player.x - 16
-            end
+    if key == 'left' and testMapEdge(-16, 0) == false then
+        if testCollisionTile(-1, 0) == false then
+            player.x = player.x - 16
+            player.translate_x = player.translate_x + 16
         end
     end
 
-    if key == 'right' then
-        if testMap(1, 0) then
-            player.grid_x = player.grid_x + 16
-            if math.min(map_x + 1, 19) == map_x + 1 then --for some reason, map_w - map_display_w does not work for the second param
-                map_x = map_x + 1
-            elseif math.min(map_x + 1, 19) == 19 then
-                map_x = 19
-                player.x = player.x + 16
-            end 
+    if key == 'right' and testMapEdge(16, 0) == false then
+        if testCollisionTile(1, 0) == false then
+            player.x = player.x + 16
+            player.translate_x = player.translate_x - 16
         end
     end
 end
