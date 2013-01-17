@@ -1,0 +1,1245 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ma",
+				"map_x"
+			],
+			[
+				"tr",
+				"translate_x"
+			],
+			[
+				"tra",
+				"translate_y"
+			],
+			[
+				"pla",
+				"player"
+			],
+			[
+				"tle",
+				"tile_w"
+			],
+			[
+				"tile",
+				"tile_w"
+			],
+			[
+				"set",
+				"setColor"
+			],
+			[
+				"lo",
+				"love"
+			],
+			[
+				"me",
+				"menuMusic"
+			],
+			[
+				"ne",
+				"newFont"
+			],
+			[
+				"in",
+				"inBox"
+			],
+			[
+				"fu",
+				"function	function"
+			],
+			[
+				"dr",
+				"draw"
+			],
+			[
+				"png",
+				"png"
+			],
+			[
+				"gr",
+				"graphics"
+			],
+			[
+				"play",
+				"playing"
+			],
+			[
+				"g",
+				"gameState"
+			],
+			[
+				"map",
+				"map_x"
+			],
+			[
+				"p",
+				"player"
+			],
+			[
+				"pr",
+				"print"
+			],
+			[
+				"user",
+				"username"
+			],
+			[
+				"r",
+				"route"
+			],
+			[
+				"Sett",
+				"Settings"
+			],
+			[
+				"pa",
+				"password"
+			],
+			[
+				"pas",
+				"password"
+			],
+			[
+				"li",
+				"li"
+			],
+			[
+				"u",
+				"userName"
+			],
+			[
+				"fo",
+				"for	for (…) {…}"
+			],
+			[
+				"ro",
+				"rows"
+			],
+			[
+				"marg",
+				"margin-right"
+			],
+			[
+				"sle",
+				"selected"
+			],
+			[
+				"h",
+				"href"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"font",
+				"font-family	zen:css_properties"
+			],
+			[
+				"f",
+				"float"
+			],
+			[
+				"l",
+				"li"
+			],
+			[
+				"fon",
+				"font-size"
+			],
+			[
+				"padd",
+				"padding-top"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"s",
+				"sans-serif"
+			],
+			[
+				"spider",
+				"spider"
+			],
+			[
+				"pl",
+				"player"
+			],
+			[
+				"cons",
+				"console"
+			],
+			[
+				"ob",
+				"obj"
+			],
+			[
+				"P",
+				"playerY  (variable)"
+			],
+			[
+				"th",
+				"theata"
+			],
+			[
+				"ti",
+				"tick"
+			],
+			[
+				"t",
+				"theata"
+			],
+			[
+				"init",
+				"initTime"
+			],
+			[
+				"tim",
+				"timer"
+			],
+			[
+				"fal",
+				"falling"
+			],
+			[
+				"v",
+				"vel"
+			],
+			[
+				"Pla",
+				"playerX"
+			],
+			[
+				"x",
+				"x"
+			],
+			[
+				"player",
+				"playerX"
+			],
+			[
+				"get",
+				"getTime"
+			],
+			[
+				"y",
+				"y"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"se",
+				"seePlayer"
+			],
+			[
+				"Sl",
+				"SimleballEntity"
+			],
+			[
+				"st",
+				"startX"
+			],
+			[
+				"max",
+				"maxVel"
+			],
+			[
+				"a",
+				"alive"
+			],
+			[
+				"fa",
+				"false"
+			],
+			[
+				"loa",
+				"load"
+			],
+			[
+				"co",
+				"console"
+			],
+			[
+				"gen",
+				"generateWorld"
+			],
+			[
+				"im",
+				"Image"
+			],
+			[
+				"js",
+				"json"
+			],
+			[
+				"sc",
+				"screenY"
+			],
+			[
+				"sp",
+				"sprites"
+			],
+			[
+				"ge",
+				"generateWorld"
+			],
+			[
+				"H",
+				"Helvetica"
+			],
+			[
+				"craf",
+				"crafty"
+			],
+			[
+				"bak",
+				"background-color"
+			],
+			[
+				"la",
+				"loading"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"php",
+				"phpinfo"
+			],
+			[
+				"paddi",
+				"padding-left"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"col",
+				"color"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"end",
+				"end"
+			],
+			[
+				"c",
+				"colliding"
+			],
+			[
+				"coll",
+				"collision"
+			],
+			[
+				"be",
+				"beginContact"
+			],
+			[
+				"mo",
+				"mouse"
+			],
+			[
+				"bl",
+				"blocks"
+			],
+			[
+				"for",
+				"forp	for k,v in pairs()"
+			],
+			[
+				"blo",
+				"blockNum"
+			],
+			[
+				"fi",
+				"fixture"
+			],
+			[
+				"setM",
+				"setMass"
+			],
+			[
+				"b",
+				"newBody"
+			],
+			[
+				"o",
+				"objects"
+			],
+			[
+				"str",
+				"string"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "main.lua",
+			"settings":
+			{
+				"buffer_size": 983,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "states.lua",
+			"settings":
+			{
+				"buffer_size": 4332,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "map.lua",
+			"settings":
+			{
+				"buffer_size": 9810,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "button.lua",
+			"settings":
+			{
+				"buffer_size": 1051,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 67.0,
+		"selected_items":
+		[
+			[
+				"symar",
+				"Set Syntax: Markdown"
+			],
+			[
+				"syji",
+				"Set Syntax: Jinja Templates"
+			],
+			[
+				"pacin",
+				"Package Control: Install Package"
+			],
+			[
+				"sy",
+				"Set Syntax: LESS"
+			],
+			[
+				"syl",
+				"Set Syntax: LESS"
+			],
+			[
+				"syle",
+				"Set Syntax: LESS"
+			],
+			[
+				"pain",
+				"Package Control: Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: List Packages"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"pa",
+				"Package Control: Remove Package"
+			],
+			[
+				"tog",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"mi",
+				"View: Toggle Minimap"
+			],
+			[
+				"",
+				"Package Control: Discover Packages"
+			],
+			[
+				"p",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/lego/Documents/gamedev/love2d/love-demos-0.8.0/no/main.lua",
+		"/Users/lego/Documents/gamedev/love2d/spritebatch/main.lua",
+		"/Users/lego/Desktop/article guide.md",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/gui.lua",
+		"/Users/lego/Documents/gamedev/love2d/love-demos-0.8.0/no/lua/states.lua",
+		"/Users/lego/Documents/gamedev/love2d/love-demos-0.8.0/no/lua/button.lua",
+		"/Users/lego/Documents/gamedev/love2d/grid/main.lua",
+		"/Users/lego/Documents/gamedev/love2d/tiles/main.lua",
+		"/Users/lego/Documents/gamedev/love2d/main.lua",
+		"/Users/lego/Documents/gamedev/dungeon algorithm.txt",
+		"/Users/lego/Documents/killerbees backup 12-10-12/history.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/aboutus.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/index.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/team.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/bios/tinaM.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/bios/timM.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/bios/stevehM.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/bios/laszloM.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/bios/chrisM.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/bios/danaM.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/bios/edM.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/bios/isaacM.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/bios/ericM.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/bios/jimM.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/bios/stevesM.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/what-is-first.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/what-is-vex.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/what-is-fll.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/what-is-ftc.html",
+		"/Users/lego/Documents/killerbees backup 12-10-12/what-is-frc.html",
+		"/Users/lego/Desktop/apple.py",
+		"/Users/lego/Desktop/snow.py",
+		"/Users/lego/Dropbox/pythonanywhere/schema.sql",
+		"/Users/lego/Dropbox/pythonanywhere/templates/hello.html",
+		"/Users/lego/Dropbox/pythonanywhere/app.py",
+		"/Users/lego/Downloads/pypy-1.9/distribute_setup.py",
+		"/Applications/MAMP/htdocs/profile/profile.sublime-project",
+		"/Applications/MAMP/htdocs/profile/inspiritas.css",
+		"/Applications/MAMP/htdocs/profile/bootstrap/less/scaffolding.less",
+		"/Applications/MAMP/htdocs/inspiritas-bootstrap-master/profile.sublime-project",
+		"/Applications/MAMP/htdocs/inspiritas-bootstrap-master/profile.sublime-workspace",
+		"/Users/lego/Documents/ReadThis/Resources/readthis.sublime-project",
+		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/DocBlockr/README.md",
+		"/Users/lego/Documents/ReadThis/.gitignore",
+		"/Users/lego/Documents/ReadThis/Resources/js/jquery-1.8.3.min.js",
+		"/Users/lego/Documents/ReadThis/Resources/main.css",
+		"/Users/lego/Documents/ReadThis/Resources/main.py",
+		"/Applications/MAMP/htdocs/mtred/css/smart-grid.min.css",
+		"/Applications/MAMP/htdocs/mtred/main.css",
+		"/Applications/MAMP/htdocs/game-off-2012/stylesheets/styles.css",
+		"/Applications/MAMP/htdocs/game-off-2012/stylesheets/pygment_trac.css",
+		"/Applications/MAMP/htdocs/game-off-2012/stylesheets/normalize.css",
+		"/Applications/MAMP/htdocs/game-off-2012/entities.js",
+		"/Applications/MAMP/htdocs/game-off-2012/main.js",
+		"/Users/lego/Documents/game-off-2012/README.md",
+		"/Users/lego/Documents/game-off-2012/main.js",
+		"/Users/lego/Documents/game-off-2012/index.html",
+		"/Users/lego/Documents/game-off-2012/js/melon.js",
+		"/Users/lego/Documents/game-off-2012/assets/js/level1.js",
+		"/Users/lego/Documents/game-off-2012/assets/levels/main.json",
+		"/Users/lego/Documents/game-off-2012/assets/js/game.js",
+		"/Users/lego/Documents/game-off-2012/params.json",
+		"/Users/lego/Documents/game-off-2012/example.html",
+		"/Users/lego/Documents/game-off-2012/assets/js/TiledLevelImporter.js",
+		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/ZenCoding/Default.sublime-keymap",
+		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/ZenCoding/zen-coding.sublime-settings",
+		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/SublimeCodeIntel/Default (OSX).sublime-keymap",
+		"/Users/lego/Documents/game-off-2012/main.json",
+		"/Users/lego/Downloads/webtop.co/mc.js",
+		"/Users/lego/Documents/game-off-2012/level.json",
+		"/Users/lego/Documents/game-off-2012/crafty.js",
+		"/Users/lego/Documents/game-off-2012/main.css",
+		"/Users/lego/Documents/love2d/grid/main.lua",
+		"/Users/lego/Library/Caches/Cleanup At Startup/Transmit/0735332E-E2A7-4765-88D3-EC4415E68638/info.php",
+		"/Users/lego/Library/Caches/Cleanup At Startup/Transmit/767DFBBF-C1ED-4E80-B4CC-A6F95F0FAA29/index.html",
+		"/Users/lego/Library/Caches/Cleanup At Startup/Transmit/364F44DA-7422-4CD1-A420-5EB96D0EA8CC/test.php",
+		"/Users/lego/Downloads/twitter-bootstrap-320b75d/docs/examples/stripe.png",
+		"/Users/lego/Library/Caches/Cleanup At Startup/Transmit/861BF127-DE28-43D2-97AC-86E28B6E4226/index.html",
+		"/Users/lego/Downloads/twitter-bootstrap-320b75d/docs/examples/hero.html",
+		"/Users/lego/Downloads/file_test/index.html",
+		"/Users/lego/Downloads/blueimp-jQuery-File-Upload-8438d59/test/index.html",
+		"/Users/lego/Desktop/main.cpp",
+		"/Users/lego/Documents/objc/prog1.m",
+		"/Users/lego/Documents/love2d/tiles/main.lua",
+		"/Users/lego/Documents/decrypt.py",
+		"/Users/lego/Library/Caches/Cleanup At Startup/Transmit/CED69993-502D-4FC9-8904-3173B0A73E43/option.php",
+		"/Users/lego/Documents/objc/.htaccess",
+		"/opt/local/share/automake-1.11/texinfo.tex",
+		"/Users/lego/Documents/love2d/testing/main.lua",
+		"/Users/lego/Documents/moai/run.sh",
+		"/Users/lego/Documents/moai/main.lua",
+		"/Users/lego/Documents/jaws/index.html",
+		"/Users/lego/Documents/jaws/main.js",
+		"/Users/lego/Documents/jaws/jaws.js",
+		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/lego/Documents/jaws/example.html",
+		"/Users/lego/Documents/jaws/astar.js",
+		"/Users/lego/Documents/jaws/untitled.js",
+		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/lego/Documents/kivy/main.py",
+		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/Default/Default (OSX).sublime-keymap"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"draw()",
+			"draw",
+			"auto",
+			"size",
+			"mediumFont",
+			"love.graphics.newFont",
+			"love.graphics.newFont(12)",
+			"fps",
+			"var ",
+			"var",
+			"var ",
+			"var",
+			"#000444",
+			"z",
+			"max",
+			"});",
+			"1",
+			"hit",
+			"onhit",
+			"map",
+			"-",
+			"MAP",
+			"map",
+			"moved",
+			")\n",
+			"hit",
+			"viewport",
+			"viewport.init",
+			"viewport",
+			"grav",
+			"player1",
+			"player",
+			"stage",
+			"bodyBackground",
+			"@bodyBackground",
+			"divider",
+			"nav-header",
+			"btn",
+			"a",
+			"baseFontFamily",
+			"btn",
+			"font-family",
+			"btn",
+			"border-radius",
+			"navbar",
+			"dropdown",
+			"drop",
+			"bodyBackground",
+			"container",
+			"h1",
+			"php",
+			" "
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"6",
+			"#444"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "main.lua",
+					"settings":
+					{
+						"buffer_size": 983,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								401,
+								401
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "states.lua",
+					"settings":
+					{
+						"buffer_size": 4332,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3390,
+								3390
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Lua/Lua.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 3343.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "map.lua",
+					"settings":
+					{
+						"buffer_size": 9810,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9765,
+								9765
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 799.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "button.lua",
+					"settings":
+					{
+						"buffer_size": 1051,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 35.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"main.css",
+				"Resources/css/main.css"
+			],
+			[
+				"git",
+				".gitignore"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 145.0,
+	"status_bar_visible": true
+}

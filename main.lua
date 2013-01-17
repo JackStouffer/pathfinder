@@ -13,10 +13,10 @@ function love.load()
     mediumFont = love.graphics.newFont(32)
 
     player = {
-        x = 352,
+        x = 368,
         y = 240,
-        grid_x = 352,
-        grid_y = 240,
+        translate_x = 0,
+        translate_y = 0,
         health = 100
     }
         
