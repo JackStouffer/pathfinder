@@ -1,11 +1,23 @@
+require "pickle"
 require "states"
 require "button"
 require "map"
 
 function love.load()
-    love.graphics.setMode(720, 480, false, true, 0)
+    air = 0
+    stone = 1
+    dirt = 3
+
+    lastN = -1
+    mySeed = 1
+    showPerlin = 0
+  
+    terrain = makeTerrain()
+
+    love.graphics.setMode(736, 480, false, true, 0)
 
     state = Menu.create()   -- current game state
+    gameState = "world"
 
     love.keyboard.setKeyRepeat(0.01, 0.1)
 
@@ -13,10 +25,11 @@ function love.load()
     mediumFont = love.graphics.newFont(32)
 
     player = {
-        x = 368,
-        y = 240,
+        x = 384,
+        y = 256,
         translate_x = 0,
         translate_y = 0,
+        body = love.graphics.newImage("textures/player/base/human_m.png"),
         health = 100
     }
         

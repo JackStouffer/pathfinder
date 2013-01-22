@@ -1,7 +1,7 @@
 -- fonts
 smallFont = love.graphics.newFont(12)
-mediumFont = love.graphics.newFont(18)
 largeFont = love.graphics.newFont(32)
+middleFont = love.graphics.newFont(24)
 
 --Music/Sound
 menuMusic = love.audio.newSource("music/AlaFlair.ogg")
@@ -176,18 +176,28 @@ function Game.create()
 	local temp = {}
 	setmetatable(temp, Game)
 	love.audio.stop(menuMusic)
-	love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
 	return temp
 end
 
 function Game:draw()
-	love.graphics.setFont(smallFont)
-    love.graphics.push()
-    	love.graphics.translate(player.translate_x, player.translate_y)
-        drawMap()
-        love.graphics.print("@", player.x, player.y)
-    love.graphics.pop()
+    if gameState == "world" then
+        if showPerlin == 1 then plot2D(terrain.perlin)
+        else
+            love.graphics.setColor(0, 0, 255, 255)
+            love.graphics.rectangle("fill", -1, -1, love.graphics.getWidth()+2, love.graphics.getHeight()+2)
+            drawTerrain(terrain)
+        end
+    elseif gameState == "cave" then
+        love.graphics.push()
+        	love.graphics.translate(player.translate_x, player.translate_y)
+            drawMap()
+            love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
+            love.graphics.draw(player.body, player.x, player.y)
+        love.graphics.pop()
+    end
     --debug info
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.setFont(smallFont)
     love.graphics.print("tile above:" .. tostring(testCollisionTile(0, -1)), 8, 2)
     love.graphics.print("player x:" .. player.x, 120, 2)
     love.graphics.print("player y:" .. player.y, 210, 2)
@@ -204,31 +214,43 @@ function Game:mousepressed(x, y, button)
 end
 
 function Game:keypressed(key)
-    if key == 'up' and testMapEdge(0, -16) == false then -- if the player pushes up and is not at the end of the world
-        if testCollisionTile(0, -1) == false then --then check for collision, this is done this way so testCollisionTile won't try to index a value that doesn't exist
-            player.y = player.y - 16
-            player.translate_y = player.translate_y + 16
+    if gameState == "cave" then
+        if key == 'up' and testMapEdge(0, -32) == false then -- if the player pushes up and is not at the end of the world
+            if testCollisionTile(0, -1) == false then --then check for collision, this is done this way so testCollisionTile won't try to index a value that doesn't exist
+                player.y = player.y - 32
+                player.translate_y = player.translate_y + 32
+            end
+        end
+
+        if key == 'down' and testMapEdge(0, 32) == false then
+            if testCollisionTile(0, 1) == false then
+                player.y = player.y + 32
+                player.translate_y = player.translate_y - 32
+            end
+        end
+       
+        if key == 'left' and testMapEdge(-32, 0) == false then
+            if testCollisionTile(-1, 0) == false then
+                player.x = player.x - 32
+                player.translate_x = player.translate_x + 32
+            end
+        end
+
+        if key == 'right' and testMapEdge(32, 0) == false then
+            if testCollisionTile(1, 0) == false then
+                player.x = player.x + 32
+                player.translate_x = player.translate_x - 32
+            end
         end
     end
 
-    if key == 'down' and testMapEdge(0, 16) == false then
-        if testCollisionTile(0, 1) == false then
-            player.y = player.y + 16
-            player.translate_y = player.translate_y - 16
-        end
-    end
-   
-    if key == 'left' and testMapEdge(-16, 0) == false then
-        if testCollisionTile(-1, 0) == false then
-            player.x = player.x - 16
-            player.translate_x = player.translate_x + 16
-        end
-    end
-
-    if key == 'right' and testMapEdge(16, 0) == false then
-        if testCollisionTile(1, 0) == false then
-            player.x = player.x + 16
-            player.translate_x = player.translate_x - 16
-        end
+    if key == "r" then
+        terrain = makeTerrain()
+    elseif key == "p" then
+        showPerlin = 1 - showPerlin
+    elseif key == "c" then
+        gameState = "cave"
+    elseif key == "escape" then
+        love.event.push("q")
     end
 end
