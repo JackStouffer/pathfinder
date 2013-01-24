@@ -176,6 +176,7 @@ function Game.create()
 	local temp = {}
 	setmetatable(temp, Game)
 	love.audio.stop(menuMusic)
+    map = createDungeon()
 	return temp
 end
 
@@ -183,9 +184,11 @@ function Game:draw()
     if gameState == "world" then
         if showPerlin == 1 then plot2D(terrain.perlin)
         else
-            love.graphics.setColor(0, 0, 255, 255)
+            love.graphics.setColor(0, 255, 0, 255)
             love.graphics.rectangle("fill", -1, -1, love.graphics.getWidth()+2, love.graphics.getHeight()+2)
+            love.graphics.setBlendMode("additive")
             drawTerrain(terrain)
+            love.graphics.setBlendMode("alpha")
         end
     elseif gameState == "cave" then
         love.graphics.push()
