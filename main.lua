@@ -1,11 +1,12 @@
+Jumper = require('Jumper')
 require "pickle"
 require "states"
 require "button"
 require "map"
 
 function love.load()
-    air = 0
-    stone = 1
+    water = 0
+    grass = 1
     dirt = 3
 
     lastN = -1
