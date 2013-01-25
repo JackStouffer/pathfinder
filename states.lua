@@ -17,20 +17,21 @@ function Menu.create()
 	setmetatable(temp, Menu)
 	love.audio.play(menuMusic)
 	logoImage = love.graphics.newImage("textures/logo.png")
-	temp.button = {	new = Button.create("New Game", 360, 270),
-					instructions = Button.create("Instructions", 360, 320),
-					options = Button.create("Options", 360, 370),
-					quit = Button.create("Quit", 360, 420) }
+    backgroundImage = love.graphics.newImage("textures/background.png")
+	temp.button = {	new = Button.create("New Game", 512, 300),
+					instructions = Button.create("Instructions", 512, 350),
+					options = Button.create("Options", 512, 400),
+					quit = Button.create("Quit", 512, 450) }
 	return temp
 end
 
 function Menu:draw()
-
+    love.graphics.draw(backgroundImage, 0, 0)
 	for n,b in pairs(self.button) do
 		b:draw()
 	end
 	love.graphics.setColor(255, 255, 255)
-	love.graphics.draw(logoImage, 60, 50)
+	love.graphics.draw(logoImage, 200, 50)
 
 end
 
@@ -176,7 +177,8 @@ function Game.create()
 	local temp = {}
 	setmetatable(temp, Game)
 	love.audio.stop(menuMusic)
-    map = createDungeon()
+    map = createCave()
+    terrain = makeTerrain()
 	return temp
 end
 

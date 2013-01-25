@@ -229,186 +229,192 @@ end
 --]]
 
 function createDungeon()
-    local width = 150
-    local height = 150
+
+
+    return map
+end
+
+function createCave()
+    local width = 250
+    local height = 250
     local p = 55
     local i = 2 --counter.
     local c = 0
     local map = {}
+    map.current = {}
+    map.new = {}
     for y = 1, height do
-        map[y] = {}
+        map.current[y] = {}
         for x = 1, width do
             if math.random(1, 100) <= p then
-                map[y][x] = 2
+                map.current[y][x] = 2
             else
-                map[y][x] = 0
+                map.current[y][x] = 0
             end
         end
     end
     
-    -- The procedure is as follows:
-    -- Randomly choose a cell from map
-    -- If the cell is open use a p to determine whether we close it.
-    -- Get c
-    -- Repeat steps 1-3 i number of times.
+    map.new = map.current
+
     for l=1, i do 
         for y = 1, height do
             for x = 1, width do 
                 --get the number of neighbors that are closed
                 if y == 1 and x == 1 then --top left corner
-                    if map[y + 1][x] == 2 then
+                    if map.current[y + 1][x] == 2 then
                         c = c + 1
                     end
-                    if map[y][x + 1] == 2 then
+                    if map.current[y][x + 1] == 2 then
                         c = c + 1
                     end
-                    if map[y + 1][x + 1] == 2 then
+                    if map.current[y + 1][x + 1] == 2 then
                         c = c + 1
                     end
                 elseif y == 1 and x == width then -- top right corner
-                    if map[y + 1][x] == 2 then
+                    if map.current[y + 1][x] == 2 then
                         c = c + 1
                     end
-                    if map[y][x - 1] == 2 then
+                    if map.current[y][x - 1] == 2 then
                         c = c + 1
                     end
-                    if map[y + 1][x - 1] == 2 then
+                    if map.current[y + 1][x - 1] == 2 then
                         c = c + 1
                     end
                 elseif y == height and x == 1 then -- bottom left corner
-                    if map[y - 1][x] == 2 then
+                    if map.current[y - 1][x] == 2 then
                         c = c + 1
                     end
-                    if map[y][x + 1] == 2 then
+                    if map.current[y][x + 1] == 2 then
                         c = c + 1
                     end
-                    if map[y - 1][x + 1] == 2 then
+                    if map.current[y - 1][x + 1] == 2 then
                         c = c + 1
                     end
                 elseif y == height and x == width then -- bottom right corner
-                    if map[y - 1][x] == 2 then
+                    if map.current[y - 1][x] == 2 then
                         c = c + 1
                     end
-                    if map[y][x - 1] == 2 then
+                    if map.current[y][x - 1] == 2 then
                         c = c + 1
                     end
-                    if map[y - 1][x - 1] == 2 then
+                    if map.current[y - 1][x - 1] == 2 then
                         c = c + 1
                     end
                 elseif x == 1 and (y ~= 1 and y ~= height) then -- left side
-                    if map[y - 1][x] == 2 then
+                    if map.current[y - 1][x] == 2 then
                         c = c + 1
                     end
-                    if map[y - 1][x + 1] == 2 then
+                    if map.current[y - 1][x + 1] == 2 then
                         c = c + 1
                     end
-                    if map[y][x + 1] == 2 then
+                    if map.current[y][x + 1] == 2 then
                         c = c + 1
                     end
-                    if map[y + 1][x + 1] == 2 then
+                    if map.current[y + 1][x + 1] == 2 then
                         c = c + 1
                     end
-                    if map[y + 1][x - 1] == 2 then
+                    if map.current[y + 1][x - 1] == 2 then
                         c = c + 1
                     end
                 elseif x == width and (y ~= 1 and y ~= height) then -- right side
-                    if map[y - 1][x] == 2 then
+                    if map.current[y - 1][x] == 2 then
                         c = c + 1
                     end
-                    if map[y - 1][x - 1] == 2 then
+                    if map.current[y - 1][x - 1] == 2 then
                         c = c + 1
                     end
-                    if map[y][x - 1] == 2 then
+                    if map.current[y][x - 1] == 2 then
                         c = c + 1
                     end
-                    if map[y + 1][x - 1] == 2 then
+                    if map.current[y + 1][x - 1] == 2 then
                         c = c + 1
                     end
-                    if map[y + 1][x] == 2 then
+                    if map.current[y + 1][x] == 2 then
                         c = c + 1
                     end
                 elseif y == 1 and (x ~= 0 and x ~= width) then -- top side
-                    if map[y][x - 1] == 2 then
+                    if map.current[y][x - 1] == 2 then
                         c = c + 1
                     end
-                    if map[y + 1][x - 1] == 2 then
+                    if map.current[y + 1][x - 1] == 2 then
                         c = c + 1
                     end
-                    if map[y + 1][x] == 2 then
+                    if map.current[y + 1][x] == 2 then
                         c = c + 1
                     end
-                    if map[y + 1][x + 1] == 2 then
+                    if map.current[y + 1][x + 1] == 2 then
                         c = c + 1
                     end
-                    if map[y][x + 1] == 2 then
+                    if map.current[y][x + 1] == 2 then
                         c = c + 1
                     end
                 elseif y == height and (x ~= 0 and x ~= width) then -- bottom side
-                    if map[y][x - 1] == 2 then
+                    if map.current[y][x - 1] == 2 then
                         c = c + 1
                     end
-                    if map[y - 1][x - 1] == 2 then
+                    if map.current[y - 1][x - 1] == 2 then
                         c = c + 1
                     end
-                    if map[y - 1][x] == 2 then
+                    if map.current[y - 1][x] == 2 then
                         c = c + 1
                     end
-                    if map[y - 1][x + 1] == 2 then
+                    if map.current[y - 1][x + 1] == 2 then
                         c = c + 1
                     end
-                    if map[y][x + 1] == 2 then
+                    if map.current[y][x + 1] == 2 then
                         c = c + 1
                     end
                 else -- everything else
-                    if map[y - 1][x - 1] == 2 then
+                    if map.current[y - 1][x - 1] == 2 then
                         c = c + 1
                     end
 
-                    if map[y - 1][x] == 2 then
+                    if map.current[y - 1][x] == 2 then
                         c = c + 1
                     end
 
-                    if map[y - 1][x + 1] == 2 then
+                    if map.current[y - 1][x + 1] == 2 then
                         c = c + 1
                     end
 
-                    if map[y][x + 1] == 2 then
+                    if map.current[y][x + 1] == 2 then
                         c = c + 1
                     end
 
-                    if map[y + 1][x + 1] == 2 then
+                    if map.current[y + 1][x + 1] == 2 then
                         c = c + 1
                     end
 
-                    if map[y + 1][x] == 2 then
+                    if map.current[y + 1][x] == 2 then
                         c = c + 1
                     end
-                    if map[y + 1][x - 1] == 2 then
+                    if map.current[y + 1][x - 1] == 2 then
                         c = c + 1
                     end
 
-                    if map[y][x - 1] == 2 then
+                    if map.current[y][x - 1] == 2 then
                         c = c + 1
                     end
                 end
-                print(string.format("c = %i", c))
                 --decide if we should close or open the cell
                 if c <= 3 then
-                    map[y][x] = 0
+                    map.new[y][x] = 0
                 elseif c > 5 then
-                    map[y][x] = 2
+                    map.new[y][x] = 2
                 end
 
                 c = 0
             end
         end
+
+        map.current = map.new
     end
 
     for x = 1, width do
-        map[1][x] = 2
+        map.current[1][x] = 2
     end
 
-    return map
+    return map.current
 end
 
 -- map variables
