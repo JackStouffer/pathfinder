@@ -16,7 +16,6 @@ function testCollisionTile(x, y)
         return true
     end
     return false
-
 end
 
 function testMapEdge(x, y)
@@ -228,15 +227,47 @@ end
 
 --]]
 
+function createRoom(x, y, width, height, dungeonMap)    
+    for u = y/32, height + y/32 do
+        print(string.format("y: %i, height: %i"), y, height + y)
+        for v = x/32, width + x/32 do
+            dungeonMap[u][v] = 0
+        end
+    end
+    return dungeonMap
+end
+
 function createDungeon()
+    -- Fill the whole map with solid earth
+    -- Dig out a single room in the center of the map
+    -- Pick a wall of any room
+    -- Decide upon a new feature to build
+    -- See if there is room to add the new feature through the chosen wall
+    -- If yes, continue. If no, go back to step 3
+    -- Add the feature through the chosen wall
+    -- Go back to step 3, until the dungeon is complete
+    -- Add the up and down staircases at random points in map
+    -- Finally, sprinkle some monsters and items liberally over dungeon
 
+    local width = 500
+    local height = 500
+    dungeonMap = {}
 
-    return map
+    for y = 1, height do
+        dungeonMap[y] = {}
+        for x = 1, width do
+            dungeonMap[y][x] = 2
+        end
+    end
+
+    
+
+    return dungeonMap
 end
 
 function createCave()
-    local width = 250
-    local height = 250
+    local width = 500
+    local height = 500
     local p = 55
     local i = 2 --counter.
     local c = 0

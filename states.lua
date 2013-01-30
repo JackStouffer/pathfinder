@@ -198,20 +198,15 @@ function Game:draw()
             drawMap()
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
             love.graphics.draw(player.body, player.x, player.y)
+            ent.enimines[0]:draw()
         love.graphics.pop()
     end
     --debug info
     love.graphics.setColor(255, 255, 255)
-    love.graphics.setFont(smallFont)
-    love.graphics.print("tile above:" .. tostring(testCollisionTile(0, -1)), 8, 2)
-    love.graphics.print("player x:" .. player.x, 120, 2)
-    love.graphics.print("player y:" .. player.y, 210, 2)
-    love.graphics.print("translate_y:" .. player.translate_y, 300, 2)
-    love.graphics.print("test:" .. player.y/16 + 1 - 1, 400, 2)
 end
 
 function Game:update(dt)
-
+    ent.enimines[0]:update(dt)
 end
 
 function Game:mousepressed(x, y, button)
