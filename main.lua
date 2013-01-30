@@ -1,8 +1,11 @@
-Jumper = require('Jumper')
+class = require "30log"
 require "pickle"
 require "states"
 require "button"
 require "map"
+require "entities"
+Jumper = require("Jumper")
+Grid = require 'Jumper.core.grid'
 
 function love.load()
     lastN = -1
