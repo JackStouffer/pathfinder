@@ -1,11 +1,11 @@
 class = require "30log"
-require "pickle"
 require "states"
 require "button"
 require "map"
 require "entities"
-Jumper = require("Jumper")
-Grid = require 'Jumper.core.grid'
+Grid = require 'jumper.grid'
+Pathfinder = require 'jumper.pathfinder'
+require "TSerial"
 
 function love.load()
     lastN = -1
@@ -19,8 +19,9 @@ function love.load()
 
     love.keyboard.setKeyRepeat(0.01, 0.1)
 
-    smallFont = love.graphics.newFont(12)
-    mediumFont = love.graphics.newFont(32)
+    smallFont = love.graphics.newFont("textures/gui/8-BIT-WONDER.TTF", 12)
+    mediumFont = love.graphics.newFont("textures/gui/8-BIT-WONDER.TTF", 32)
+    largeFont = love.graphics.newFont("textures/gui/8-BIT-WONDER.TTF", 64)
 
     player = {
         x = 512,
@@ -28,13 +29,16 @@ function love.load()
         translate_x = 0,
         translate_y = 0,
         body = love.graphics.newImage("textures/player/base/human_m.png"),
-        health = 100
+        health = 100,
+        magic = 100
     }
         
     tile = {}
     for i=0,3 do -- change 3 to the number of tile images minus 1.
        tile[i] = love.graphics.newImage( "textures/tile"..i..".png" )
     end
+
+    guiBar = love.graphics.newImage("textures/gui/bar.png")
 end
 
 function love.draw()
@@ -57,3 +61,14 @@ function love.keypressed(key, unicode)
     state:keypressed(key)
 end
 
+function love.focus(f)
+    if not f then
+        print("LOST FOCUS")
+    else
+        print("GAINED FOCUS")
+    end
+end
+
+function love.quit()
+  print("Thanks for playing! Come back soon!")
+end

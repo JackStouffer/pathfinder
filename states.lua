@@ -178,7 +178,12 @@ function Game.create()
 	setmetatable(temp, Game)
 	love.audio.stop(menuMusic)
     map = createCave()
+    grid = Grid(map, false)
+    myPath = Pathfinder('ASTAR', grid, 0)
     terrain = makeTerrain()
+    for x=1, #terrain.value do
+        print(max(terrain.value[x], function(a,b) return a < b end))
+    end
 	return temp
 end
 
@@ -186,11 +191,9 @@ function Game:draw()
     if gameState == "world" then
         if showPerlin == 1 then plot2D(terrain.perlin)
         else
-            love.graphics.setColor(0, 255, 0, 255)
+            love.graphics.setColor(161, 235, 255, 255)
             love.graphics.rectangle("fill", -1, -1, love.graphics.getWidth()+2, love.graphics.getHeight()+2)
-            love.graphics.setBlendMode("additive")
             drawTerrain(terrain)
-            love.graphics.setBlendMode("alpha")
         end
     elseif gameState == "cave" then
         love.graphics.push()
@@ -200,13 +203,20 @@ function Game:draw()
             love.graphics.draw(player.body, player.x, player.y)
             ent.enimines[0]:draw()
         love.graphics.pop()
+
+        --gui
+        love.graphics.draw(guiBar, 0, 476)
+        love.graphics.setFont(mediumFont)
+        love.graphics.print(player.health, 47, 520)
+        love.graphics.print(player.magic, 203, 520)
+        love.graphics.print("1", 400, 520)
     end
     --debug info
     love.graphics.setColor(255, 255, 255)
 end
 
 function Game:update(dt)
-    ent.enimines[0]:update(dt)
+
 end
 
 function Game:mousepressed(x, y, button)
@@ -215,11 +225,22 @@ end
 
 function Game:keypressed(key)
     if gameState == "cave" then
+        if (key == 'up' and key == 'right') and testMapEdge(0, -32) == false then -- if the player pushes up and is not at the end of the world
+            if testCollisionTile(0, -1) == false then --then check for collision, this is done this way so testCollisionTile won't try to index a value that doesn't exist
+                player.y = player.y - 32
+                player.x = player.x + 32
+                player.translate_y = player.translate_y + 32
+                player.translate_x = player.translate_x - 32
+            end
+            ent.enimines[0]:turn()
+        end
+
         if key == 'up' and testMapEdge(0, -32) == false then -- if the player pushes up and is not at the end of the world
             if testCollisionTile(0, -1) == false then --then check for collision, this is done this way so testCollisionTile won't try to index a value that doesn't exist
                 player.y = player.y - 32
                 player.translate_y = player.translate_y + 32
             end
+            ent.enimines[0]:turn()
         end
 
         if key == 'down' and testMapEdge(0, 32) == false then
@@ -227,6 +248,7 @@ function Game:keypressed(key)
                 player.y = player.y + 32
                 player.translate_y = player.translate_y - 32
             end
+            ent.enimines[0]:turn()
         end
        
         if key == 'left' and testMapEdge(-32, 0) == false then
@@ -234,6 +256,7 @@ function Game:keypressed(key)
                 player.x = player.x - 32
                 player.translate_x = player.translate_x + 32
             end
+            ent.enimines[0]:turn()
         end
 
         if key == 'right' and testMapEdge(32, 0) == false then
@@ -241,6 +264,7 @@ function Game:keypressed(key)
                 player.x = player.x + 32
                 player.translate_x = player.translate_x - 32
             end
+            ent.enimines[0]:turn()
         end
     end
 
@@ -251,6 +275,6 @@ function Game:keypressed(key)
     elseif key == "c" then
         gameState = "cave"
     elseif key == "escape" then
-        love.event.push("q")
+        love.event.push("quit")
     end
 end
