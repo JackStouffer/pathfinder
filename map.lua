@@ -1,3 +1,14 @@
+function max(t, fn)
+    if #t == 0 then return nil, nil end
+    local key, value = 1, t[1]
+    for i = 2, #t do
+        if fn(value, t[i]) then
+            key, value = i, t[i]
+        end
+    end
+    return key, value
+end
+
 function drawMap()
    --legacy code is bad M'kay, need to replace this
    for y=1, map_display_h do
@@ -206,19 +217,29 @@ function makeTerrain(seed)
       if r < 128 then
         value = value + (128 - r) * 0.025
       end
-      terrain.value[r][c] = value
+      terrain.value[r][c] = math.floor(value)
     end
   end
   return terrain
 end
 
 function drawTerrain(terrain)
-  for r = 1, #terrain.perlin do
-    for c = 1, #(terrain.perlin[1]) do
-        love.graphics.setColor(128 + 40 * terrain.perlin[r][c], 128 + 40 * terrain.perlin[r][c], 128 + 40 * terrain.perlin[r][c], 255)
-        love.graphics.rectangle("fill", (c-1)/(#(terrain.value[1]))*love.graphics.getWidth(), (r-1)/(#terrain.value)*love.graphics.getHeight(), love.graphics.getWidth()/#(terrain.value[1]), love.graphics.getHeight()/#terrain.value)
+    for r = 1, #terrain.value do
+        for c = 1, #(terrain.value[1]) do
+            if terrain.value[r][c] == 0 then
+                love.graphics.setColor(0, 0, 225, 255)
+            elseif terrain.value[r][c] == 1 then
+                love.graphics.setColor(26, 148, 22, 255)
+            elseif terrain.value[r][c] == 2 then
+                love.graphics.setColor(0, 255, 0, 255)
+            elseif terrain.value[r][c] == 3 then
+                love.graphics.setColor(118, 237, 113, 255)
+            elseif terrain.value[r][c] == 4 then
+                love.graphics.setColor(225, 225, 225, 255)
+            end
+            love.graphics.rectangle("fill", (c-1)/(#(terrain.value[1]))*love.graphics.getWidth(), (r-1)/(#terrain.value)*love.graphics.getHeight(), love.graphics.getWidth()/#(terrain.value[1]), love.graphics.getHeight()/#terrain.value)
+        end
     end
-  end
 end
 
 --[[
@@ -266,8 +287,8 @@ function createDungeon()
 end
 
 function createCave()
-    local width = 500
-    local height = 500
+    local width = 100
+    local height = 100
     local p = 55
     local i = 2 --counter.
     local c = 0

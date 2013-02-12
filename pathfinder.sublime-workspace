@@ -4,8 +4,52 @@
 		"selected_items":
 		[
 			[
+				"gr",
+				"love.graphics.draw"
+			],
+			[
+				"dt",
+				"love.thread.getThread"
+			],
+			[
+				"compre",
+				"compressedSerializedTable"
+			],
+			[
+				"setC",
+				"love.graphics.setColor"
+			],
+			[
+				"rec",
+				"love.graphics.rectangle"
+			],
+			[
+				"new",
+				"love.graphics.newImage"
+			],
+			[
+				"for",
+				"for	for i=1,10"
+			],
+			[
+				"fun",
+				"function	function"
+			],
+			[
 				"ma",
-				"map_x"
+				"map_h"
+			],
+			[
+				"ti",
+				"tile_h"
+			],
+			[
+				"p",
+				"print"
+			],
+			[
+				"map_w",
+				"map_w"
 			],
 			[
 				"tr",
@@ -60,10 +104,6 @@
 				"png"
 			],
 			[
-				"gr",
-				"graphics"
-			],
-			[
 				"play",
 				"playing"
 			],
@@ -74,10 +114,6 @@
 			[
 				"map",
 				"map_x"
-			],
-			[
-				"p",
-				"player"
 			],
 			[
 				"pr",
@@ -190,10 +226,6 @@
 			[
 				"th",
 				"theata"
-			],
-			[
-				"ti",
-				"tick"
 			],
 			[
 				"t",
@@ -312,10 +344,6 @@
 				"loading"
 			],
 			[
-				"fun",
-				"function"
-			],
-			[
 				"php",
 				"phpinfo"
 			],
@@ -360,10 +388,6 @@
 				"blocks"
 			],
 			[
-				"for",
-				"forp	for k,v in pairs()"
-			],
-			[
 				"blo",
 				"blockNum"
 			],
@@ -395,7 +419,7 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 983,
+				"buffer_size": 1443,
 				"line_ending": "Unix"
 			}
 		},
@@ -403,33 +427,106 @@
 			"file": "states.lua",
 			"settings":
 			{
-				"buffer_size": 4332,
+				"buffer_size": 6551,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "entities.lua",
+			"settings":
+			{
+				"buffer_size": 934,
+				"line_ending": "Unix"
 			}
 		},
 		{
 			"file": "map.lua",
 			"settings":
 			{
-				"buffer_size": 9810,
+				"buffer_size": 14138,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "button.lua",
+			"file": "/Users/lego/Documents/gamedev/love2d/WarpRun_Love/WarpRun/dungeon.lua",
 			"settings":
 			{
-				"buffer_size": 1051,
-				"line_ending": "Windows"
+				"buffer_size": 42570,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/lego/Documents/gamedev/love2d/WarpRun_Love/WarpRun/vector.lua",
+			"settings":
+			{
+				"buffer_size": 3636,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "30log.lua",
+			"settings":
+			{
+				"buffer_size": 1992,
+				"line_ending": "Unix",
+				"name": "--[["
+			}
+		},
+		{
+			"file": "jumper/pathfinder.lua",
+			"settings":
+			{
+				"buffer_size": 12559,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "data.txt",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
 			}
 		}
 	],
-	"build_system": "",
+	"build_system": "Packages/SublimeLove/Love.sublime-build",
 	"command_palette":
 	{
-		"height": 67.0,
+		"height": 227.0,
 		"selected_items":
 		[
+			[
+				"packi",
+				"Package Control: Install Package"
+			],
+			[
+				"synlo",
+				"Set Syntax: Lua (Love)"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"pai",
+				"Package Control: Install Package"
+			],
+			[
+				"sylo",
+				"Set Syntax: Lua (Love)"
+			],
+			[
+				"pain",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: Remove Package"
+			],
+			[
+				"pACK",
+				"Package Control: Discover Packages"
+			],
 			[
 				"symar",
 				"Set Syntax: Markdown"
@@ -455,10 +552,6 @@
 				"Set Syntax: LESS"
 			],
 			[
-				"pain",
-				"Package Control: Install Package"
-			],
-			[
 				"in",
 				"Package Control: Install Package"
 			],
@@ -469,10 +562,6 @@
 			[
 				"inst",
 				"Package Control: Install Package"
-			],
-			[
-				"pac",
-				"Package Control: List Packages"
 			],
 			[
 				"rem",
@@ -497,10 +586,6 @@
 			[
 				"p",
 				"Package Control: Install Package"
-			],
-			[
-				"pack",
-				"Package Control: Install Package"
 			]
 		],
 		"width": 449.0
@@ -520,8 +605,26 @@
 	},
 	"file_history":
 	[
-		"/Users/lego/Documents/gamedev/love2d/love-demos-0.8.0/no/main.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/jumper/search/jps.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/data.txt",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/Jumper/jumper.lua",
+		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/lego/Documents/gamedev/love2d/WarpRun_Love/licenses.txt",
+		"/Users/lego/Documents/gamedev/love2d/perlin-terrain/conf.lua",
+		"/Users/lego/Documents/gamedev/love2d/perlin-terrain/perlin.lua",
+		"/Users/lego/Documents/gamedev/love2d/perlin-terrain/main.lua",
+		"/Users/lego/Documents/gamedev/love2d/WarpRun_Love/WarpRun/parallax.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/button.lua",
+		"/Users/lego/Desktop/dungeon.py",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/states.lua",
 		"/Users/lego/Documents/gamedev/love2d/spritebatch/main.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/pickle.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/compress.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/serial.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/jupiter.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/pathfinder.sublime-project",
+		"/Users/lego/Documents/gamedev/love2d/love-demos-0.8.0/no/main.lua",
 		"/Users/lego/Desktop/article guide.md",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/gui.lua",
 		"/Users/lego/Documents/gamedev/love2d/love-demos-0.8.0/no/lua/states.lua",
@@ -614,11 +717,9 @@
 		"/Users/lego/Documents/jaws/index.html",
 		"/Users/lego/Documents/jaws/main.js",
 		"/Users/lego/Documents/jaws/jaws.js",
-		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
 		"/Users/lego/Documents/jaws/example.html",
 		"/Users/lego/Documents/jaws/astar.js",
 		"/Users/lego/Documents/jaws/untitled.js",
-		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/Users/lego/Documents/kivy/main.py",
 		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/Default/Default (OSX).sublime-keymap"
 	],
@@ -638,6 +739,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"c += 1",
+			"GeneratePerlinNoise",
+			"draw_map",
+			"test",
 			"draw()",
 			"draw",
 			"auto",
@@ -697,6 +802,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"c = c + 1",
 			"6",
 			"#444"
 		],
@@ -709,7 +815,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -717,15 +823,15 @@
 					"file": "main.lua",
 					"settings":
 					{
-						"buffer_size": 983,
+						"buffer_size": 1443,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								401,
-								401
+								1369,
+								1369
 							]
 						],
 						"settings":
@@ -818,7 +924,237 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"syntax": "Packages/SublimeLove/Love.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 685.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "states.lua",
+					"settings":
+					{
+						"buffer_size": 6551,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4434,
+								4434
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/SublimeLove/Love.tmLanguage"
+						},
+						"translation.x": 206.0,
+						"translation.y": 4008.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "entities.lua",
+					"settings":
+					{
+						"buffer_size": 934,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								668,
+								668
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/SublimeLove/Love.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
@@ -829,133 +1165,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "states.lua",
-					"settings":
-					{
-						"buffer_size": 4332,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3390,
-								3390
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Lua/Lua.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 3343.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "map.lua",
 					"settings":
 					{
-						"buffer_size": 9810,
+						"buffer_size": 14138,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9765,
-								9765
+								13737,
+								13737
 							]
 						],
 						"settings":
@@ -1048,22 +1270,22 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"tab_size": 4,
+							"syntax": "Packages/SublimeLove/Love.tmLanguage",
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 799.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "button.lua",
+					"buffer": 4,
+					"file": "/Users/lego/Documents/gamedev/love2d/WarpRun_Love/WarpRun/dungeon.lua",
 					"settings":
 					{
-						"buffer_size": 1051,
+						"buffer_size": 42570,
 						"regions":
 						{
 						},
@@ -1164,8 +1386,472 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/SublimeLove/Love.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/Users/lego/Documents/gamedev/love2d/WarpRun_Love/WarpRun/vector.lua",
+					"settings":
+					{
+						"buffer_size": 3636,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1072,
+								1074
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/SublimeLove/Love.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "30log.lua",
+					"settings":
+					{
+						"buffer_size": 1992,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1992,
+								1992
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"auto_name": "--[[",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/SublimeLove/Love.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "jumper/pathfinder.lua",
+					"settings":
+					{
+						"buffer_size": 12559,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/SublimeLove/Love.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2023.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "data.txt",
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1207,6 +1893,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 124.0
+	},
 	"replace":
 	{
 		"height": 64.0
