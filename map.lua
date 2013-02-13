@@ -204,23 +204,23 @@ function plot2D(values)
 end
 
 function makeTerrain(seed)
-  terrain = {}
-  if seed == nil then seed = os.time() end
-  terrain.seed = seed
-  terrain.perlin = perlin2D(seed, 341, 256, 0.55, 7, 1.5)
-  terrain.value = {}
-  for r = 1, #terrain.perlin do
-    terrain.value[r] = {}
-    dirtMargin = (256-r) * 0.01
-    for c = 1, #(terrain.perlin[r]) do
-      value = terrain.perlin[r][c]
-      if r < 128 then
-        value = value + (128 - r) * 0.025
-      end
-      terrain.value[r][c] = math.floor(value)
+    terrain = {}
+    if seed == nil then seed = os.time() end
+    terrain.seed = seed
+    terrain.perlin = perlin2D(seed, 341, 256, 0.55, 7, 1.5)
+    terrain.value = {}
+    for r = 1, #terrain.perlin do
+        terrain.value[r] = {}
+        dirtMargin = (256-r) * 0.01
+        for c = 1, #(terrain.perlin[r]) do
+            value = terrain.perlin[r][c]
+            -- if r < 128 then
+            --   value = value + (128 - r) * 0.025
+            -- end
+            terrain.value[r][c] = math.floor(value)
+        end
     end
-  end
-  return terrain
+    return terrain
 end
 
 function drawTerrain(terrain)
@@ -236,6 +236,14 @@ function drawTerrain(terrain)
                 love.graphics.setColor(118, 237, 113, 255)
             elseif terrain.value[r][c] == 4 then
                 love.graphics.setColor(225, 225, 225, 255)
+            elseif terrain.value[r][c] == -1 then
+                love.graphics.setColor(26, 148, 22, 255)
+            elseif terrain.value[r][c] == -2 then
+                love.graphics.setColor(0, 255, 0, 255)
+            elseif terrain.value[r][c] == -3 then
+                love.graphics.setColor(225, 225, 225, 255)
+            else
+                love.graphics.setColor(225, 0, 0, 255)
             end
             love.graphics.rectangle("fill", (c-1)/(#(terrain.value[1]))*love.graphics.getWidth(), (r-1)/(#terrain.value)*love.graphics.getHeight(), love.graphics.getWidth()/#(terrain.value[1]), love.graphics.getHeight()/#terrain.value)
         end
