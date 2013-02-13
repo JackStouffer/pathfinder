@@ -6,6 +6,7 @@ middleFont = love.graphics.newFont(24)
 --Music/Sound
 menuMusic = love.audio.newSource("music/AlaFlair.ogg")
 clickSound = love.audio.newSource("sounds/click1.wav")
+rolloverSound = love.audio.newSource("sounds/rollover1.wav")
 
 -- Menu State
 -- Main menu...
@@ -182,8 +183,13 @@ function Game.create()
     myPath = Pathfinder('ASTAR', grid, 0)
     terrain = makeTerrain()
     for x=1, #terrain.value do
-        print(max(terrain.value[x], function(a,b) return a < b end))
+        print(max(terrain.perlin[x], function(a,b) return a < b end))
     end
+    data = TSerial.pack(terrain.value)
+    file = io.open("data.txt", "w+")
+    file:write(data)
+    file:flush()
+    file:close()
 	return temp
 end
 

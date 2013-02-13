@@ -8,6 +8,7 @@ function Button.create(text,x,y)
 	setmetatable(temp, Button)
 	temp.hover = false -- whether the mouse is hovering over the button
 	temp.click = false -- whether the mouse has been clicked on the button
+	temp.once = false
 	temp.text = text -- the text in the button
 	temp.width = largeFont:getWidth(text)
 	temp.height = largeFont:getHeight()
@@ -39,7 +40,13 @@ function Button:update(dt)
 		and y < self.y then
 		self.hover = true
 	end
-	
+
+	if not self.once and self.hover then -- if the mouse is inside the button
+    	love.audio.play(rolloverSound)
+    	self.once = true
+  	elseif self.once and not self.hover then
+    	self.once = false
+  	end
 end
 
 function Button:mousepressed(x, y, button)
