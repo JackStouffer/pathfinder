@@ -9,21 +9,18 @@ function max(t, fn)
     return key, value
 end
 
-function drawMap()
-   --legacy code is bad M'kay, need to replace this
-   for y=1, map_display_h do
-      for x=1, map_display_w do                                                         
-         love.graphics.draw(tile[map[y+map_y][x+map_x]], (x*tile_w)+map_offset_x, (y*tile_h)+map_offset_y)
-      end
-   end
+function round(num, idp)
+    local mult = 10^(idp or 0)
+    if num >= 0 then return math.floor(num * mult + 0.5) / mult
+    else return math.ceil(num * mult - 0.5) / mult end
 end
 
 function testCollisionTile(x, y)
     -- if the tile is rock or water, return true
     -- I add an extra one due to the way lua handles table indexing with zero not being the first
     -- number, what a stupid design decision
-    if  map[player.y/32 + 1 + y][player.x/32 + 1 + x] == 2 or 
-        map[player.y/32 + 1 + y][player.x/32 + 1 + x] == 3 then
+    if  collisionMap[player.y/32 + 1 + y][player.x/32 + 1 + x] == 2 or 
+        collisionMap[player.y/32 + 1 + y][player.x/32 + 1 + x] == 3 then
         return true
     end
     return false
@@ -211,13 +208,9 @@ function makeTerrain(seed)
     terrain.value = {}
     for r = 1, #terrain.perlin do
         terrain.value[r] = {}
-        dirtMargin = (256-r) * 0.01
         for c = 1, #(terrain.perlin[r]) do
             value = terrain.perlin[r][c]
-            -- if r < 128 then
-            --   value = value + (128 - r) * 0.025
-            -- end
-            terrain.value[r][c] = math.floor(value)
+            terrain.value[r][c] = round(value, 1)
         end
     end
     return terrain
@@ -226,21 +219,15 @@ end
 function drawTerrain(terrain)
     for r = 1, #terrain.value do
         for c = 1, #(terrain.value[1]) do
-            if terrain.value[r][c] == 0 then
+            if terrain.value[r][c] >= 0 then
                 love.graphics.setColor(0, 0, 225, 255)
-            elseif terrain.value[r][c] == 1 then
+            elseif terrain.value[r][c] >= -.1 and terrain.value[r][c] < 0 then
+                love.graphics.setColor(244, 240, 123, 255)
+            elseif terrain.value[r][c] >= -.7 and terrain.value[r][c] < -.1 then
                 love.graphics.setColor(26, 148, 22, 255)
-            elseif terrain.value[r][c] == 2 then
-                love.graphics.setColor(0, 255, 0, 255)
-            elseif terrain.value[r][c] == 3 then
-                love.graphics.setColor(118, 237, 113, 255)
-            elseif terrain.value[r][c] == 4 then
-                love.graphics.setColor(225, 225, 225, 255)
-            elseif terrain.value[r][c] == -1 then
-                love.graphics.setColor(26, 148, 22, 255)
-            elseif terrain.value[r][c] == -2 then
-                love.graphics.setColor(0, 255, 0, 255)
-            elseif terrain.value[r][c] == -3 then
+            elseif terrain.value[r][c] >= -.9 and terrain.value[r][c] < -.7 then
+                love.graphics.setColor(128, 128, 128, 255)
+            elseif terrain.value[r][c] >= -2 and terrain.value[r][c] < -.9 then
                 love.graphics.setColor(225, 225, 225, 255)
             else
                 love.graphics.setColor(225, 0, 0, 255)
@@ -294,7 +281,15 @@ function createDungeon()
     return dungeonMap
 end
 
+--[[
+
+    CAVE GENERATION
+
+--]]
+
 function createCave()
+    -- 0 is empty 
+    -- 2 is thing to avoid
     local width = 100
     local height = 100
     local p = 55
@@ -475,6 +470,15 @@ function createCave()
     end
 
     return map.current
+end
+
+function drawMap()
+   --add local vars and passed maps with passed map vars
+   for y = 1, map_display_h do
+      for x = 1, map_display_w do                                                         
+         love.graphics.draw(tile[map[y + map_y][x + map_x]], (x * tile_w) + map_offset_x, (y * tile_h) + map_offset_y)
+      end
+   end
 end
 
 -- map variables

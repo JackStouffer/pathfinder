@@ -179,17 +179,12 @@ function Game.create()
 	setmetatable(temp, Game)
 	love.audio.stop(menuMusic)
     map = createCave()
-    grid = Grid(map, false)
-    myPath = Pathfinder('ASTAR', grid, 0)
+    collisionMap = TSerial.unpack(TSerial.pack(map)) -- when assigning a value to value that is a table, lua does not set the original value to the table, but rather as a pointer to the table
+    ent.enimines[1] = monster:new(320, 320, 100, "textures/dc-mon/acid_blob.png")
     terrain = makeTerrain()
-    for x=1, #terrain.value do
-        print(max(terrain.perlin[x], function(a,b) return a < b end))
-    end
-    data = TSerial.pack(terrain.value)
-    file = io.open("data.txt", "w+")
-    file:write(data)
-    file:flush()
-    file:close()
+    Astar(collisionMap)
+    Astar:setObstValue(2)
+    Astar:disableDiagonalMove()
 	return temp
 end
 
@@ -207,7 +202,7 @@ function Game:draw()
             drawMap()
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
             love.graphics.draw(player.body, player.x, player.y)
-            ent.enimines[0]:draw()
+            ent.enimines[1]:draw()
         love.graphics.pop()
 
         --gui
@@ -231,22 +226,12 @@ end
 
 function Game:keypressed(key)
     if gameState == "cave" then
-        if (key == 'up' and key == 'right') and testMapEdge(0, -32) == false then -- if the player pushes up and is not at the end of the world
-            if testCollisionTile(0, -1) == false then --then check for collision, this is done this way so testCollisionTile won't try to index a value that doesn't exist
-                player.y = player.y - 32
-                player.x = player.x + 32
-                player.translate_y = player.translate_y + 32
-                player.translate_x = player.translate_x - 32
-            end
-            ent.enimines[0]:turn()
-        end
-
         if key == 'up' and testMapEdge(0, -32) == false then -- if the player pushes up and is not at the end of the world
             if testCollisionTile(0, -1) == false then --then check for collision, this is done this way so testCollisionTile won't try to index a value that doesn't exist
                 player.y = player.y - 32
                 player.translate_y = player.translate_y + 32
             end
-            ent.enimines[0]:turn()
+            ent.enimines[1]:turn()
         end
 
         if key == 'down' and testMapEdge(0, 32) == false then
@@ -254,7 +239,7 @@ function Game:keypressed(key)
                 player.y = player.y + 32
                 player.translate_y = player.translate_y - 32
             end
-            ent.enimines[0]:turn()
+            ent.enimines[1]:turn()
         end
        
         if key == 'left' and testMapEdge(-32, 0) == false then
@@ -262,7 +247,7 @@ function Game:keypressed(key)
                 player.x = player.x - 32
                 player.translate_x = player.translate_x + 32
             end
-            ent.enimines[0]:turn()
+            ent.enimines[1]:turn()
         end
 
         if key == 'right' and testMapEdge(32, 0) == false then
@@ -270,7 +255,7 @@ function Game:keypressed(key)
                 player.x = player.x + 32
                 player.translate_x = player.translate_x - 32
             end
-            ent.enimines[0]:turn()
+            ent.enimines[1]:turn()
         end
     end
 
@@ -282,5 +267,6 @@ function Game:keypressed(key)
         gameState = "cave"
     elseif key == "escape" then
         love.event.push("quit")
+        profiler.stop()
     end
 end
