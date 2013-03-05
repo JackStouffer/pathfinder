@@ -1,11 +1,10 @@
 class = require "30log"
+Astar = require "astar"
+require "TSerial"
 require "states"
 require "button"
 require "map"
 require "entities"
-Grid = require 'jumper.grid'
-Pathfinder = require 'jumper.pathfinder'
-require "TSerial"
 
 function love.load()
     lastN = -1
@@ -32,7 +31,7 @@ function love.load()
         health = 100,
         magic = 100
     }
-        
+    
     tile = {}
     for i=0,3 do -- change 3 to the number of tile images minus 1.
        tile[i] = love.graphics.newImage( "textures/tile"..i..".png" )
