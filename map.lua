@@ -26,17 +26,6 @@ function testCollisionTile(x, y)
     return false
 end
 
-function testMapEdge(x, y)
-    --if the player's input is going to send him off the map, then return true
-    if  player.x + x < 0 or
-        player.x + x == 2048 or
-        player.y + y < 0 or
-        player.y + y == 1408 then
-        return true
-    end
-    return false
-end
-
 --[[
 
     PERLIN NOISE
@@ -287,11 +276,13 @@ end
 
 --]]
 
-function createCave()
+function createCave(Width, Height)
     -- 0 is empty 
     -- 2 is thing to avoid
-    local width = 100
-    local height = 100
+    local width = Width
+    local height = Height
+    print(width)
+    print(height)
     local p = 55
     local i = 2 --counter.
     local c = 0
@@ -472,24 +463,36 @@ function createCave()
     return map.current
 end
 
-function drawMap()
-   --add local vars and passed maps with passed map vars
-   for y = 1, map_display_h do
-      for x = 1, map_display_w do                                                         
-         love.graphics.draw(tile[map[y + map_y][x + map_x]], (x * tile_w) + map_offset_x, (y * tile_h) + map_offset_y)
+function drawMap(Map, mapDisplayW, mapDisplayH)
+   for y = 1, mapDisplayH do
+      for x = 1, mapDisplayW do                                                         
+         love.graphics.draw(tile[Map[y][x]], (x * 32) - 32, (y * 32) - 32)
       end
    end
 end
 
--- map variables
-map_w = 500
-map_h = 500
-map_x = 0
-map_y = 0
-map_offset_x = -32 --to make the map appear at the edge of the screen and not have a black border
-map_offset_y = -32 --to make the map appear at the edge of the screen and not have a black border
-map_display_w = 64
-map_display_h = 44
-tile_w = 32
-tile_h = 32
+function getRandOpenTile(Map, mapW, mapH)
+    --find a open tile randomly on the map
+    local found = false
+    local x = 0
+    local y = 0
+    while found == false do
+        x = math.random(1, mapW)
+        y = math.random(1, mapH)
+        if Map[y][x] == 0 then found = true end
+    end
+    if found then return x,y end
+end
+
+function testMapEdge(x, y, mapW, mapH)
+    --if the player's input is going to send him off the map, then return true
+    if  player.x + x < 0 or
+        player.x + x == (mapW * 32) or
+        player.y + y < 0 or
+        player.y + y == (mapH * 32) then
+        return true
+    end
+    return false
+end
+
 rect = love.graphics.newImage("textures/square.png")
