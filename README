@@ -1,0 +1,3 @@
+Pathfinder is a simple rougelike written in Lua using the Love2d framework. This project is a work in progress and likely will be forever. Expect bugs and random quirks.
+
+To play, run ./build.sh in your shell
