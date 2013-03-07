@@ -2,14 +2,17 @@ ent = {}
 ent.enimines = {}
 
 -- the monster is a 30log class with default values
-monster = class{ x = 100, y = 100, health = 100, image = "textures/dc-mon/acid_blob.png" }
+monster = class{health = 100, image = "textures/dc-mon/acid_blob.png"}
 
-function monster:__init(x, y, health, image)
-    self.x = x
-    self.y = y
+function monster:__init(health, image)
+    self.gridx, self.gridy = getRandOpenTile(map, mapWidth, mapHeight)
+    self.x = (self.gridx * 32) - 32
+    self.y = (self.gridy * 32) - 32
     self.path = nil
     self.health = health
     self.image = love.graphics.newImage(image)
+    print("x: " .. self.x)
+    print("y: " .. self.y)
 
     collisionMap[(self.y / 32) + 1][(self.x / 32) + 1] = 2
 end
@@ -23,12 +26,18 @@ function monster:turn()
     self.distance = (self.vector.x * self.vector.x) + (self.vector.y * self.vector.y)
     self.distance = math.sqrt(self.distance)
     if self.distance <= 400 then
+        --chase
         collisionMap[(self.y / 32) + 1][(self.x / 32) + 1] = 0
         Astar:setInitialNode((self.x / 32) + 1, (self.y / 32) + 1)
         Astar:setFinalNode((player.x / 32) + 1, (player.y / 32) + 1)
         self.path = Astar:getPath()
-        self.x = (self.path[2].x * 32) - 32
-        self.y = (self.path[2].y * 32) - 32
+        if self.path ~= nil then
+            self.x = (self.path[2].x * 32) - 32
+            self.y = (self.path[2].y * 32) - 32
+            collisionMap[(self.y / 32) + 1][(self.x / 32) + 1] = 2
+        end
         collisionMap[(self.y / 32) + 1][(self.x / 32) + 1] = 2
+    else
+        --wander
     end
 end

@@ -176,11 +176,17 @@ Game.__index = Game
 
 function Game.create()
 	local temp = {}
+    local openX = 0
+    local openY = 0
 	setmetatable(temp, Game)
 	love.audio.stop(menuMusic)
-    map = createCave()
-    collisionMap = TSerial.unpack(TSerial.pack(map)) -- when assigning a value to value that is a table, lua does not set the original value to the table, but rather as a pointer to the table
-    ent.enimines[1] = monster:new(320, 320, 100, "textures/dc-mon/acid_blob.png")
+    map = createCave(mapWidth, mapHeight)
+    -- when assigning a value to value that is a table, lua does not set the original value to the table, but rather as a pointer to the table
+    --so if I change collisionMap.x = 5 the map.x = 5 as well
+    collisionMap = TSerial.unpack(TSerial.pack(map))
+    for num=1, 2 do
+        ent.enimines[num] = monster:new(100, "textures/dc-mon/acid_blob.png")
+    end
     terrain = makeTerrain()
     Astar(collisionMap)
     Astar:setObstValue(2)
@@ -198,11 +204,13 @@ function Game:draw()
         end
     elseif gameState == "cave" then
         love.graphics.push()
-        	love.graphics.translate(player.translate_x, player.translate_y)
-            drawMap()
+        	love.graphics.translate(player.translate_x, player.translate_y) --have the player always centered
+            drawMap(map, mapWidth, mapHeight)
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
             love.graphics.draw(player.body, player.x, player.y)
-            ent.enimines[1]:draw()
+            for x=1,#ent.enimines do
+                ent.enimines[x]:draw()
+            end
         love.graphics.pop()
 
         --gui
@@ -226,36 +234,44 @@ end
 
 function Game:keypressed(key)
     if gameState == "cave" then
-        if key == 'up' and testMapEdge(0, -32) == false then -- if the player pushes up and is not at the end of the world
+        if key == 'up' and testMapEdge(0, -32, mapWidth, mapHeight) == false then -- if the player pushes up and is not at the end of the world
             if testCollisionTile(0, -1) == false then --then check for collision, this is done this way so testCollisionTile won't try to index a value that doesn't exist
                 player.y = player.y - 32
                 player.translate_y = player.translate_y + 32
             end
-            ent.enimines[1]:turn()
+            for x=1,#ent.enimines do
+                ent.enimines[x]:turn()
+            end
         end
 
-        if key == 'down' and testMapEdge(0, 32) == false then
+        if key == 'down' and testMapEdge(0, 32, mapWidth, mapHeight) == false then
             if testCollisionTile(0, 1) == false then
                 player.y = player.y + 32
                 player.translate_y = player.translate_y - 32
             end
-            ent.enimines[1]:turn()
+            for x=1,#ent.enimines do
+                ent.enimines[x]:turn()
+            end
         end
        
-        if key == 'left' and testMapEdge(-32, 0) == false then
+        if key == 'left' and testMapEdge(-32, 0, mapWidth, mapHeight) == false then
             if testCollisionTile(-1, 0) == false then
                 player.x = player.x - 32
                 player.translate_x = player.translate_x + 32
             end
-            ent.enimines[1]:turn()
+            for x=1,#ent.enimines do
+                ent.enimines[x]:turn()
+            end
         end
 
-        if key == 'right' and testMapEdge(32, 0) == false then
+        if key == 'right' and testMapEdge(32, 0, mapWidth, mapHeight) == false then
             if testCollisionTile(1, 0) == false then
                 player.x = player.x + 32
                 player.translate_x = player.translate_x - 32
             end
-            ent.enimines[1]:turn()
+            for x=1,#ent.enimines do
+                ent.enimines[x]:turn()
+            end
         end
     end
 

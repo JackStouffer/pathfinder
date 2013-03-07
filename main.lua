@@ -1,3 +1,9 @@
+lastN = -1
+mySeed = 1
+showPerlin = 0
+mapWidth = 120
+mapHeight = 120
+
 class = require "30log"
 Astar = require "astar"
 require "TSerial"
@@ -7,10 +13,6 @@ require "map"
 require "entities"
 
 function love.load()
-    lastN = -1
-    mySeed = 1
-    showPerlin = 0
-
     love.graphics.setMode(1024, 576, false, true, 0)
 
     state = Menu.create()   -- current game state
