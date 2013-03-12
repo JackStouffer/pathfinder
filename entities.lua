@@ -1,8 +1,6 @@
-ent = {}
-ent.enimines = {}
-
--- the monster is a 30log class with default values
+--30log classes with default values
 monster = class{health = 100, image = "textures/dc-mon/acid_blob.png"}
+item = class{image = "textures/item/potion/ruby.png"}
 
 function monster:__init(health, image)
     self.gridx, self.gridy = getRandOpenTile(map, mapWidth, mapHeight)
@@ -11,8 +9,6 @@ function monster:__init(health, image)
     self.path = nil
     self.health = health
     self.image = love.graphics.newImage(image)
-    print("x: " .. self.x)
-    print("y: " .. self.y)
 
     collisionMap[(self.y / 32) + 1][(self.x / 32) + 1] = 2
 end
@@ -40,4 +36,17 @@ function monster:turn()
     else
         --wander
     end
+end
+
+function item:__init(image)
+    self.gridx, self.gridy = getRandOpenTile(map, mapWidth, mapHeight)
+    self.x = (self.gridx * 32) - 32
+    self.y = (self.gridy * 32) - 32
+    self.image = love.graphics.newImage(image)
+
+    collisionMap[(self.y / 32) + 1][(self.x / 32) + 1] = 3
+end
+
+function item:draw()
+    love.graphics.draw(self.image, self.x, self.y)
 end
