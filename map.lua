@@ -16,11 +16,9 @@ function round(num, idp)
 end
 
 function testCollisionTile(x, y)
-    -- if the tile is rock or water, return true
     -- I add an extra one due to the way lua handles table indexing with zero not being the first
     -- number, what a stupid design decision
-    if  collisionMap[player.y/32 + 1 + y][player.x/32 + 1 + x] == 2 or 
-        collisionMap[player.y/32 + 1 + y][player.x/32 + 1 + x] == 3 then
+    if collisionMap[player.y/32 + 1 + y][player.x/32 + 1 + x] == 2 then
         return true
     end
     return false
@@ -281,8 +279,6 @@ function createCave(Width, Height)
     -- 2 is thing to avoid
     local width = Width
     local height = Height
-    print(width)
-    print(height)
     local p = 55
     local i = 2 --counter.
     local c = 0
@@ -463,12 +459,25 @@ function createCave(Width, Height)
     return map.current
 end
 
-function drawMap(Map, mapDisplayW, mapDisplayH)
-   for y = 1, mapDisplayH do
-      for x = 1, mapDisplayW do                                                         
-         love.graphics.draw(tile[Map[y][x]], (x * 32) - 32, (y * 32) - 32)
-      end
-   end
+function drawMap(Map, mapDisplayW, mapDisplayH, radius)
+    local startx = ((player.x / 32) + 1) - radius
+    local starty = ((player.y / 32) + 1) - radius
+    local endx = ((player.x / 32) + 1) + radius
+    local endy = ((player.y / 32) + 1) + radius
+    
+    if ((player.x / 32) + 1) - radius < 1 then
+        startx = 1
+    end
+
+    if ((player.y / 32) + 1) - radius < 1 then
+        starty = 1
+    end
+
+    for y = starty, endy do
+        for x = startx, endx do                                                         
+            love.graphics.draw(tile[Map[y][x]], (x * 32) - 32, (y * 32) - 32)
+        end
+    end
 end
 
 function getRandOpenTile(Map, mapW, mapH)
@@ -486,6 +495,7 @@ end
 
 function testMapEdge(x, y, mapW, mapH)
     --if the player's input is going to send him off the map, then return true
+    --rather than an actual pixel amount, the x and y are vectors that represent the direction to be checked
     if  player.x + x < 0 or
         player.x + x == (mapW * 32) or
         player.y + y < 0 or
@@ -494,5 +504,3 @@ function testMapEdge(x, y, mapW, mapH)
     end
     return false
 end
-
-rect = love.graphics.newImage("textures/square.png")

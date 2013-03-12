@@ -178,14 +178,23 @@ function Game.create()
 	local temp = {}
     local openX = 0
     local openY = 0
+    ent = {}
+    ent.enimines = {}
+    ent.items = {}
 	setmetatable(temp, Game)
 	love.audio.stop(menuMusic)
+    bg = love.graphics.newImage("textures/gui/bg.png")
     map = createCave(mapWidth, mapHeight)
     -- when assigning a value to value that is a table, lua does not set the original value to the table, but rather as a pointer to the table
     --so if I change collisionMap.x = 5 the map.x = 5 as well
     collisionMap = TSerial.unpack(TSerial.pack(map))
-    for num=1, 2 do
+    player = playerClass:new(416, 288, "textures/player/base/human_m.png", 100, 100)
+    for num=1, 20 do
         ent.enimines[num] = monster:new(100, "textures/dc-mon/acid_blob.png")
+    end
+
+    for num=1, 20 do
+        ent.items[num] = item:new("textures/item/potion/ruby.png")
     end
     terrain = makeTerrain()
     Astar(collisionMap)
@@ -205,22 +214,26 @@ function Game:draw()
     elseif gameState == "cave" then
         love.graphics.push()
         	love.graphics.translate(player.translate_x, player.translate_y) --have the player always centered
-            drawMap(map, mapWidth, mapHeight)
+            drawMap(map, mapWidth, mapHeight, 15)
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
-            love.graphics.draw(player.body, player.x, player.y)
+            player:draw()
             for x=1,#ent.enimines do
                 ent.enimines[x]:draw()
             end
-        love.graphics.pop()
 
+            for x=1,#ent.items do
+                ent.items[x]:draw()
+            end
+        love.graphics.pop()
+        
         --gui
-        love.graphics.draw(guiBar, 0, 476)
-        love.graphics.setFont(mediumFont)
-        love.graphics.print(player.health, 47, 520)
-        love.graphics.print(player.magic, 203, 520)
-        love.graphics.print("1", 400, 520)
+        love.graphics.draw(bg, 832, 0)
+        love.graphics.setColor(255, 0, 0)
+        love.graphics.rectangle("fill", 845, 20, 165 * (player.health/player.max_health), 15)
+        love.graphics.setColor(0, 0, 255)
+        love.graphics.rectangle("fill", 844, 45, 165 * (player.mana/player.max_mana), 15)
+        love.graphics.setColor(255, 255, 255)
     end
-    --debug info
     love.graphics.setColor(255, 255, 255)
 end
 
@@ -234,45 +247,7 @@ end
 
 function Game:keypressed(key)
     if gameState == "cave" then
-        if key == 'up' and testMapEdge(0, -32, mapWidth, mapHeight) == false then -- if the player pushes up and is not at the end of the world
-            if testCollisionTile(0, -1) == false then --then check for collision, this is done this way so testCollisionTile won't try to index a value that doesn't exist
-                player.y = player.y - 32
-                player.translate_y = player.translate_y + 32
-            end
-            for x=1,#ent.enimines do
-                ent.enimines[x]:turn()
-            end
-        end
-
-        if key == 'down' and testMapEdge(0, 32, mapWidth, mapHeight) == false then
-            if testCollisionTile(0, 1) == false then
-                player.y = player.y + 32
-                player.translate_y = player.translate_y - 32
-            end
-            for x=1,#ent.enimines do
-                ent.enimines[x]:turn()
-            end
-        end
-       
-        if key == 'left' and testMapEdge(-32, 0, mapWidth, mapHeight) == false then
-            if testCollisionTile(-1, 0) == false then
-                player.x = player.x - 32
-                player.translate_x = player.translate_x + 32
-            end
-            for x=1,#ent.enimines do
-                ent.enimines[x]:turn()
-            end
-        end
-
-        if key == 'right' and testMapEdge(32, 0, mapWidth, mapHeight) == false then
-            if testCollisionTile(1, 0) == false then
-                player.x = player.x + 32
-                player.translate_x = player.translate_x - 32
-            end
-            for x=1,#ent.enimines do
-                ent.enimines[x]:turn()
-            end
-        end
+        player:keypressed(key)
     end
 
     if key == "r" then
@@ -283,6 +258,5 @@ function Game:keypressed(key)
         gameState = "cave"
     elseif key == "escape" then
         love.event.push("quit")
-        profiler.stop()
     end
 end
