@@ -1,6 +1,5 @@
---30log classes with default values
-monster = class{health = 100, image = "textures/dc-mon/acid_blob.png"}
-item = class{image = "textures/item/potion/ruby.png"}
+monster = class{health, image}
+item = class{image}
 
 function monster:__init(health, image)
     self.gridx, self.gridy = getRandOpenTile(map, mapWidth, mapHeight)
@@ -18,9 +17,11 @@ function monster:draw()
 end
 
 function monster:turn()
+    --use a simple vector magnitude to find the distance between the player and the monster
     self.vector = {x = player.x - self.x, y = player.y - self.y}
     self.distance = (self.vector.x * self.vector.x) + (self.vector.y * self.vector.y)
     self.distance = math.sqrt(self.distance)
+    
     if self.distance <= 400 then
         --chase
         collisionMap[(self.y / 32) + 1][(self.x / 32) + 1] = 0
