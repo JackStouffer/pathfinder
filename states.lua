@@ -184,12 +184,13 @@ function Game.create()
 	setmetatable(temp, Game)
 	love.audio.stop(menuMusic)
     bg = love.graphics.newImage("textures/gui/bg.png")
-    map = createCave(mapWidth, mapHeight)
+    map = minerCave(mapWidth, mapHeight)
     -- when assigning a value to value that is a table, lua does not set the original value to the table, but rather as a pointer to the table
     --so if I change collisionMap.x = 5 the map.x = 5 as well
+    --that's why I do this abomination of code
     collisionMap = TSerial.unpack(TSerial.pack(map))
     player = playerClass:new(416, 288, "textures/player/base/human_m.png", 100, 100)
-    for num=1, 20 do
+    for num=1, 5 do
         ent.enimines[num] = monster:new(100, "textures/dc-mon/acid_blob.png")
     end
 
@@ -200,6 +201,7 @@ function Game.create()
     Astar(collisionMap)
     Astar:setObstValue(2)
     Astar:disableDiagonalMove()
+
 	return temp
 end
 
