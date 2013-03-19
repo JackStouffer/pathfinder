@@ -272,6 +272,12 @@ end
 
 -- Checks if a node is walkable
 function Astar:isWalkable(node)
+    -- for table_value = 1, #self.OBST_VALUE do
+    --     print(self.OBST_VALUE[table_value])
+    --     if self.map[node.y][node.x] == self.OBST_VALUE[table_value] then
+    --         return false
+    --     end
+    -- end
     return not (self.map[node.y][node.x] == self.OBST_VALUE)
 end
 

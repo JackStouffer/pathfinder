@@ -1,29 +1,3 @@
-function max(t, fn)
-    if #t == 0 then return nil, nil end
-    local key, value = 1, t[1]
-    for i = 2, #t do
-        if fn(value, t[i]) then
-            key, value = i, t[i]
-        end
-    end
-    return key, value
-end
-
-function round(num, idp)
-    local mult = 10^(idp or 0)
-    if num >= 0 then return math.floor(num * mult + 0.5) / mult
-    else return math.ceil(num * mult - 0.5) / mult end
-end
-
-function testCollisionTile(x, y)
-    -- I add an extra one due to the way lua handles table indexing with zero not being the first
-    -- number, what a stupid design decision
-    if collisionMap[player.y/32 + 1 + y][player.x/32 + 1 + x] == 2 then
-        return true
-    end
-    return false
-end
-
 --[[
 
     PERLIN NOISE
@@ -33,8 +7,28 @@ end
 --Props go to middlerun on the LOVE forums for this awesome perlin code that
 --is much better than what I was making
 
+local function rand(seed, n)
+  if n <= 0 then return nil end
+  if seed ~= mySeed or lastN < 0 or n <= lastN then
+    mySeed = seed
+    math.randomseed(seed)
+    lastN = 0
+  end
+  while lastN < n do
+    num = math.random()
+    lastN = lastN + 1
+  end
+  return num - 0.5
+end
+
 -- takes table of L values and returns N*(L-3) interpolated values
-function interpolate1D(values, N)
+local function round(num, idp)
+    local mult = 10^(idp or 0)
+    if num >= 0 then return math.floor(num * mult + 0.5) / mult
+    else return math.ceil(num * mult - 0.5) / mult end
+end
+
+local function interpolate1D(values, N)
   newData = {}
   for i = 1, #values - 3 do
     P = (values[i+3] - values[i+2]) - (values[i] - values[i+1])
@@ -49,7 +43,7 @@ function interpolate1D(values, N)
   return newData
 end
 
-function perlinComponent1D(seed, length, N, amplitude)
+local function perlinComponent1D(seed, length, N, amplitude)
   rawData = {}
   finalData = {}
   for i = 1, math.ceil(length/N) + 3 do
@@ -63,7 +57,7 @@ function perlinComponent1D(seed, length, N, amplitude)
   return finalData
 end
 
-function perlin1D(seed, length, persistence, N, amplitude)
+local function perlin1D(seed, length, persistence, N, amplitude)
   data = {}
   for i = 1, length do
     data[i] = 0
@@ -79,7 +73,7 @@ function perlin1D(seed, length, persistence, N, amplitude)
   return data
 end
 
-function interpolate2D(values, N)
+local function interpolate2D(values, N)
   newData1 = {}
   for r = 1, #values do
     newData1[r] = {}
@@ -115,7 +109,7 @@ function interpolate2D(values, N)
   return newData2
 end
 
-function perlinComponent2D(seed, width, height, N, amplitude)
+local function perlinComponent2D(seed, width, height, N, amplitude)
   rawData = {}
   finalData = {}
   for r = 1, math.ceil(height/N) + 3 do
@@ -135,7 +129,7 @@ function perlinComponent2D(seed, width, height, N, amplitude)
   return finalData
 end
 
-function perlin2D(seed, width, height, persistence, N, amplitude)
+local function perlin2D(seed, width, height, persistence, N, amplitude)
   data = {}
   for r = 1, height do
     data[r] = {}
@@ -154,20 +148,6 @@ function perlin2D(seed, width, height, persistence, N, amplitude)
     end
   end
   return data
-end
-
-function rand(seed, n)
-  if n <= 0 then return nil end
-  if seed ~= mySeed or lastN < 0 or n <= lastN then
-    mySeed = seed
-    math.randomseed(seed)
-    lastN = 0
-  end
-  while lastN < n do
-    num = math.random()
-    lastN = lastN + 1
-  end
-  return num - 0.5
 end
 
 function plot1D(values)
@@ -459,6 +439,123 @@ function createCave(Width, Height)
     return map.current
 end
 
+local MinerList={}
+local NbMiner=0
+local Act=1
+
+local function NewMiner(x,y)
+    NbMiner = NbMiner+1
+    local t = {}
+    t.x = x
+    t.y = y
+    t.Active = true
+    table.insert(MinerList,t)
+end
+
+function minerCave(Width, Height)
+    local width = Width
+    local height = Height
+    local Map = {}
+    local Dir = 0
+    local max_miners = 1600
+    local false_counter = 0
+
+    for y = 1, height do
+        Map[y] = {}
+        for x = 1, width do
+            Map[y][x] = 2
+        end
+    end
+
+    NewMiner(13,9)
+
+    while false_counter < max_miners do
+        for k,v in ipairs(MinerList) do
+            if v.Active == false then
+                false_counter = false_counter + 1
+            end
+            
+            if v.x >= width - 1 or v.x <= 1  or v.y >= height - 1 or v.y <= 1 then
+                v.Active = false
+            end
+        
+            if v.Active == true then
+                if Map[v.y-1][v.x] == 0 and Map[v.y+1][v.x] == 0 and Map[v.y][v.x + 1] == 0 and Map[v.y][v.x-1] == 0 then
+                    v.Active = false
+                end
+            end
+        
+        
+            if v.Active == true then
+                Dir = math.random(1, 4)
+                if Dir == 1 then
+                    Map[v.y - 1][v.x] = 0
+                    v.y = v.y - 1
+                end
+                if Dir == 2 then
+                    Map[v.y][v.x + 1] = 0
+                    v.x = v.x + 1
+                end
+                if Dir == 3 then
+                    Map[v.y + 1][v.x] = 0
+                    v.y = v.y + 1
+                end
+                if Dir == 4 then
+                    Map[v.y][v.x - 1] = 0
+                    v.x = v.x - 1
+                end
+                -- NewMiner 8% de chance
+                local N = math.random(0,5)
+                local miner_direction =  math.random(1,4)
+                if N > 3 and NbMiner < max_miners then
+                    if miner_direction == 1 then
+                        NewMiner(v.x, v.y - 1)
+                    end
+                    if miner_direction == 2 then
+                        NewMiner(v.x + 1, v.y)
+                    end
+                    if miner_direction == 3 then
+                        NewMiner(v.x, v.y + 1)
+                    end
+                    if miner_direction == 4 then
+                        NewMiner(v.x - 1, v.y)
+                    end
+                end
+            end
+        end
+        
+        if false_counter ~= max_miners then
+            false_counter = 0
+        end
+
+        for k,v in ipairs(MinerList) do
+            if v.Active == true then
+                Act = 1
+                break
+            else
+                Act = 2
+            end
+        end
+    end -- end while loop
+
+    --strip out lone blocks 
+    for y = 2, height - 1 do
+        for x = 2, width - 1 do
+            if Map[y][x + 1] == 0 and Map[y][x - 1] == 0 and Map[y + 1][x] == 0 and Map[y - 1][x] == 0 then
+                Map[y][x] = 0
+            end
+        end
+    end
+
+    return Map
+end
+
+--[[
+
+    UTILITIES
+
+]]--
+
 function drawMap(Map, mapDisplayW, mapDisplayH, radius)
     local startx = ((player.x / 32) + 1) - radius
     local starty = ((player.y / 32) + 1) - radius
@@ -491,6 +588,15 @@ function getRandOpenTile(Map, mapW, mapH)
         if Map[y][x] == 0 then found = true end
     end
     if found then return x,y end
+end
+
+function testCollisionTile(x, y)
+    -- I add an extra one due to the way lua handles table indexing with zero not being the first
+    -- number, what a stupid design decision
+    if collisionMap[player.y/32 + 1 + y][player.x/32 + 1 + x] == 2 then
+        return true
+    end
+    return false
 end
 
 function testMapEdge(x, y, mapW, mapH)

@@ -10,7 +10,7 @@ require "TSerial"
 require "map"
 require "player"
 require "states"
-require "button"
+require "gui"
 require "entities"
 
 function love.load()
