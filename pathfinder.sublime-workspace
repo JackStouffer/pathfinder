@@ -472,18 +472,10 @@
 			}
 		},
 		{
-			"file": "/Users/lego/Documents/typescript/samples/raytracer/raytracer.ts",
-			"settings":
-			{
-				"buffer_size": 10082,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "map.lua",
 			"settings":
 			{
-				"buffer_size": 18183,
+				"buffer_size": 18374,
 				"line_ending": "Unix"
 			}
 		},
@@ -496,20 +488,28 @@
 			}
 		},
 		{
-			"file": "astar.lua",
+			"file": "/Users/lego/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 			"settings":
 			{
-				"buffer_size": 11777,
+				"buffer_size": 2932,
 				"line_ending": "Unix"
 			}
 		}
 	],
-	"build_system": "Packages/SublimeLove/Love.sublime-build",
+	"build_system": "Packages/User/rougelike.sublime-build",
 	"command_palette":
 	{
-		"height": 227.0,
+		"height": 228.0,
 		"selected_items":
 		[
+			[
+				"pain",
+				"Package Control: Install Package"
+			],
+			[
+				"pacd",
+				"Package Control: Discover Packages"
+			],
 			[
 				"packi",
 				"Package Control: Install Package"
@@ -529,10 +529,6 @@
 			[
 				"sylo",
 				"Set Syntax: Lua (Love)"
-			],
-			[
-				"pain",
-				"Package Control: Install Package"
 			],
 			[
 				"pac",
@@ -620,16 +616,20 @@
 	},
 	"file_history":
 	[
-		"/Users/lego/Documents/gamedev/love2d/rougelike/button.lua",
+		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/pathfinder.sublime-project",
+		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/User/rougelike.sublime-build",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/astar.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/build.sh",
+		"/Users/lego/Documents/typescript/samples/raytracer/raytracer.ts",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/button.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/data.txt",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/LICENSE.txt",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/json.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/README.md",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/README",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/player.lua",
-		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
-		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/vector.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/summary.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/lprof_tmp.52.mFXLh1.out",
@@ -637,7 +637,6 @@
 		"/Users/lego/Documents/gamedev/love2d/rougelike/binary_heap.lua",
 		"/Users/lego/Documents/gamedev/love2d/WarpRun_Love/WarpRun/dungeon.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/jumper/pathfinder.lua",
-		"/Users/lego/Documents/gamedev/love2d/rougelike/pathfinder.sublime-project",
 		"/Users/lego/Documents/gamedev/love2d/WarpRun_Love/WarpRun/vector.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/30log.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/jumper/search/jps.lua",
@@ -744,10 +743,7 @@
 		"/Users/lego/Documents/love2d/testing/main.lua",
 		"/Users/lego/Documents/moai/run.sh",
 		"/Users/lego/Documents/moai/main.lua",
-		"/Users/lego/Documents/jaws/index.html",
-		"/Users/lego/Documents/jaws/main.js",
-		"/Users/lego/Documents/jaws/jaws.js",
-		"/Users/lego/Documents/jaws/example.html"
+		"/Users/lego/Documents/jaws/index.html"
 	],
 	"find":
 	{
@@ -765,6 +761,15 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"use_tab_stops",
+			"translate_tabs_to_spaces",
+			"tab_size",
+			"tab_completion",
+			"spell_check",
+			"save_on_focus_lost",
+			"highlight_line",
+			"auto_complete",
+			"dictionary",
 			"print",
 			"isWalkable",
 			"self.OBST_VALUE",
@@ -851,7 +856,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 6,
 			"sheets":
 			[
 				{
@@ -1311,17 +1316,17 @@
 							"syntax": "Packages/SublimeLove/Love.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 3393.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "/Users/lego/Documents/typescript/samples/raytracer/raytracer.ts",
+					"file": "map.lua",
 					"settings":
 					{
-						"buffer_size": 10082,
+						"buffer_size": 18374,
 						"regions":
 						{
 						},
@@ -1330,34 +1335,6 @@
 							[
 								0,
 								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "map.lua",
-					"settings":
-					{
-						"buffer_size": 18183,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7335,
-								7345
 							]
 						],
 						"settings":
@@ -1455,13 +1432,13 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4635.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 5,
 					"file": "gui.lua",
 					"settings":
 					{
@@ -1570,25 +1547,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 514.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "astar.lua",
+					"buffer": 6,
+					"file": "/Users/lego/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 					"settings":
 					{
-						"buffer_size": 11777,
+						"buffer_size": 2932,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								10462,
-								10462
+								2623,
+								2623
 							]
 						],
 						"settings":
@@ -1681,12 +1658,11 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/SublimeLove/Love.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 5136.0,
+						"translation.y": 2225.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

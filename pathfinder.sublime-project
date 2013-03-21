@@ -1,7 +1,9 @@
 {
     "folders": [
         {
-            "path": "/Users/lego/Documents/gamedev/love2d/rougelike"
+            "path": "/Users/lego/Documents/gamedev/love2d/rougelike",
+            "file_exclude_patterns": ["*.love"],
+            "folder_exclude_patterns": ["music", "sounds", "textures"]
         }
     ], 
     "build_systems": [
