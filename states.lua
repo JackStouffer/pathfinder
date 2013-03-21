@@ -5,6 +5,7 @@ middleFont = love.graphics.newFont(24)
 
 --Music/Sound
 menuMusic = love.audio.newSource("music/AlaFlair.ogg")
+caveMusic = love.audio.newSource("music/radakan-cave ambience.ogg")
 clickSound = love.audio.newSource("sounds/click1.wav")
 rolloverSound = love.audio.newSource("sounds/rollover1.wav")
 
@@ -19,10 +20,10 @@ function Menu.create()
 	love.audio.play(menuMusic)
 	logoImage = love.graphics.newImage("textures/logo.png")
     backgroundImage = love.graphics.newImage("textures/background.png")
-	temp.button = {	new = Button.create("New Game", 512, 300),
-					instructions = Button.create("Instructions", 512, 350),
-					options = Button.create("Options", 512, 400),
-					quit = Button.create("Quit", 512, 450) }
+	temp.button = {	new = Button:new("New Game", 512, 300),
+					instructions = Button:new("Instructions", 512, 350),
+					options = Button:new("Options", 512, 400),
+					quit = Button:new("Quit", 512, 450) }
 	return temp
 end
 
@@ -77,7 +78,7 @@ Instructions.__index = Instructions
 function Instructions.create()
 	local temp = {}
 	setmetatable(temp, Instructions)
-	temp.button = {	back = Button.create("Back", 350, 200) }
+	temp.button = {	back = Button:new("Back", 350, 200) }
 	return temp
 end
 
@@ -128,7 +129,7 @@ Options.__index = Options
 function Options.create()
 	local temp = {}
 	setmetatable(temp, Options)
-	temp.button = {back = Button.create("Back", 350, 200)}
+	temp.button = {back = Button:new("Back", 350, 200)}
 	return temp
 end
 
@@ -178,29 +179,36 @@ function Game.create()
 	local temp = {}
     local openX = 0
     local openY = 0
-    ent = {}
-    ent.enimines = {}
-    ent.items = {}
-	setmetatable(temp, Game)
+	
+    setmetatable(temp, Game)
 	love.audio.stop(menuMusic)
+    
     bg = love.graphics.newImage("textures/gui/bg.png")
-    map = minerCave(mapWidth, mapHeight)
-    -- when assigning a value to value that is a table, lua does not set the original value to the table, but rather as a pointer to the table
-    --so if I change collisionMap.x = 5 the map.x = 5 as well
-    --that's why I do this abomination of code
-    collisionMap = TSerial.unpack(TSerial.pack(map))
+    
+    cave = caveSystem(level_num, "normal")
+    print("cave")
+    
     player = playerClass:new(416, 288, "textures/player/base/human_m.png", 100, 100)
-    for num=1, 5 do
-        ent.enimines[num] = monster:new(100, "textures/dc-mon/acid_blob.png")
+    
+    for level = 1, level_num do 
+        for num=1, 5 do
+            cave.enemies[level][num] = monster:new(100, "textures/dc-mon/acid_blob.png", level)
+        end
     end
 
-    for num=1, 20 do
-        ent.items[num] = item:new("textures/item/potion/ruby.png")
+    for level = 1, level_num do 
+        for num=1, 20 do
+            cave.items[level][num] = item:new("textures/item/potion/ruby.png", level)
+        end
     end
+
     terrain = makeTerrain()
-    Astar(collisionMap)
+    
+    Astar(cave.collisionMap[current_level])
     Astar:setObstValue(2)
     Astar:disableDiagonalMove()
+
+    love.audio.play(caveMusic)
 
 	return temp
 end
@@ -216,15 +224,16 @@ function Game:draw()
     elseif gameState == "cave" then
         love.graphics.push()
         	love.graphics.translate(player.translate_x, player.translate_y) --have the player always centered
-            drawMap(map, mapWidth, mapHeight, 15)
+            drawMap(cave.map[current_level], mapWidth, mapHeight, 15)
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
             player:draw()
-            for x=1,#ent.enimines do
-                ent.enimines[x]:draw()
+            
+            for x=1,#cave.enemies[current_level] do
+                cave.enemies[current_level][x]:draw()
             end
 
-            for x=1,#ent.items do
-                ent.items[x]:draw()
+            for x=1,#cave.items[current_level] do
+                cave.items[current_level][x]:draw()
             end
         love.graphics.pop()
         
@@ -260,5 +269,20 @@ function Game:keypressed(key)
         gameState = "cave"
     elseif key == "escape" then
         love.event.push("quit")
+    elseif key == "1" then
+        current_level = 1
+        Astar(cave.collisionMap[current_level])
+        Astar:setObstValue(2)
+        Astar:disableDiagonalMove()
+    elseif key == "2" then
+        current_level = 2
+        Astar(cave.collisionMap[current_level])
+        Astar:setObstValue(2)
+        Astar:disableDiagonalMove()
+    elseif key == "3" then
+        current_level = 3
+        Astar(cave.collisionMap[current_level])
+        Astar:setObstValue(2)
+        Astar:disableDiagonalMove()
     end
 end

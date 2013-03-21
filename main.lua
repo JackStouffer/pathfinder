@@ -1,9 +1,3 @@
-lastN = -1
-mySeed = 1
-showPerlin = 0
-mapWidth = 120
-mapHeight = 120
-
 class = require "30log"
 Astar = require "astar"
 require "TSerial"
@@ -18,6 +12,8 @@ function love.load()
 
     state = Menu.create()   -- current game state
     gameState = "world"
+
+    level_num = 3
 
     love.keyboard.setKeyRepeat(0.01, 0.1)
 

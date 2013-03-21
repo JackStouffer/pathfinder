@@ -1,3 +1,10 @@
+lastN = -1
+mySeed = 1
+showPerlin = 0
+mapWidth = 120
+mapHeight = 120
+current_level = 1
+
 --[[
 
     PERLIN NOISE
@@ -452,13 +459,20 @@ local function NewMiner(x,y)
     table.insert(MinerList,t)
 end
 
+--alternate way of creating caves based around "miners"
+--this is superior because it is not possible for this to produce closed areas
 function minerCave(Width, Height)
     local width = Width
     local height = Height
     local Map = {}
     local Dir = 0
     local max_miners = 1600
-    local false_counter = 0
+    local false_counter = 0 --number of inactive miners
+
+    --reset the values
+    MinerList = {}
+    NbMiner = 0
+    Act = 1
 
     for y = 1, height do
         Map[y] = {}
@@ -467,7 +481,8 @@ function minerCave(Width, Height)
         end
     end
 
-    NewMiner(13,9)
+    --start at the player position
+    NewMiner(13, 9)
 
     while false_counter < max_miners do
         for k,v in ipairs(MinerList) do
@@ -550,6 +565,35 @@ function minerCave(Width, Height)
     return Map
 end
 
+--function to generate multi-leveled caves
+--each level has its own item and enemies 
+function caveSystem(level_num, difficulty)
+    local Map = {}
+    local CollisionMap = {}
+    local enemies = {}
+    local items = {}
+    local system = {}
+    local difficulty = difficulty
+
+    for level = 1, level_num do
+        Map[level] = minerCave(mapWidth, mapHeight)
+        print("map")
+        -- when assigning a value to value that is a table, lua does not set the original value to the table, but rather as a pointer to the table
+        --so if I change collisionMap.x = 5 the map.x = 5 as well
+        --that's why I do this abomination of code
+        CollisionMap[level] = TSerial.unpack(TSerial.pack(Map[level]))
+        print("collisionMap")
+        enemies[level] = {}
+        items[level] = {}
+    end
+
+    system.map = Map
+    system.collisionMap = CollisionMap
+    system.enemies = enemies
+    system.items = items
+    return system
+end
+
 --[[
 
     UTILITIES
@@ -590,10 +634,10 @@ function getRandOpenTile(Map, mapW, mapH)
     if found then return x,y end
 end
 
-function testCollisionTile(x, y)
+function testCollisionTile(CollisionMap, x, y)
     -- I add an extra one due to the way lua handles table indexing with zero not being the first
     -- number, what a stupid design decision
-    if collisionMap[player.y/32 + 1 + y][player.x/32 + 1 + x] == 2 then
+    if CollisionMap[player.y/32 + 1 + y][player.x/32 + 1 + x] == 2 then
         return true
     end
     return false
