@@ -1,3 +1,10 @@
+lastN = -1
+mySeed = 1
+showPerlin = 0
+mapWidth = 120
+mapHeight = 120
+current_level = 1
+
 class = require "30log"
 Astar = require "astar"
 require "TSerial"
@@ -22,8 +29,18 @@ function love.load()
     largeFont = love.graphics.newFont("textures/gui/visitor.ttf", 64)
 
     tile = {}
-    tile[0] = love.graphics.newImage("textures/dc-dngn/floor/rect_gray2.png")
-    tile[2] = love.graphics.newImage("textures/dc-dngn/wall/stone_brick4.png")
+    tile[0] = {}
+    tile[0][1] = love.graphics.newImage("textures/dc-dngn/floor/rect_gray0.png")
+    tile[0][2] = love.graphics.newImage("textures/dc-dngn/floor/rect_gray1.png")
+    tile[0][3] = love.graphics.newImage("textures/dc-dngn/floor/rect_gray2.png")
+    tile[0][4] = love.graphics.newImage("textures/dc-dngn/floor/rect_gray3.png")
+    tile[2] = {}
+    tile[2][1] = love.graphics.newImage("textures/dc-dngn/wall/stone_brick1.png")
+    tile[2][2] = love.graphics.newImage("textures/dc-dngn/wall/stone_brick2.png")
+    tile[2][3] = love.graphics.newImage("textures/dc-dngn/wall/stone_brick3.png")
+    tile[2][4] = love.graphics.newImage("textures/dc-dngn/wall/stone_brick4.png")
+    tile[2][5] = love.graphics.newImage("textures/dc-dngn/wall/stone_brick5.png")
+    tile[2][6] = love.graphics.newImage("textures/dc-dngn/wall/stone_brick6.png")
 end
 
 function love.draw()

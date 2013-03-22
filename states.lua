@@ -186,7 +186,6 @@ function Game.create()
     bg = love.graphics.newImage("textures/gui/bg.png")
     
     cave = caveSystem(level_num, "normal")
-    print("cave")
     
     player = playerClass:new(416, 288, "textures/player/base/human_m.png", 100, 100)
     

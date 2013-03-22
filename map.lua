@@ -1,10 +1,3 @@
-lastN = -1
-mySeed = 1
-showPerlin = 0
-mapWidth = 120
-mapHeight = 120
-current_level = 1
-
 --[[
 
     PERLIN NOISE
@@ -15,17 +8,20 @@ current_level = 1
 --is much better than what I was making
 
 local function rand(seed, n)
-  if n <= 0 then return nil end
-  if seed ~= mySeed or lastN < 0 or n <= lastN then
-    mySeed = seed
-    math.randomseed(seed)
-    lastN = 0
-  end
-  while lastN < n do
-    num = math.random()
-    lastN = lastN + 1
-  end
-  return num - 0.5
+    if n <= 0 then return nil end
+  
+    if seed ~= mySeed or lastN < 0 or n <= lastN then
+        mySeed = seed
+        math.randomseed(seed)
+        lastN = 0
+    end
+  
+    while lastN < n do
+        num = math.random()
+        lastN = lastN + 1
+    end
+  
+    return num - 0.5
 end
 
 -- takes table of L values and returns N*(L-3) interpolated values
@@ -36,150 +32,192 @@ local function round(num, idp)
 end
 
 local function interpolate1D(values, N)
-  newData = {}
-  for i = 1, #values - 3 do
-    P = (values[i+3] - values[i+2]) - (values[i] - values[i+1])
-    Q = (values[i] - values[i+1]) - P
-    R = (values[i+2] - values[i])
-    S = values[i+1]
-    for j = 0, N-1 do
-      x = j/N
-      table.insert(newData, P*x^3 + Q*x^2 + R*x + S)
+    local newData = {}
+    local P = 0
+    local Q = 0
+    local R = 0
+    local S = 0
+    local x = 0
+    
+    for i = 1, #values - 3 do
+        P = (values[i+3] - values[i+2]) - (values[i] - values[i+1])
+        Q = (values[i] - values[i+1]) - P
+        R = (values[i+2] - values[i])
+        S = values[i+1]
+        for j = 0, N-1 do
+            x = j/N
+            table.insert(newData, P*x^3 + Q*x^2 + R*x + S)
+        end
     end
-  end
-  return newData
+    
+    return newData
 end
 
 local function perlinComponent1D(seed, length, N, amplitude)
-  rawData = {}
-  finalData = {}
-  for i = 1, math.ceil(length/N) + 3 do
-    rawData[i] = amplitude * rand(seed, i)
-  end
-  interpData = interpolate1D(rawData, N)
-  assert(#interpData >= length)
-  for i = 1, length do
-    finalData[i] = interpData[i]
-  end
-  return finalData
+    local rawData = {}
+    local finalData = {}
+    local interpData = {}
+    
+    for i = 1, math.ceil(length/N) + 3 do
+        rawData[i] = amplitude * rand(seed, i)
+    end
+    
+    interpData = interpolate1D(rawData, N)
+    assert(#interpData >= length)
+    
+    for i = 1, length do
+        finalData[i] = interpData[i]
+    end
+    
+    return finalData
 end
 
 local function perlin1D(seed, length, persistence, N, amplitude)
-  data = {}
-  for i = 1, length do
-    data[i] = 0
-  end
-  for i = N, 1, -1 do
-    compInterp = 2^(i-1)
-    compAmplitude = amplitude * persistence^(N-i)
-    comp = perlinComponent1D(seed+i, length, compInterp, compAmplitude)
+    local data = {}
+    local compInterp = 0
+    local compAmplitude = 0
+    local comp = {}
+    local data = {}
+    
     for i = 1, length do
-      data[i] = data[i] + comp[i]
+        data[i] = 0
     end
-  end
-  return data
+    
+    for i = N, 1, -1 do
+        compInterp = 2^(i-1)
+        compAmplitude = amplitude * persistence^(N-i)
+        comp = perlinComponent1D(seed+i, length, compInterp, compAmplitude)
+        
+        for i = 1, length do
+            data[i] = data[i] + comp[i]
+        end
+    end
+    
+    return data
 end
 
 local function interpolate2D(values, N)
-  newData1 = {}
-  for r = 1, #values do
-    newData1[r] = {}
-    for c = 1, #values[r] - 3 do
-      P = (values[r][c+3] - values[r][c+2]) - (values[r][c] - values[r][c+1])
-      Q = (values[r][c] - values[r][c+1]) - P
-      R = (values[r][c+2] - values[r][c])
-      S = values[r][c+1]
-      for j = 0, N-1 do
-        x = j/N
-        table.insert(newData1[r], P*x^3 + Q*x^2 + R*x + S)
-      end
+    local newData1 = {}
+    local newData2 = {}
+    local P = 0
+    local Q = 0
+    local R = 0
+    local S = 0
+    local x = 0
+
+    for r = 1, #values do
+        newData1[r] = {}
+        for c = 1, #values[r] - 3 do
+            P = (values[r][c+3] - values[r][c+2]) - (values[r][c] - values[r][c+1])
+            Q = (values[r][c] - values[r][c+1]) - P
+            R = (values[r][c+2] - values[r][c])
+            S = values[r][c+1]
+            for j = 0, N-1 do
+                x = j/N
+                table.insert(newData1[r], P*x^3 + Q*x^2 + R*x + S)
+            end
+        end
     end
-  end
   
-  newData2 = {}
-  for r = 1, (#newData1-3) * N do
-    newData2[r] = {}
-  end
-  for c = 1, #newData1[1] do
-    for r = 1, #newData1 - 3 do
-      P = (newData1[r+3][c] - newData1[r+2][c]) - (newData1[r][c] - newData1[r+1][c])
-      Q = (newData1[r][c] - newData1[r+1][c]) - P
-      R = (newData1[r+2][c] - newData1[r][c])
-      S = newData1[r+1][c]
-      for j = 0, N-1 do
-        x = j/N
-        newData2[(r-1)*N+j+1][c] = P*x^3 + Q*x^2 + R*x + S
-      end
+    for r = 1, (#newData1-3) * N do
+        newData2[r] = {}
     end
-  end
+    
+    for c = 1, #newData1[1] do
+        for r = 1, #newData1 - 3 do
+            P = (newData1[r+3][c] - newData1[r+2][c]) - (newData1[r][c] - newData1[r+1][c])
+            Q = (newData1[r][c] - newData1[r+1][c]) - P
+            R = (newData1[r+2][c] - newData1[r][c])
+            S = newData1[r+1][c]
+            for j = 0, N-1 do
+                x = j/N
+                newData2[(r-1)*N+j+1][c] = P*x^3 + Q*x^2 + R*x + S
+            end
+        end
+    end
   
-  return newData2
+    return newData2
 end
 
 local function perlinComponent2D(seed, width, height, N, amplitude)
-  rawData = {}
-  finalData = {}
-  for r = 1, math.ceil(height/N) + 3 do
-    rawData[r] = {}
-    for c = 1, math.ceil(width/N) + 3 do
-      rawData[r][c] = amplitude * rand(seed+r, c)
+    local rawData = {}
+    local finalData = {}
+    local interpData = {}
+    
+    for r = 1, math.ceil(height/N) + 3 do
+        rawData[r] = {}
+        
+        for c = 1, math.ceil(width/N) + 3 do
+            rawData[r][c] = amplitude * rand(seed+r, c)
+        end
     end
-  end
-  interpData = interpolate2D(rawData, N)
-  assert(#interpData >= height and #interpData[1] >= width)
-  for r = 1, height do
-    finalData[r] = {}
-    for c = 1, width do
-      finalData[r][c] = interpData[r][c]
+    
+    interpData = interpolate2D(rawData, N)
+    assert(#interpData >= height and #interpData[1] >= width)
+    
+    for r = 1, height do
+        finalData[r] = {}
+        
+        for c = 1, width do
+            finalData[r][c] = interpData[r][c]
+        end
     end
-  end
-  return finalData
+    
+    return finalData
 end
 
 local function perlin2D(seed, width, height, persistence, N, amplitude)
-  data = {}
-  for r = 1, height do
-    data[r] = {}
-    for c = 1, width do
-      data[r][c] = 0
-    end
-  end
-  for i = N, 1, -1 do
-    compInterp = 2^(i-1)
-    compAmplitude = amplitude * persistence^(N-i)
-    comp = perlinComponent2D(seed+i*1000, width, height, compInterp, compAmplitude)
+    local data = {}
+    local comp = 0
+    local compInterp = 0
+    local compAmplitude = 0
+
     for r = 1, height do
-      for c = 1, width do
-        data[r][c] = data[r][c] + comp[r][c]
-      end
+        data[r] = {}
+        for c = 1, width do
+            data[r][c] = 0
+        end
     end
-  end
-  return data
+    for i = N, 1, -1 do
+        compInterp = 2^(i-1)
+        compAmplitude = amplitude * persistence^(N-i)
+        comp = perlinComponent2D(seed+i*1000, width, height, compInterp, compAmplitude)
+        for r = 1, height do
+            for c = 1, width do
+                data[r][c] = data[r][c] + comp[r][c]
+            end
+        end
+    end
+    return data
 end
 
 function plot1D(values)
-  love.graphics.line(0, love.graphics.getHeight()/2 - 200, love.graphics.getWidth(), love.graphics.getHeight()/2 - 200)
-  love.graphics.line(0, love.graphics.getHeight()/2 + 200, love.graphics.getWidth(), love.graphics.getHeight()/2 + 200)
-  for i = 1, #values - 1 do
-    love.graphics.line((i-1)/(#values-1)*love.graphics.getWidth(), love.graphics.getHeight()/2 - values[i] * 400, (i)/(#values-1)*love.graphics.getWidth(), love.graphics.getHeight()/2 - values[i+1] * 400)
-  end
+    love.graphics.line(0, love.graphics.getHeight()/2 - 200, love.graphics.getWidth(), love.graphics.getHeight()/2 - 200)
+    love.graphics.line(0, love.graphics.getHeight()/2 + 200, love.graphics.getWidth(), love.graphics.getHeight()/2 + 200)
+    
+    for i = 1, #values - 1 do
+        love.graphics.line((i-1)/(#values-1)*love.graphics.getWidth(), love.graphics.getHeight()/2 - values[i] * 400, (i)/(#values-1)*love.graphics.getWidth(), love.graphics.getHeight()/2 - values[i+1] * 400)
+    end
 end
 
 function plot2D(values)
-  for r = 1, #values do
-    for c = 1, #(values[1]) do
-      love.graphics.setColor(128 + 40 * values[r][c], 128 + 40 * values[r][c], 128 + 40 * values[r][c], 255)
-      love.graphics.rectangle("fill", (c-1)/(#(values[1]))*love.graphics.getWidth(), (r-1)/(#values)*love.graphics.getHeight(), love.graphics.getWidth()/#(values[1]), love.graphics.getHeight()/#values)
+    for r = 1, #values do
+        for c = 1, #(values[1]) do
+            love.graphics.setColor(128 + 40 * values[r][c], 128 + 40 * values[r][c], 128 + 40 * values[r][c], 255)
+            love.graphics.rectangle("fill", (c-1)/(#(values[1]))*love.graphics.getWidth(), (r-1)/(#values)*love.graphics.getHeight(), love.graphics.getWidth()/#(values[1]), love.graphics.getHeight()/#values)
+        end
     end
-  end
 end
 
 function makeTerrain(seed)
-    terrain = {}
+    local terrain = {}
+    
     if seed == nil then seed = os.time() end
+    
     terrain.seed = seed
     terrain.perlin = perlin2D(seed, 341, 256, 0.55, 7, 1.5)
     terrain.value = {}
+    
     for r = 1, #terrain.perlin do
         terrain.value[r] = {}
         for c = 1, #(terrain.perlin[r]) do
@@ -187,6 +225,7 @@ function makeTerrain(seed)
             terrain.value[r][c] = round(value, 1)
         end
     end
+    
     return terrain
 end
 
@@ -261,7 +300,7 @@ end
 
 --]]
 
-function createCave(Width, Height)
+local function createCave(Width, Height)
     -- 0 is empty 
     -- 2 is thing to avoid
     local width = Width
@@ -461,12 +500,12 @@ end
 
 --alternate way of creating caves based around "miners"
 --this is superior because it is not possible for this to produce closed areas
-function minerCave(Width, Height)
+local function minerCave(Width, Height)
     local width = Width
     local height = Height
     local Map = {}
     local Dir = 0
-    local max_miners = 1600
+    local max_miners = 1900
     local false_counter = 0 --number of inactive miners
 
     --reset the values
@@ -574,15 +613,23 @@ function caveSystem(level_num, difficulty)
     local items = {}
     local system = {}
     local difficulty = difficulty
+    local rand = 1
 
     for level = 1, level_num do
         Map[level] = minerCave(mapWidth, mapHeight)
-        print("map")
+        
         -- when assigning a value to value that is a table, lua does not set the original value to the table, but rather as a pointer to the table
         --so if I change collisionMap.x = 5 the map.x = 5 as well
         --that's why I do this abomination of code
         CollisionMap[level] = TSerial.unpack(TSerial.pack(Map[level]))
-        print("collisionMap")
+
+        for y = 1, #Map[level] do
+            for x = 1, #Map[level][1] do
+                rand = math.random(1, #tile[Map[level][y][x]])
+                Map[level][y][x] = tile[Map[level][y][x]][rand]
+            end
+        end
+        
         enemies[level] = {}
         items[level] = {}
     end
@@ -615,8 +662,8 @@ function drawMap(Map, mapDisplayW, mapDisplayH, radius)
     end
 
     for y = starty, endy do
-        for x = startx, endx do                                                         
-            love.graphics.draw(tile[Map[y][x]], (x * 32) - 32, (y * 32) - 32)
+        for x = startx, endx do
+            love.graphics.draw(Map[y][x], (x * 32) - 32, (y * 32) - 32)
         end
     end
 end
@@ -626,11 +673,13 @@ function getRandOpenTile(Map, mapW, mapH)
     local found = false
     local x = 0
     local y = 0
+    
     while found == false do
         x = math.random(1, mapW)
         y = math.random(1, mapH)
         if Map[y][x] == 0 then found = true end
     end
+    
     if found then return x,y end
 end
 
