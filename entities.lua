@@ -2,7 +2,7 @@ monster = class{health, image}
 item = class{image}
 
 function monster:__init(health, image, level)
-    self.gridx, self.gridy = getRandOpenTile(cave.map[level], mapWidth, mapHeight)
+    self.gridx, self.gridy = getRandOpenTile(cave.collisionMap[level], mapWidth, mapHeight)
     self.x = (self.gridx * 32) - 32
     self.y = (self.gridy * 32) - 32
     self.path = nil
@@ -25,14 +25,17 @@ function monster:turn()
     if self.distance <= 400 then
         --chase
         cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 0
+        
         Astar:setInitialNode((self.x / 32) + 1, (self.y / 32) + 1)
         Astar:setFinalNode((player.x / 32) + 1, (player.y / 32) + 1)
         self.path = Astar:getPath()
+        
         if self.path ~= nil then
             self.x = (self.path[2].x * 32) - 32
             self.y = (self.path[2].y * 32) - 32
             cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 2
         end
+        
         cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 2
     else
         --wander
@@ -40,7 +43,7 @@ function monster:turn()
 end
 
 function item:__init(image, level)
-    self.gridx, self.gridy = getRandOpenTile(cave.map[level], mapWidth, mapHeight)
+    self.gridx, self.gridy = getRandOpenTile(cave.collisionMap[level], mapWidth, mapHeight)
     self.x = (self.gridx * 32) - 32
     self.y = (self.gridy * 32) - 32
     self.image = love.graphics.newImage(image)
