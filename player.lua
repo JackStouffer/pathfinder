@@ -10,6 +10,8 @@ function playerClass:__init(x, y, body, health, mana)
     self.max_health = health
     self.mana = mana
     self.max_mana = mana
+
+    SoundManager.set_listener(self.x, self.y)
     
     cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 1
 end
@@ -22,6 +24,8 @@ function playerClass:keypressed(key)
             self.y = self.y - 32
             self.translate_y = self.translate_y + 32
             
+            SoundManager.set_listener(self.x, self.y)
+
             cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 1
         end
         
@@ -36,6 +40,8 @@ function playerClass:keypressed(key)
             
             self.y = self.y + 32
             self.translate_y = self.translate_y - 32
+            
+            SoundManager.set_listener(self.x, self.y)
             
             cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 1
         end
@@ -52,6 +58,8 @@ function playerClass:keypressed(key)
             self.x = self.x - 32
             self.translate_x = self.translate_x + 32
             
+            SoundManager.set_listener(self.x, self.y)
+            
             cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 1
         end
         
@@ -66,6 +74,8 @@ function playerClass:keypressed(key)
             
             self.x = self.x + 32
             self.translate_x = self.translate_x - 32
+            
+            SoundManager.set_listener(self.x, self.y)
             
             cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 1
         end

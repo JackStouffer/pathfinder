@@ -7,6 +7,8 @@ current_level = 1
 
 class = require "30log"
 Astar = require "astar"
+SoundManager = require 'sound_manager'
+Settings = require 'settings'
 require "TSerial"
 require "map"
 require "player"
@@ -17,16 +19,23 @@ require "entities"
 function love.load()
     love.graphics.setMode(1024, 576, false, true, 0)
 
-    state = Menu.create()   -- current game state
-    gameState = "world"
-
     level_num = 3
+
+    Settings.load()
+    SoundManager.load()
 
     love.keyboard.setKeyRepeat(0.01, 0.1)
 
     smallFont = love.graphics.newFont("textures/gui/visitor.ttf", 12)
     mediumFont = love.graphics.newFont("textures/gui/visitor.ttf", 32)
     largeFont = love.graphics.newFont("textures/gui/visitor.ttf", 64)
+
+    --Music/Sound
+    clickSound = love.audio.newSource("sounds/click1.wav")
+    rolloverSound = love.audio.newSource("sounds/rollover1.wav")
+
+    menuMusic = SoundManager.new_sound("music/AlaFlair", 512, 288, 6000, 100, true, true, true)
+    caveMusic = SoundManager.new_sound("music/radakan-cave ambience", 512, 288, 6000, 100, true, true, true)
 
     tile = {}
     tile[0] = {}
@@ -41,6 +50,9 @@ function love.load()
     tile[2][4] = love.graphics.newImage("textures/dc-dngn/wall/stone_brick4.png")
     tile[2][5] = love.graphics.newImage("textures/dc-dngn/wall/stone_brick5.png")
     tile[2][6] = love.graphics.newImage("textures/dc-dngn/wall/stone_brick6.png")
+
+    state = Menu.create()   -- current game state
+    gameState = "world"
 end
 
 function love.draw()
@@ -73,4 +85,18 @@ end
 
 function love.quit()
   print("Thanks for playing! Come back soon!")
+end
+
+function take_screenshot()
+    local screenshot = love.graphics.newScreenshot()
+
+    local time_string = os.date('%Y-%m-%d_%H-%M-%S')
+    local filename = 'warp_run_' .. time_string .. '.' .. ".png"
+
+    if not love.filesystem.exists('screenshots')
+      or not love.filesystem.isDirectory('screenshots') then
+        love.filesystem.mkdir('screenshots')
+    end
+
+    screenshot:encode('screenshots/' .. filename,".png")
 end

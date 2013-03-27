@@ -1,14 +1,3 @@
--- fonts
-smallFont = love.graphics.newFont(12)
-largeFont = love.graphics.newFont(32)
-middleFont = love.graphics.newFont(24)
-
---Music/Sound
-menuMusic = love.audio.newSource("music/AlaFlair.ogg")
-caveMusic = love.audio.newSource("music/radakan-cave ambience.ogg")
-clickSound = love.audio.newSource("sounds/click1.wav")
-rolloverSound = love.audio.newSource("sounds/rollover1.wav")
-
 -- Menu State
 -- Main menu...
 Menu = {}
@@ -17,9 +6,12 @@ Menu.__index = Menu
 function Menu.create()
 	local temp = {}
 	setmetatable(temp, Menu)
-	love.audio.play(menuMusic)
-	logoImage = love.graphics.newImage("textures/logo.png")
-    backgroundImage = love.graphics.newImage("textures/background.png")
+
+    menuMusic.source:play()
+
+    SoundManager.set_listener(512, 288)
+	logoImage = love.graphics.newImage("textures/gui/logo.png")
+    backgroundImage = love.graphics.newImage("textures/gui/background.png")
 	temp.button = {	new = Button:new("New Game", 512, 300),
 					instructions = Button:new("Instructions", 512, 350),
 					options = Button:new("Options", 512, 400),
@@ -127,46 +119,66 @@ Options = {}
 Options.__index = Options
 
 function Options.create()
-	local temp = {}
-	setmetatable(temp, Options)
-	temp.button = {back = Button:new("Back", 350, 200)}
-	return temp
+    local temp = {}
+    setmetatable(temp, Options)
+    temp.button = { on = Button:new("On", 425, 300),
+                    off = Button:new("Off", 550, 300),
+                    back = Button:new("Back", 550, 500)}
+    return temp
 end
 
 function Options:draw()
-	
-	for n,b in pairs(self.button) do
-		b:draw()
-	end
+    
+    love.graphics.print("Audio:", 250, 270)
+    
+    love.graphics.setLine(4, "rough")
+
+    if not Settings.is_mute() then
+        love.graphics.line(400,305,450,305)
+    else
+        love.graphics.line(525,305,575,305)
+    end
+    
+    --love.graphics.line(360+((size-5)*50),380,390+((size-5)*50),380)
+    
+    for n,b in pairs(self.button) do
+        b:draw()
+    end
 
 end
 
 function Options:update(dt)
-	
-	for n,b in pairs(self.button) do
-		b:update(dt)
-	end
-	
+    
+    for n,b in pairs(self.button) do
+        b:update(dt)
+    end
+    
 end
 
 function Options:mousepressed(x,y,button)
-	
-	for n,b in pairs(self.button) do
-		if b:mousepressed(x,y,button) then
-			if n == "back" then
-				state = Menu.create()
-			end
-		end
-	end
-	
+    
+    for n,b in pairs(self.button) do
+        if b:mousepressed(x,y,button) then
+            if n == "on" then
+                Settings.set("volume", 1)
+                SoundManager.resume()
+            elseif n == "off" then
+                Settings.set("volume", 0)
+                SoundManager.pause_current()
+            elseif n == "back" then
+                state = Menu.create()
+            end
+        end
+    end
+    
 end
 
 function Options:keypressed(key)
-	
-	if key == "escape" then
-		state = Menu.create()
-	end
-	
+    
+    if key == "escape" then
+        state = Menu.create()
+    end
+    
 end
 
 
@@ -181,7 +193,6 @@ function Game.create()
     local openY = 0
 	
     setmetatable(temp, Game)
-	love.audio.stop(menuMusic)
     
     bg = love.graphics.newImage("textures/gui/bg.png")
     
@@ -207,7 +218,8 @@ function Game.create()
     Astar:setObstValue(2)
     Astar:disableDiagonalMove()
 
-    love.audio.play(caveMusic)
+    menuMusic.source:stop()
+    caveMusic.source:play()
 
 	return temp
 end
@@ -248,7 +260,7 @@ function Game:draw()
 end
 
 function Game:update(dt)
-
+    SoundManager.update()
 end
 
 function Game:mousepressed(x, y, button)
