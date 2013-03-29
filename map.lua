@@ -217,6 +217,11 @@ function makeTerrain(seed)
     terrain.seed = seed
     terrain.perlin = perlin2D(seed, 341, 256, 0.55, 7, 1.5)
     terrain.value = {}
+    terrain.locations = {}
+
+    local found = false
+    local x = 1
+    local y = 1
     
     for r = 1, #terrain.perlin do
         terrain.value[r] = {}
@@ -225,6 +230,21 @@ function makeTerrain(seed)
             terrain.value[r][c] = round(value, 1)
         end
     end
+
+    while found == false do
+        x = math.random(1, #terrain.value[1])
+        y = math.random(1, #terrain.value)
+        if terrain.value[y][x] >= -.9 and terrain.value[y][x] < -.7 then 
+            found = true 
+        end
+    end
+
+    terrain.locations.cave = {}
+    terrain.locations.cave.gridx = x
+    terrain.locations.cave.gridy = y
+    terrain.locations.cave.x = (terrain.locations.cave.gridx-1)/(#(terrain.value[1]))*love.graphics.getWidth()
+    terrain.locations.cave.y = (terrain.locations.cave.gridy-1)/(#terrain.value)*love.graphics.getHeight()
+    terrain.locations.cave.image = love.graphics.newImage("textures/dc-dngn/dngn_open_door.png")
     
     return terrain
 end
@@ -248,6 +268,8 @@ function drawTerrain(terrain)
             love.graphics.rectangle("fill", (c-1)/(#(terrain.value[1]))*love.graphics.getWidth(), (r-1)/(#terrain.value)*love.graphics.getHeight(), love.graphics.getWidth()/#(terrain.value[1]), love.graphics.getHeight()/#terrain.value)
         end
     end
+    
+    love.graphics.draw(terrain.locations.cave.image, terrain.locations.cave.x, terrain.locations.cave.y)
 end
 
 --[[
@@ -629,6 +651,7 @@ function caveSystem(level_num, difficulty)
     local system = {}
     local difficulty = difficulty
     local rand = 1
+    local image
 
     for level = 1, level_num do
         Map[level] = minerCave(mapWidth, mapHeight)
@@ -638,10 +661,14 @@ function caveSystem(level_num, difficulty)
         --that's why I do this abomination of code
         CollisionMap[level] = TSerial.unpack(TSerial.pack(Map[level]))
 
+        --turn the map into a refference for the images
         for y = 1, #Map[level] do
             for x = 1, #Map[level][1] do
                 rand = math.random(1, #tile[Map[level][y][x]])
-                Map[level][y][x] = tile[Map[level][y][x]][rand]
+                image = tile[Map[level][y][x]][rand]
+                Map[level][y][x] = {}
+                Map[level][y][x].image = image
+                Map[level][y][x].visibility = false
             end
         end
         
@@ -662,11 +689,17 @@ end
 
 ]]--
 
-function drawMap(Map, mapDisplayW, mapDisplayH, radius)
+function drawMap(Map, mapDisplayW, mapDisplayH, radius, sight)
     local startx = ((player.x / 32) + 1) - radius
     local starty = ((player.y / 32) + 1) - radius
     local endx = ((player.x / 32) + 1) + radius
     local endy = ((player.y / 32) + 1) + radius
+
+    local start_x_sight = ((player.x / 32) + 1) - sight
+    local start_y_sight = ((player.y / 32) + 1) - sight
+    local end_x_sight = ((player.x / 32) + 1) + sight
+    local end_y_sight = ((player.y / 32) + 1) + sight
+
     
     if ((player.x / 32) + 1) - radius < 1 then
         startx = 1
@@ -676,9 +709,33 @@ function drawMap(Map, mapDisplayW, mapDisplayH, radius)
         starty = 1
     end
 
+    if ((player.x / 32) + 1) - sight < 1 then
+        start_x_sight = 1
+    end
+
+    if ((player.y / 32) + 1) - sight < 1 then
+        start_y_sight = 1
+    end
+
     for y = starty, endy do
         for x = startx, endx do
-            love.graphics.draw(Map[y][x], (x * 32) - 32, (y * 32) - 32)
+            if y >= start_y_sight and y <= end_y_sight and x >= start_x_sight and x <= end_x_sight then
+                Map[y][x].visibility = true                
+            elseif not(y >= start_y_sight and y <= end_y_sight and x >= start_x_sight and x <= end_x_sight) and Map[y][x].visibility == true then
+                Map[y][x].visibility = "fog"
+            elseif Map[y][x].visibility == "fog" then
+                
+            else
+                Map[y][x].visibility = false
+            end
+            
+            if Map[y][x].visibility == true then
+                love.graphics.setColor(255, 255, 255, 255)
+                love.graphics.draw(Map[y][x].image, (x * 32) - 32, (y * 32) - 32)
+            elseif Map[y][x].visibility == "fog" then
+                love.graphics.setColor(255, 255, 255, 100)
+                love.graphics.draw(Map[y][x].image, (x * 32) - 32, (y * 32) - 32)
+            end
         end
     end
 end

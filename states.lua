@@ -194,8 +194,6 @@ function Game.create()
 	
     setmetatable(temp, Game)
     
-    bg = love.graphics.newImage("textures/gui/bg.png")
-    
     cave = caveSystem(level_num, "normal")
     
     player = playerClass:new(416, 288, "textures/player/base/human_m.png", 100, 100)
@@ -235,7 +233,7 @@ function Game:draw()
     elseif gameState == "cave" then
         love.graphics.push()
         	love.graphics.translate(player.translate_x, player.translate_y) --have the player always centered
-            drawMap(cave.map[current_level], mapWidth, mapHeight, 15)
+            drawMap(cave.map[current_level], mapWidth, mapHeight, 15, 6)
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
             player:draw()
             
@@ -249,7 +247,9 @@ function Game:draw()
         love.graphics.pop()
         
         --gui
-        love.graphics.draw(bg, 832, 0)
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.rectangle("fill", 832, 0, 260, 576)
+        love.graphics.setColor(255, 255, 255)
         love.graphics.setColor(255, 0, 0)
         love.graphics.rectangle("fill", 845, 20, 165 * (player.health/player.max_health), 15)
         love.graphics.setColor(0, 0, 255)
@@ -264,7 +264,11 @@ function Game:update(dt)
 end
 
 function Game:mousepressed(x, y, button)
-	
+	if gameState == "world" then
+        if x >= terrain.locations.cave.x and x <= terrain.locations.cave.x + 32 and y <= terrain.locations.cave.y + 32 and y >= terrain.locations.cave.y then
+            gameState = "cave"
+        end
+    end
 end
 
 function Game:keypressed(key)

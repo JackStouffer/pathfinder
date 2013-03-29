@@ -2,18 +2,24 @@ monster = class{health, image}
 item = class{image}
 
 function monster:__init(health, image, level)
-    self.gridx, self.gridy = getRandOpenTile(cave.collisionMap[level], mapWidth, mapHeight)
-    self.x = (self.gridx * 32) - 32
-    self.y = (self.gridy * 32) - 32
+    self.level = level
+    self.startx, self.starty = getRandOpenTile(cave.collisionMap[level], mapWidth, mapHeight)
+    self.gridx = self.startx - 1
+    self.gridy = self.starty - 1
+    self.x = (self.startx * 32) - 32
+    self.y = (self.starty * 32) - 32
     self.path = nil
     self.health = health
     self.image = love.graphics.newImage(image)
 
-    cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 2
+    cave.collisionMap[self.level][(self.y / 32) + 1][(self.x / 32) + 1] = 2
 end
 
 function monster:draw()
-    love.graphics.draw(self.image, self.x, self.y)
+    --fog of war check
+    if cave.map[self.level][self.gridy][self.gridx].visibility == true then
+        love.graphics.draw(self.image, self.x, self.y)
+    end
 end
 
 function monster:turn()
@@ -24,7 +30,7 @@ function monster:turn()
     
     if self.distance <= 400 then
         --chase
-        cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 0
+        cave.collisionMap[self.level][(self.y / 32) + 1][(self.x / 32) + 1] = 0
         
         Astar:setInitialNode((self.x / 32) + 1, (self.y / 32) + 1)
         Astar:setFinalNode((player.x / 32) + 1, (player.y / 32) + 1)
@@ -33,24 +39,31 @@ function monster:turn()
         if self.path ~= nil then
             self.x = (self.path[2].x * 32) - 32
             self.y = (self.path[2].y * 32) - 32
-            cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 2
+            self.gridx = (self.x / 32) + 1
+            self.gridy = (self.y / 32) + 1
+            cave.collisionMap[self.level][(self.y / 32) + 1][(self.x / 32) + 1] = 2
         end
         
-        cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 2
+        cave.collisionMap[self.level][(self.y / 32) + 1][(self.x / 32) + 1] = 2
     else
         --wander
     end
 end
 
 function item:__init(image, level)
-    self.gridx, self.gridy = getRandOpenTile(cave.collisionMap[level], mapWidth, mapHeight)
-    self.x = (self.gridx * 32) - 32
-    self.y = (self.gridy * 32) - 32
+    self.level = level
+    self.startx, self.starty = getRandOpenTile(cave.collisionMap[level], mapWidth, mapHeight)
+    self.x = (self.startx * 32) - 32
+    self.y = (self.starty * 32) - 32
+    self.gridx = self.startx
+    self.gridy = self.starty
     self.image = love.graphics.newImage(image)
 
-    cave.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 3
+    cave.collisionMap[level][(self.y / 32) + 1][(self.x / 32) + 1] = 3
 end
 
 function item:draw()
-    love.graphics.draw(self.image, self.x, self.y)
+    if cave.map[self.level][self.gridy][self.gridx].visibility == true then
+        love.graphics.draw(self.image, self.x, self.y)
+    end
 end
