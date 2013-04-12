@@ -11,6 +11,8 @@ SoundManager = require 'sound_manager'
 Settings = require 'settings'
 require "TSerial"
 require "map"
+require "cave"
+require "dungeon"
 require "player"
 require "states"
 require "gui"
@@ -18,6 +20,7 @@ require "entities"
 
 function love.load()
     love.graphics.setMode(1024, 576, false, true, 0)
+    love.graphics.setCaption("Pathfinder")
 
     level_num = 3
 

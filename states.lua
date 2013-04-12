@@ -121,22 +121,23 @@ Options.__index = Options
 function Options.create()
     local temp = {}
     setmetatable(temp, Options)
-    temp.button = { on = Button:new("On", 425, 300),
-                    off = Button:new("Off", 550, 300),
+    temp.button = { on = Button:new("On", 425, 155),
+                    off = Button:new("Off", 550, 155),
                     back = Button:new("Back", 550, 500)}
     return temp
 end
 
 function Options:draw()
-    
-    love.graphics.print("Audio:", 250, 270)
+    love.graphics.setColor(214, 169, 187)
+    love.graphics.print("Audio:", 250, 100)
+    love.graphics.print("Controls:", 179, 170)
     
     love.graphics.setLine(4, "rough")
 
     if not Settings.is_mute() then
-        love.graphics.line(400,305,450,305)
+        love.graphics.line(380,135,430,135)
     else
-        love.graphics.line(525,305,575,305)
+        love.graphics.line(493,135,543,135)
     end
     
     --love.graphics.line(360+((size-5)*50),380,390+((size-5)*50),380)
@@ -194,27 +195,47 @@ function Game.create()
 	
     setmetatable(temp, Game)
     
-    cave = caveSystem(level_num, "normal")
+    cave = levelSystem(level_num, "normal", "cave")
+    print("cave")
+
+    dungeon = levelSystem(level_num, "normal", "dungeon")
+    print("dungeon")
     
     player = playerClass:new(416, 288, "textures/player/base/human_m.png", 100, 100)
     
     for level = 1, level_num do 
         for num=1, 5 do
             cave.enemies[level][num] = monster:new(100, "textures/dc-mon/acid_blob.png", level)
+            dungeon.enemies[level][num] = monster:new(100, "textures/dc-mon/acid_blob.png", level)
         end
     end
+    print("enemies")
 
     for level = 1, level_num do 
         for num=1, 20 do
             cave.items[level][num] = item:new("textures/item/potion/ruby.png", level)
+            dungeon.items[level][num] = item:new("textures/item/potion/ruby.png", level)
         end
     end
+    print("items")
+
+    fireball = love.graphics.newParticleSystem(love.graphics.newImage("textures/part1.png"), 500)
+    fireball:setEmissionRate(100)
+    fireball:setSpeed(200, 300)
+    fireball:setGravity(0)
+    fireball:setSizes(2, 1)
+    fireball:setColors(255, 0, 0, 255, 254, 166, 61, 170, 255, 255, 0, 0)
+    fireball:setPosition((player.x * 32) - 32, (player.y * 32) - 32)
+    fireball:setLifetime(-1)
+    fireball:setParticleLife(.3)
+    fireball:setDirection(0)
+    fireball:setSpread(360)
+    fireball:setRadialAcceleration(-2000)
+    fireball:setTangentialAcceleration(0)
+    fireball:stop()
 
     terrain = makeTerrain()
-    
-    Astar(cave.collisionMap[current_level])
-    Astar:setObstValue(2)
-    Astar:disableDiagonalMove()
+    print("terrain")
 
     menuMusic.source:stop()
     caveMusic.source:play()
@@ -233,20 +254,60 @@ function Game:draw()
     elseif gameState == "cave" then
         love.graphics.push()
         	love.graphics.translate(player.translate_x, player.translate_y) --have the player always centered
+            
             drawMap(cave.map[current_level], mapWidth, mapHeight, 15, 6)
+            
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
+            
             player:draw()
             
-            for x=1,#cave.enemies[current_level] do
+            for x = 1, #cave.enemies[current_level] do
                 cave.enemies[current_level][x]:draw()
             end
 
-            for x=1,#cave.items[current_level] do
+            for x = 1, #cave.items[current_level] do
                 cave.items[current_level][x]:draw()
             end
         love.graphics.pop()
         
         --gui
+        love.graphics.setColorMode("modulate")
+        love.graphics.setBlendMode("additive")
+        love.graphics.draw(fireball, 0, 0)
+        love.graphics.setBlendMode("alpha")
+
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.rectangle("fill", 832, 0, 260, 576)
+        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(255, 0, 0)
+        love.graphics.rectangle("fill", 845, 20, 165 * (player.health / player.max_health), 15)
+        love.graphics.setColor(0, 0, 255)
+        love.graphics.rectangle("fill", 844, 45, 165 * (player.mana / player.max_mana), 15)
+        love.graphics.setColor(255, 255, 255)
+    elseif gameState == "dungeon" then
+        love.graphics.push()
+            love.graphics.translate(player.translate_x, player.translate_y) --have the player always centered
+            
+            drawMap(dungeon.map[current_level], mapWidth, mapHeight, 15, 6)
+            
+            love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
+            
+            player:draw()
+            
+            for x = 1, #dungeon.enemies[current_level] do
+                dungeon.enemies[current_level][x]:draw()
+            end
+
+            for x = 1, #dungeon.items[current_level] do
+                dungeon.items[current_level][x]:draw()
+            end
+        love.graphics.pop()
+        
+        --gui
+        love.graphics.setBlendMode("additive")
+        love.graphics.draw(fireball, 0, 0)
+        love.graphics.setBlendMode("alpha")
+
         love.graphics.setColor(0, 0, 0)
         love.graphics.rectangle("fill", 832, 0, 260, 576)
         love.graphics.setColor(255, 255, 255)
@@ -261,6 +322,22 @@ end
 
 function Game:update(dt)
     SoundManager.update()
+
+    if love.mouse.isDown("l") then
+        fireball:setPosition(love.mouse.getX(), love.mouse.getY())
+
+        local delta_y = love.mouse.getY() - player.y
+        local delta_x = love.mouse.getY() - player.x
+
+        local direction = math.atan2(delta_y, delta_x)
+        print(direction)
+        fireball:setDirection(1)
+        fireball:start()
+    else
+        fireball:stop()
+    end
+
+    fireball:update(dt)
 end
 
 function Game:mousepressed(x, y, button)
@@ -273,7 +350,9 @@ end
 
 function Game:keypressed(key)
     if gameState == "cave" then
-        player:keypressed(key)
+        player:keypressed(key, cave)
+    elseif gameState == "dungeon" then 
+        player:keypressed(key, dungeon)
     end
 
     if key == "r" then
@@ -282,22 +361,48 @@ function Game:keypressed(key)
         showPerlin = 1 - showPerlin
     elseif key == "c" then
         gameState = "cave"
+        Astar(cave.collisionMap[current_level])
+        Astar:setObstValue(2)
+        Astar:disableDiagonalMove()
+    elseif key == "d" then
+        gameState = "dungeon"
+        Astar(dungeon.collisionMap[current_level])
+        Astar:setObstValue(2)
+        Astar:disableDiagonalMove()
     elseif key == "escape" then
         love.event.push("quit")
     elseif key == "1" then
         current_level = 1
-        Astar(cave.collisionMap[current_level])
-        Astar:setObstValue(2)
-        Astar:disableDiagonalMove()
+        if gameState == "cave" then
+            Astar(cave.collisionMap[current_level])
+            Astar:setObstValue(2)
+            Astar:disableDiagonalMove()
+        elseif gameState == "dungeon" then
+            Astar(dungeon.collisionMap[current_level])
+            Astar:setObstValue(2)
+            Astar:disableDiagonalMove()
+        end
     elseif key == "2" then
         current_level = 2
-        Astar(cave.collisionMap[current_level])
-        Astar:setObstValue(2)
-        Astar:disableDiagonalMove()
+        if gameState == "cave" then
+            Astar(cave.collisionMap[current_level])
+            Astar:setObstValue(2)
+            Astar:disableDiagonalMove()
+        elseif gameState == "dungeon" then
+            Astar(dungeon.collisionMap[current_level])
+            Astar:setObstValue(2)
+            Astar:disableDiagonalMove()
+        end
     elseif key == "3" then
         current_level = 3
-        Astar(cave.collisionMap[current_level])
-        Astar:setObstValue(2)
-        Astar:disableDiagonalMove()
+        if gameState == "cave" then
+            Astar(cave.collisionMap[current_level])
+            Astar:setObstValue(2)
+            Astar:disableDiagonalMove()
+        elseif gameState == "dungeon" then
+            Astar(dungeon.collisionMap[current_level])
+            Astar:setObstValue(2)
+            Astar:disableDiagonalMove()
+        end
     end
 end

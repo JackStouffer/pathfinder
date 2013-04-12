@@ -55,59 +55,57 @@ SoundManager.reset_listener = reset_listener
 -- persist = Not removed even if stopped, unless SoundManager.clear is
 --           used.
 local function new_sound(file_name, x, y, max_hearing_dist, loops, unclearable, start_stopped, persist)
-    if not Settings.is_mute() then
-        local new_sound = {file_name = file_name}
-        local volume = 1
+    local new_sound = {file_name = file_name}
+    local volume = 1
 
-        if x then
-            assert(y)
-            new_sound.pos = {}
-            new_sound.pos.x = 0
-            new_sound.pos.y = 0
+    if x then
+        assert(y)
+        new_sound.pos = {}
+        new_sound.pos.x = 0
+        new_sound.pos.y = 0
 
-            local max_dist = MAX_DISTANCE
-            if max_hearing_dist then
-                max_dist = max_hearing_dist
-            end
-            new_sound.max_dist = max_dist
-
-            local vector = {x = listener_pos.x - x, y = listener_pos.y - y}
-            local distance = (vector.x * vector.x) + (vector.y * vector.y)
-            distance = math.sqrt(distance)
-
-            volume = math.max(0, 1 - (distance / max_dist))
+        local max_dist = MAX_DISTANCE
+        if max_hearing_dist then
+            max_dist = max_hearing_dist
         end
+        new_sound.max_dist = max_dist
 
-        if sound_pool[file_name] and (#sound_pool[file_name] > 0) then
-            new_sound.source = table.remove(sound_pool[file_name])
-        else
-            if not static_sound_data[file_name] then
-                local file_path = "sounds"
-                  .. '/' .. file_name
-                  .. '.' .. "ogg"
-                static_sound_data[file_name]
-                  = love.sound.newSoundData(file_path)
-            end
-            new_sound.source
-              = love.audio.newSource(static_sound_data[file_name])
-        end
+        local vector = {x = listener_pos.x - x, y = listener_pos.y - y}
+        local distance = (vector.x * vector.x) + (vector.y * vector.y)
+        distance = math.sqrt(distance)
 
-        new_sound.source:setVolume(volume * Settings.get('volume'))
-        new_sound.source:setLooping(loops)
-
-        if not start_stopped then
-            new_sound.source:play()
-        else
-            assert(persist)
-        end
-
-        new_sound.unclearable = unclearable
-        new_sound.persist = persist
-
-        table.insert(current_sounds, new_sound)
-
-        return new_sound
+        volume = math.max(0, 1 - (distance / max_dist))
     end
+
+    if sound_pool[file_name] and (#sound_pool[file_name] > 0) then
+        new_sound.source = table.remove(sound_pool[file_name])
+    else
+        if not static_sound_data[file_name] then
+            local file_path = "sounds"
+              .. '/' .. file_name
+              .. '.' .. "ogg"
+            static_sound_data[file_name]
+              = love.sound.newSoundData(file_path)
+        end
+        new_sound.source
+          = love.audio.newSource(static_sound_data[file_name])
+    end
+
+    new_sound.source:setVolume(volume * Settings.get('volume'))
+    new_sound.source:setLooping(loops)
+
+    if not start_stopped then
+        new_sound.source:play()
+    else
+        assert(persist)
+    end
+
+    new_sound.unclearable = unclearable
+    new_sound.persist = persist
+
+    table.insert(current_sounds, new_sound)
+
+    return new_sound
 end
 SoundManager.new_sound = new_sound
 
