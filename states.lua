@@ -202,22 +202,6 @@ function Game.create()
     print("dungeon")
     
     player = playerClass:new(416, 288, "textures/player/base/human_m.png", 100, 100)
-    
-    for level = 1, level_num do 
-        for num=1, 5 do
-            cave.enemies[level][num] = monster:new(100, "textures/dc-mon/acid_blob.png", level)
-            dungeon.enemies[level][num] = monster:new(100, "textures/dc-mon/acid_blob.png", level)
-        end
-    end
-    print("enemies")
-
-    for level = 1, level_num do 
-        for num=1, 20 do
-            cave.items[level][num] = item:new("textures/item/potion/ruby.png", level)
-            dungeon.items[level][num] = item:new("textures/item/potion/ruby.png", level)
-        end
-    end
-    print("items")
 
     fireball = love.graphics.newParticleSystem(love.graphics.newImage("textures/part1.png"), 500)
     fireball:setEmissionRate(100)

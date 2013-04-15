@@ -231,7 +231,7 @@ function Astar:getSearchDepth() return self.searchDepth end
 function Astar:setInitialNode (x,y)
     local node = Node(x,y)
     if not node:inBound(self.map) or not self:isWalkable(node) then
-    error ('Location ('..node.x..','..node.y..') is unwalkable or not valid!',2)
+    print('Location ('..node.x..','..node.y..') is unwalkable or not valid!',2)
     end
     self.initialNode = node
 end
@@ -257,7 +257,7 @@ function Astar:setFinalNode (x,y)
                 self.finalNode = newLocation
                 end
             else        
-                error ('Location ('..node.x..','..node.y..') is unwalkable!',2) 
+                print('Location ('..node.x..','..node.y..') is unwalkable!',2) 
             end
         else
         self.finalNode = node
@@ -287,7 +287,7 @@ function Astar:getPath()
     computePath(self)
     if self.path then
         if #self.path == 0 then
-            error ('Path was not found!',2)
+            print('Path was not found!',2)
         end
     local way={}
     local nxt=Node(self.finalNode.x,self.finalNode.y)

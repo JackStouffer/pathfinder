@@ -149,6 +149,7 @@ function levelSystem(level_num, difficulty, Type)
     local difficulty = difficulty
     local rand = 1
     local image
+    local enemy_num = 5
 
     for level = 1, level_num do
         if Type == "cave" then
@@ -166,8 +167,8 @@ function levelSystem(level_num, difficulty, Type)
         --turn the map into a reference for the images
         for y = 1, #Map[level] do
             for x = 1, #Map[level][1] do
-                rand = math.random(1, #tile[Map[level][y][x]])
-                image = tile[Map[level][y][x]][rand]
+                rand = math.random(1, #tile[Type][Map[level][y][x]])
+                image = tile[Type][Map[level][y][x]][rand]
                 Map[level][y][x] = {}
                 Map[level][y][x].image = image
                 Map[level][y][x].visibility = false
@@ -177,6 +178,26 @@ function levelSystem(level_num, difficulty, Type)
         enemies[level] = {}
         items[level] = {}
     end
+
+    if difficulty == "normal" then
+        enemy_num = 5
+    elseif difficulty == "hard" then
+        enemy_num = 10
+    end
+
+    for level = 1, level_num do
+        for num=1, enemy_num do
+            enemies[level][num] = monster:new(100, "textures/dc-mon/acid_blob.png", level, CollisionMap[level], Map[level])
+        end
+    end
+    print("enemies")
+
+    for level = 1, level_num do 
+        for num=1, 20 do
+            items[level][num] = item:new("textures/item/potion/ruby.png", level, CollisionMap[level], Map[level])
+        end
+    end
+    print("items")
 
     system.map = Map
     system.collisionMap = CollisionMap
@@ -211,6 +232,22 @@ function drawMap(Map, mapDisplayW, mapDisplayH, radius, sight)
 
     if ((player.y / 32) + 1) - sight < 1 then
         start_y_sight = 1
+    end
+
+    if ((player.x / 32) + 1) + radius > mapWidth then
+        endx = mapWidth
+    end
+
+    if ((player.y / 32) + 1) + radius > mapHeight then
+        endy = mapHeight
+    end
+
+    if ((player.x / 32) + 1) + sight > mapWidth then
+        end_x_sight = mapWidth
+    end
+
+    if ((player.y / 32) + 1) + sight > mapHeight then
+        end_y_sight = mapHeight
     end
 
     for y = starty, endy do

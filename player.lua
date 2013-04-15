@@ -13,7 +13,7 @@ function playerClass:__init(x, y, body, health, mana)
 
     SoundManager.set_listener(self.x, self.y)
     
-    -- system.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 1
+    --system.collisionMap[current_level][(self.y / 32) + 1][(self.x / 32) + 1] = 1
 end
 
 function playerClass:keypressed(key, system)
