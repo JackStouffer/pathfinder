@@ -196,10 +196,8 @@ function Game.create()
     setmetatable(temp, Game)
     
     cave = levelSystem(level_num, "normal", "cave")
-    print("cave")
 
     dungeon = levelSystem(level_num, "normal", "dungeon")
-    print("dungeon")
     
     player = playerClass:new(416, 288, "textures/player/base/human_m.png", 100, 100)
 
@@ -219,7 +217,6 @@ function Game.create()
     fireball:stop()
 
     terrain = makeTerrain()
-    print("terrain")
 
     menuMusic.source:stop()
     caveMusic.source:play()
@@ -239,7 +236,7 @@ function Game:draw()
         love.graphics.push()
         	love.graphics.translate(player.translate_x, player.translate_y) --have the player always centered
             
-            drawMap(cave.map[current_level], mapWidth, mapHeight, 15, 6)
+            drawMap(cave, mapWidth, mapHeight, 15, 6)
             
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
             
@@ -272,7 +269,7 @@ function Game:draw()
         love.graphics.push()
             love.graphics.translate(player.translate_x, player.translate_y) --have the player always centered
             
-            drawMap(dungeon.map[current_level], mapWidth, mapHeight, 15, 6)
+            drawMap(dungeon, mapWidth, mapHeight, 15, 6)
             
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
             

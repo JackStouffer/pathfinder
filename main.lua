@@ -9,6 +9,7 @@ class = require "30log"
 Astar = require "astar"
 SoundManager = require 'sound_manager'
 Settings = require 'settings'
+bresenham = require 'bresenham'
 require "TSerial"
 require "map"
 require "cave"

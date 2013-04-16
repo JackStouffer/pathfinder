@@ -15,15 +15,15 @@ Currently Implemented But Needs Work:
 * monsters with A* path finding
 * a very basic gui
 * multiple leveled areas
-* Very early Fog of War Implementation
+* Fog of War
+* locations to overworld
+* dungeon generation
 
 Things That Haven't Been Started:
 ---------------------------------
-* dungeon generation
 * maze generation
 * forest generation
 * player map
-* locations to overworld
 * combat
 * inventory
 * items
@@ -31,7 +31,6 @@ Things That Haven't Been Started:
 * Armor
 * Magic
 * more advanced monster AI (Flee, Intercept)
-* add text to menu options
 * pause menu
 * NPCs
 * towns

@@ -190,14 +190,12 @@ function levelSystem(level_num, difficulty, Type)
             enemies[level][num] = monster:new(100, "textures/dc-mon/acid_blob.png", level, CollisionMap[level], Map[level])
         end
     end
-    print("enemies")
 
     for level = 1, level_num do 
         for num=1, 20 do
             items[level][num] = item:new("textures/item/potion/ruby.png", level, CollisionMap[level], Map[level])
         end
     end
-    print("items")
 
     system.map = Map
     system.collisionMap = CollisionMap
@@ -206,7 +204,7 @@ function levelSystem(level_num, difficulty, Type)
     return system
 end
 
-function drawMap(Map, mapDisplayW, mapDisplayH, radius, sight)
+function drawMap(system, mapDisplayW, mapDisplayH, radius, sight)
     local startx = ((player.x / 32) + 1) - radius
     local starty = ((player.y / 32) + 1) - radius
     local endx = ((player.x / 32) + 1) + radius
@@ -253,21 +251,30 @@ function drawMap(Map, mapDisplayW, mapDisplayH, radius, sight)
     for y = starty, endy do
         for x = startx, endx do
             if y >= start_y_sight and y <= end_y_sight and x >= start_x_sight and x <= end_x_sight then
-                Map[y][x].visibility = true                
-            elseif not(y >= start_y_sight and y <= end_y_sight and x >= start_x_sight and x <= end_x_sight) and Map[y][x].visibility == true then
-                Map[y][x].visibility = "fog"
-            elseif Map[y][x].visibility == "fog" then
+                
+                bresenham.los((player.x / 32) + 1,(player.y / 32) + 1, x, y, function(x,y)
+                    if system.collisionMap[current_level][y][x] == 2 then 
+                        system.map[current_level][y][x].visibility = true
+                        return false
+                    end
+                    system.map[current_level][y][x].visibility = true
+                    return true
+                end)
+
+            elseif not(y >= start_y_sight and y <= end_y_sight and x >= start_x_sight and x <= end_x_sight) and system.map[current_level][y][x].visibility == true then
+                system.map[current_level][y][x].visibility = "fog"
+            elseif system.map[current_level][y][x].visibility == "fog" then
                 
             else
-                Map[y][x].visibility = false
+                system.map[current_level][y][x].visibility = false
             end
             
-            if Map[y][x].visibility == true then
+            if system.map[current_level][y][x].visibility == true then
                 love.graphics.setColor(255, 255, 255, 255)
-                love.graphics.draw(Map[y][x].image, (x * 32) - 32, (y * 32) - 32)
-            elseif Map[y][x].visibility == "fog" then
+                love.graphics.draw(system.map[current_level][y][x].image, (x * 32) - 32, (y * 32) - 32)
+            elseif system.map[current_level][y][x].visibility == "fog" then
                 love.graphics.setColor(255, 255, 255, 100)
-                love.graphics.draw(Map[y][x].image, (x * 32) - 32, (y * 32) - 32)
+                love.graphics.draw(system.map[current_level][y][x].image, (x * 32) - 32, (y * 32) - 32)
             end
         end
     end
