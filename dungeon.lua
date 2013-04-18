@@ -109,5 +109,20 @@ function createDungeon(width, height)
         Map[connectedCells[i].y][connectedCells[i].x] = 0
     end
 
+    --make the edges solid
+    for y = 1, height do
+        for x = 1, width do
+            if x == 1 then
+                Map[y][x] = 2
+            elseif y == 1 then
+                Map[y][x] = 2
+            elseif x == width then
+                Map[y][x] = 2
+            elseif y == height then
+                Map[y][x] =2
+            end
+        end
+    end
+
     return Map
 end

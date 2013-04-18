@@ -194,10 +194,13 @@ function Game.create()
     local openY = 0
 	
     setmetatable(temp, Game)
-    
+
+    print("start")
     cave = levelSystem(level_num, "normal", "cave")
+    print("cave")
 
     dungeon = levelSystem(level_num, "normal", "dungeon")
+    print("dungeon")
     
     player = playerClass:new(416, 288, "textures/player/base/human_m.png", 100, 100)
 
@@ -228,19 +231,16 @@ function Game:draw()
     if gameState == "world" then
         if showPerlin == 1 then plot2D(terrain.perlin)
         else
-            love.graphics.setColor(161, 235, 255, 255)
-            love.graphics.rectangle("fill", -1, -1, love.graphics.getWidth()+2, love.graphics.getHeight()+2)
             drawTerrain(terrain)
         end
     elseif gameState == "cave" then
         love.graphics.push()
         	love.graphics.translate(player.translate_x, player.translate_y) --have the player always centered
+            love.graphics.scale(player.scale, player.scale)
             
             drawMap(cave, mapWidth, mapHeight, 15, 6)
             
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
-            
-            player:draw()
             
             for x = 1, #cave.enemies[current_level] do
                 cave.enemies[current_level][x]:draw()
@@ -249,6 +249,8 @@ function Game:draw()
             for x = 1, #cave.items[current_level] do
                 cave.items[current_level][x]:draw()
             end
+
+            player:draw()
         love.graphics.pop()
         
         --gui
@@ -273,8 +275,6 @@ function Game:draw()
             
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
             
-            player:draw()
-            
             for x = 1, #dungeon.enemies[current_level] do
                 dungeon.enemies[current_level][x]:draw()
             end
@@ -282,6 +282,8 @@ function Game:draw()
             for x = 1, #dungeon.items[current_level] do
                 dungeon.items[current_level][x]:draw()
             end
+
+            player:draw()
         love.graphics.pop()
         
         --gui
@@ -325,6 +327,8 @@ function Game:mousepressed(x, y, button)
 	if gameState == "world" then
         if x >= terrain.locations.cave.x and x <= terrain.locations.cave.x + 32 and y <= terrain.locations.cave.y + 32 and y >= terrain.locations.cave.y then
             gameState = "cave"
+        elseif x >= terrain.locations.dungeon.x and x <= terrain.locations.dungeon.x + 32 and y <= terrain.locations.dungeon.y + 32 and y >= terrain.locations.dungeon.y then
+            gameState = "dungeon"
         end
     end
 end
@@ -336,7 +340,11 @@ function Game:keypressed(key)
         player:keypressed(key, dungeon)
     end
 
-    if key == "r" then
+    if key == "w" then
+        player.scale = player.scale - .1
+    elseif key == "s" then
+        player.scale = player.scale + .1
+    elseif key == "r" then
         terrain = makeTerrain()
     elseif key == "p" then
         showPerlin = 1 - showPerlin

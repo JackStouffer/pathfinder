@@ -67,6 +67,9 @@ function love.load()
     tile.cave[2][3] = love.graphics.newImage("textures/dc-dngn/wall/stone_dark2.png")
     tile.cave[2][4] = love.graphics.newImage("textures/dc-dngn/wall/stone_dark3.png")
 
+    ladder_img_down = love.graphics.newImage("textures/dc-dngn/gateways/stone_stairs_down.png")
+    ladder_img_up = love.graphics.newImage("textures/dc-dngn/gateways/stone_stairs_up.png")
+
     state = Menu.create()   -- current game state
     gameState = "world"
 end

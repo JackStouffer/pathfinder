@@ -1,5 +1,6 @@
 monster = class{health, image, level, map}
 item = class{image, level, map}
+stairs = class{image, level}
 
 function monster:__init(health, image, level, map, image_map)
     self.level = level
@@ -67,6 +68,31 @@ function item:__init(image, level, map, image_map)
 end
 
 function item:draw()
+    if self.image_map[self.gridy][self.gridx].visibility == true then
+        love.graphics.draw(self.image, self.x, self.y)
+    end
+end
+
+function stairs:__init(image, direction, level, map, image_map)
+    self.level = level
+    self.direction = direction
+    self.map = map
+    self.image_map = image_map
+    self.startx, self.starty = getRandOpenTile(self.map, mapWidth, mapHeight)
+    self.x = (self.startx * 32) - 32
+    self.y = (self.starty * 32) - 32
+    self.gridx = self.startx
+    self.gridy = self.starty
+    self.image = love.graphics.newImage(image)
+
+    if self.direction == "up" then 
+        self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 4
+    elseif self.direction == "down" then
+        self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 5
+    end
+end
+
+function stairs:draw()
     if self.image_map[self.gridy][self.gridx].visibility == true then
         love.graphics.draw(self.image, self.x, self.y)
     end

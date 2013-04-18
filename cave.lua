@@ -187,13 +187,19 @@ function levelSystem(level_num, difficulty, Type)
 
     for level = 1, level_num do
         for num=1, enemy_num do
-            enemies[level][num] = monster:new(100, "textures/dc-mon/acid_blob.png", level, CollisionMap[level], Map[level])
+            --enemies[level][num] = monster:new(100, "textures/dc-mon/acid_blob.png", level, CollisionMap[level], Map[level])
         end
     end
 
     for level = 1, level_num do 
         for num=1, 20 do
             items[level][num] = item:new("textures/item/potion/ruby.png", level, CollisionMap[level], Map[level])
+        end
+        if level ~= level_num then
+            table.insert(items[level], stairs:new("textures/dc-dngn/gateways/stone_stairs_down.png", "down", level, CollisionMap[level], Map[level]))
+        end
+        if level ~= 1 then
+            table.insert(items[level], stairs:new("textures/dc-dngn/gateways/stone_stairs_up.png", "up", level, CollisionMap[level], Map[level]))
         end
     end
 

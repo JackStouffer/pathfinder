@@ -9,7 +9,6 @@ Currently Implemented But Needs Work:
 -------------------------------------
 * a main menu
 * using perlin noise to create a landscape
-* using Cellular Automata to create a cave like map
 * using a random "growing" algorithm to create a cave
 * walking and collision detection
 * monsters with A* path finding

@@ -219,9 +219,12 @@ function makeTerrain(seed)
     terrain.value = {}
     terrain.locations = {}
 
-    local found = false
-    local x = 1
-    local y = 1
+    local cave_found = false
+    local dungeon_found = false
+    local cave_x = 1
+    local cave_y = 1
+    local dungeon_x = 1
+    local dungeon_y = 1
     
     for r = 1, #terrain.perlin do
         terrain.value[r] = {}
@@ -231,20 +234,35 @@ function makeTerrain(seed)
         end
     end
 
-    while found == false do
-        x = math.random(1, #terrain.value[1])
-        y = math.random(1, #terrain.value)
-        if terrain.value[y][x] >= -.9 and terrain.value[y][x] < -.7 then 
-            found = true 
+    while cave_found == false do
+        cave_x = math.random(1, #terrain.value[1])
+        cave_y = math.random(1, #terrain.value)
+        if terrain.value[cave_y][cave_x] >= -.9 and terrain.value[cave_y][cave_x] < -.7 then 
+            cave_found = true 
+        end
+    end
+
+    while dungeon_found == false do
+        dungeon_x = math.random(1, #terrain.value[1])
+        dungeon_y = math.random(1, #terrain.value)
+        if terrain.value[dungeon_y][dungeon_x] >= -.7 and terrain.value[dungeon_y][dungeon_x] < -.5 then 
+            dungeon_found = true 
         end
     end
 
     terrain.locations.cave = {}
-    terrain.locations.cave.gridx = x
-    terrain.locations.cave.gridy = y
+    terrain.locations.cave.gridx = cave_x
+    terrain.locations.cave.gridy = cave_y
     terrain.locations.cave.x = (terrain.locations.cave.gridx-1)/(#(terrain.value[1]))*love.graphics.getWidth()
     terrain.locations.cave.y = (terrain.locations.cave.gridy-1)/(#terrain.value)*love.graphics.getHeight()
     terrain.locations.cave.image = love.graphics.newImage("textures/dc-dngn/dngn_open_door.png")
+
+    terrain.locations.dungeon = {}
+    terrain.locations.dungeon.gridx = dungeon_x
+    terrain.locations.dungeon.gridy = dungeon_y
+    terrain.locations.dungeon.x = (terrain.locations.dungeon.gridx-1)/(#(terrain.value[1]))*love.graphics.getWidth()
+    terrain.locations.dungeon.y = (terrain.locations.dungeon.gridy-1)/(#terrain.value)*love.graphics.getHeight()
+    terrain.locations.dungeon.image = love.graphics.newImage("textures/dc-dngn/gateways/dngn_enter_labyrinth.png")
     
     return terrain
 end
@@ -268,6 +286,7 @@ function drawTerrain(terrain)
             love.graphics.rectangle("fill", (c-1)/(#(terrain.value[1]))*love.graphics.getWidth(), (r-1)/(#terrain.value)*love.graphics.getHeight(), love.graphics.getWidth()/#(terrain.value[1]), love.graphics.getHeight()/#terrain.value)
         end
     end
-    
+    love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(terrain.locations.cave.image, terrain.locations.cave.x, terrain.locations.cave.y)
+    love.graphics.draw(terrain.locations.dungeon.image, terrain.locations.dungeon.x, terrain.locations.dungeon.y)
 end
