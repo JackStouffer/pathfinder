@@ -195,31 +195,17 @@ function Game.create()
 	
     setmetatable(temp, Game)
 
-    print("start")
     cave = levelSystem(level_num, "normal", "cave")
     print("cave")
 
     dungeon = levelSystem(level_num, "normal", "dungeon")
     print("dungeon")
     
-    player = playerClass:new(416, 288, "textures/player/base/human_m.png", 100, 100)
-
-    fireball = love.graphics.newParticleSystem(love.graphics.newImage("textures/part1.png"), 500)
-    fireball:setEmissionRate(100)
-    fireball:setSpeed(200, 300)
-    fireball:setGravity(0)
-    fireball:setSizes(2, 1)
-    fireball:setColors(255, 0, 0, 255, 254, 166, 61, 170, 255, 255, 0, 0)
-    fireball:setPosition((player.x * 32) - 32, (player.y * 32) - 32)
-    fireball:setLifetime(-1)
-    fireball:setParticleLife(.3)
-    fireball:setDirection(0)
-    fireball:setSpread(360)
-    fireball:setRadialAcceleration(-2000)
-    fireball:setTangentialAcceleration(0)
-    fireball:stop()
+    player = playerClass:new(cave, dungeon, "textures/player/base/human_m.png", 100, 100)
 
     terrain = makeTerrain()
+
+    SoundManager.load()
 
     menuMusic.source:stop()
     caveMusic.source:play()
@@ -235,7 +221,7 @@ function Game:draw()
         end
     elseif gameState == "cave" then
         love.graphics.push()
-        	love.graphics.translate(player.translate_x, player.translate_y) --have the player always centered
+        	love.graphics.translate(cave.map[current_level].translate_x, cave.map[current_level].translate_y) --have the player always centered
             love.graphics.scale(player.scale, player.scale)
             
             drawMap(cave, mapWidth, mapHeight, 15, 6)
@@ -250,13 +236,12 @@ function Game:draw()
                 cave.items[current_level][x]:draw()
             end
 
-            player:draw()
+            player:draw(cave)
         love.graphics.pop()
         
         --gui
         love.graphics.setColorMode("modulate")
         love.graphics.setBlendMode("additive")
-        love.graphics.draw(fireball, 0, 0)
         love.graphics.setBlendMode("alpha")
 
         love.graphics.setColor(0, 0, 0)
@@ -269,7 +254,7 @@ function Game:draw()
         love.graphics.setColor(255, 255, 255)
     elseif gameState == "dungeon" then
         love.graphics.push()
-            love.graphics.translate(player.translate_x, player.translate_y) --have the player always centered
+            love.graphics.translate(dungeon.map[current_level].translate_x, dungeon.map[current_level].translate_y) --have the player always centered
             
             drawMap(dungeon, mapWidth, mapHeight, 15, 6)
             
@@ -283,12 +268,11 @@ function Game:draw()
                 dungeon.items[current_level][x]:draw()
             end
 
-            player:draw()
+            player:draw(dungeon)
         love.graphics.pop()
         
         --gui
         love.graphics.setBlendMode("additive")
-        love.graphics.draw(fireball, 0, 0)
         love.graphics.setBlendMode("alpha")
 
         love.graphics.setColor(0, 0, 0)
@@ -305,22 +289,6 @@ end
 
 function Game:update(dt)
     SoundManager.update()
-
-    if love.mouse.isDown("l") then
-        fireball:setPosition(love.mouse.getX(), love.mouse.getY())
-
-        local delta_y = love.mouse.getY() - player.y
-        local delta_x = love.mouse.getY() - player.x
-
-        local direction = math.atan2(delta_y, delta_x)
-        print(direction)
-        fireball:setDirection(1)
-        fireball:start()
-    else
-        fireball:stop()
-    end
-
-    fireball:update(dt)
 end
 
 function Game:mousepressed(x, y, button)

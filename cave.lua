@@ -174,6 +174,18 @@ function levelSystem(level_num, difficulty, Type)
                 Map[level][y][x].visibility = false
             end
         end
+
+        local start_x, start_y = getRandOpenTile(CollisionMap[level], mapWidth, mapHeight)
+        local player_x = (start_x * 32) - 32
+        local player_y = (start_y * 32) - 32
+
+        local translate_x = (player_x - 416) * -1
+        local translate_y = (player_y - 288) * -1
+
+        Map[level].player_x = player_x
+        Map[level].player_y = player_y
+        Map[level].translate_x = translate_x
+        Map[level].translate_y = translate_y
         
         enemies[level] = {}
         items[level] = {}
@@ -211,46 +223,46 @@ function levelSystem(level_num, difficulty, Type)
 end
 
 function drawMap(system, mapDisplayW, mapDisplayH, radius, sight)
-    local startx = ((player.x / 32) + 1) - radius
-    local starty = ((player.y / 32) + 1) - radius
-    local endx = ((player.x / 32) + 1) + radius
-    local endy = ((player.y / 32) + 1) + radius
+    local startx = ((system.map[current_level].player_x / 32) + 1) - radius
+    local starty = ((system.map[current_level].player_y / 32) + 1) - radius
+    local endx = ((system.map[current_level].player_x / 32) + 1) + radius
+    local endy = ((system.map[current_level].player_y / 32) + 1) + radius
 
-    local start_x_sight = ((player.x / 32) + 1) - sight
-    local start_y_sight = ((player.y / 32) + 1) - sight
-    local end_x_sight = ((player.x / 32) + 1) + sight
-    local end_y_sight = ((player.y / 32) + 1) + sight
+    local start_x_sight = ((system.map[current_level].player_x / 32) + 1) - sight
+    local start_y_sight = ((system.map[current_level].player_y / 32) + 1) - sight
+    local end_x_sight = ((system.map[current_level].player_x / 32) + 1) + sight
+    local end_y_sight = ((system.map[current_level].player_y / 32) + 1) + sight
 
     
-    if ((player.x / 32) + 1) - radius < 1 then
+    if ((system.map[current_level].player_x / 32) + 1) - radius < 1 then
         startx = 1
     end
 
-    if ((player.y / 32) + 1) - radius < 1 then
+    if ((system.map[current_level].player_y / 32) + 1) - radius < 1 then
         starty = 1
     end
 
-    if ((player.x / 32) + 1) - sight < 1 then
+    if ((system.map[current_level].player_x / 32) + 1) - sight < 1 then
         start_x_sight = 1
     end
 
-    if ((player.y / 32) + 1) - sight < 1 then
+    if ((system.map[current_level].player_y / 32) + 1) - sight < 1 then
         start_y_sight = 1
     end
 
-    if ((player.x / 32) + 1) + radius > mapWidth then
+    if ((system.map[current_level].player_x / 32) + 1) + radius > mapWidth then
         endx = mapWidth
     end
 
-    if ((player.y / 32) + 1) + radius > mapHeight then
+    if ((system.map[current_level].player_y / 32) + 1) + radius > mapHeight then
         endy = mapHeight
     end
 
-    if ((player.x / 32) + 1) + sight > mapWidth then
+    if ((system.map[current_level].player_x / 32) + 1) + sight > mapWidth then
         end_x_sight = mapWidth
     end
 
-    if ((player.y / 32) + 1) + sight > mapHeight then
+    if ((system.map[current_level].player_y / 32) + 1) + sight > mapHeight then
         end_y_sight = mapHeight
     end
 
@@ -258,7 +270,7 @@ function drawMap(system, mapDisplayW, mapDisplayH, radius, sight)
         for x = startx, endx do
             if y >= start_y_sight and y <= end_y_sight and x >= start_x_sight and x <= end_x_sight then
                 
-                bresenham.los((player.x / 32) + 1,(player.y / 32) + 1, x, y, function(x,y)
+                bresenham.los((system.map[current_level].player_x / 32) + 1,(system.map[current_level].player_y / 32) + 1, x, y, function(x,y)
                     if system.collisionMap[current_level][y][x] == 2 then 
                         system.map[current_level][y][x].visibility = true
                         return false
@@ -301,22 +313,22 @@ function getRandOpenTile(Map, mapW, mapH)
     if found then return x,y end
 end
 
-function testCollisionTile(CollisionMap, x, y)
+function testCollisionTile(system, x, y)
     -- I add an extra one due to the way lua handles table indexing with zero not being the first
-    -- number, what a stupid design decision
-    if CollisionMap[player.y/32 + 1 + y][player.x/32 + 1 + x] == 2 then
+    -- number; what a stupid design decision
+    if system.collisionMap[current_level][system.map[current_level].player_y/32 + 1 + y][system.map[current_level].player_x/32 + 1 + x] == 2 then
         return true
     end
     return false
 end
 
-function testMapEdge(x, y, mapW, mapH)
+function testMapEdge(system, x, y, mapW, mapH)
     --if the player's input is going to send him off the map, then return true
     --rather than an actual pixel amount, the x and y are vectors that represent the direction to be checked
-    if  player.x + x < 0 or
-        player.x + x == (mapW * 32) or
-        player.y + y < 0 or
-        player.y + y == (mapH * 32) then
+    if  system.map[current_level].player_x + x < 0 or
+        system.map[current_level].player_x + x == (mapW * 32) or
+        system.map[current_level].player_y + y < 0 or
+        system.map[current_level].player_y + y == (mapH * 32) then
         return true
     end
     return false

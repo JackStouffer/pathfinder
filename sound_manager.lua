@@ -161,7 +161,7 @@ local function update()
                     max_dist = s.max_dist
                 end
 
-                local vector = {x = listener_pos.x - s.pos.x, y = player.y - s.pos.y}
+                local vector = {x = listener_pos.x - s.pos.x, y = listener_pos.y - s.pos.y}
                 local distance = (vector.x * vector.x) + (vector.y * vector.y)
                 distance = math.sqrt(distance)
                 local volume = math.max(0, 1 - (distance / max_dist))
