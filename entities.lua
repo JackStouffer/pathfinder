@@ -27,7 +27,7 @@ end
 
 function monster:turn()
     --use a simple vector magnitude to find the distance between the player and the monster
-    self.vector = {x = player.x - self.x, y = player.y - self.y}
+    self.vector = {x = self.image_map.player_x - self.x, y = self.image_map.player_y - self.y}
     self.distance = (self.vector.x * self.vector.x) + (self.vector.y * self.vector.y)
     self.distance = math.sqrt(self.distance)
     
@@ -36,7 +36,7 @@ function monster:turn()
         self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 0
         
         Astar:setInitialNode((self.x / 32) + 1, (self.y / 32) + 1)
-        Astar:setFinalNode((player.x / 32) + 1, (player.y / 32) + 1)
+        Astar:setFinalNode((self.image_map.player_x / 32) + 1, (self.image_map.player_y / 32) + 1)
         self.path = Astar:getPath()
         
         if self.path ~= nil then

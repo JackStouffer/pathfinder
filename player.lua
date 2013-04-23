@@ -72,11 +72,11 @@ function playerClass:keypressed(key, system)
         print(system.collisionMap[current_level][(system.map[current_level].player_y / 32) + 1][(system.map[current_level].player_x / 32) + 1])
         --stairs up
         if system.collisionMap[current_level][(system.map[current_level].player_y / 32) + 1][(system.map[current_level].player_x / 32) + 1] == 4 then
-            current_level = current_level + 1
+            current_level = current_level - 1
         end
         --stairs down
         if system.collisionMap[current_level][(system.map[current_level].player_y / 32) + 1][(system.map[current_level].player_x / 32) + 1] == 5 then
-            current_level = current_level - 1
+            current_level = current_level + 1
         end
     end
 end

@@ -236,6 +236,10 @@ function Game:draw()
                 cave.items[current_level][x]:draw()
             end
 
+            for x = 1, #cave.stair[current_level] do
+                cave.stair[current_level][x]:draw()
+            end
+
             player:draw(cave)
         love.graphics.pop()
         
@@ -266,6 +270,10 @@ function Game:draw()
 
             for x = 1, #dungeon.items[current_level] do
                 dungeon.items[current_level][x]:draw()
+            end
+
+            for x = 1, #dungeon.stair[current_level] do
+                dungeon.stair[current_level][x]:draw()
             end
 
             player:draw(dungeon)

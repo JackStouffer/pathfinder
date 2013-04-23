@@ -39,8 +39,8 @@ local function minerCave(Width, Height)
         end
     end
 
-    --start at the player position
-    NewMiner(13, 9)
+    --start in the middle
+    NewMiner(width / 2, height / 2)
 
     while false_counter < max_miners do
         for k,v in ipairs(MinerList) do
@@ -145,6 +145,7 @@ function levelSystem(level_num, difficulty, Type)
     local CollisionMap = {}
     local enemies = {}
     local items = {}
+    local stair = {}
     local system = {}
     local difficulty = difficulty
     local rand = 1
@@ -174,51 +175,68 @@ function levelSystem(level_num, difficulty, Type)
                 Map[level][y][x].visibility = false
             end
         end
-
-        local start_x, start_y = getRandOpenTile(CollisionMap[level], mapWidth, mapHeight)
-        local player_x = (start_x * 32) - 32
-        local player_y = (start_y * 32) - 32
-
-        local translate_x = (player_x - 416) * -1
-        local translate_y = (player_y - 288) * -1
-
-        Map[level].player_x = player_x
-        Map[level].player_y = player_y
-        Map[level].translate_x = translate_x
-        Map[level].translate_y = translate_y
         
         enemies[level] = {}
         items[level] = {}
+        stair[level] = {}
     end
 
+    --difficulty settings
     if difficulty == "normal" then
         enemy_num = 5
     elseif difficulty == "hard" then
         enemy_num = 10
     end
 
-    for level = 1, level_num do
-        for num=1, enemy_num do
-            --enemies[level][num] = monster:new(100, "textures/dc-mon/acid_blob.png", level, CollisionMap[level], Map[level])
-        end
-    end
+    --put the player in a random location on the first level
+    local start_x, start_y = getRandOpenTile(CollisionMap[1], mapWidth, mapHeight)
+    local player_x = (start_x * 32) - 32
+    local player_y = (start_y * 32) - 32
 
-    for level = 1, level_num do 
-        for num=1, 20 do
-            items[level][num] = item:new("textures/item/potion/ruby.png", level, CollisionMap[level], Map[level])
-        end
-        if level ~= level_num then
-            table.insert(items[level], stairs:new("textures/dc-dngn/gateways/stone_stairs_down.png", "down", level, CollisionMap[level], Map[level]))
-        end
-        if level ~= 1 then
-            table.insert(items[level], stairs:new("textures/dc-dngn/gateways/stone_stairs_up.png", "up", level, CollisionMap[level], Map[level]))
-        end
-    end
+    local translate_x = (player_x - 416) * -1
+    local translate_y = (player_y - 288) * -1
 
+    Map[1].player_x = player_x
+    Map[1].player_y = player_y
+    Map[1].translate_x = translate_x
+    Map[1].translate_y = translate_y
+
+    --store our vars in a nice data structure
     system.map = Map
     system.collisionMap = CollisionMap
     system.enemies = enemies
     system.items = items
+    system.stair = stair
+
+    --add in the entities in to the maps
+    for level = 1, level_num do 
+        for num=1, enemy_num do
+            system.enemies[level][num] = monster:new(100, "textures/dc-mon/acid_blob.png", level, CollisionMap[level], Map[level])
+        end
+        for num=1, 20 do
+            system.items[level][num] = item:new("textures/item/potion/ruby.png", level, CollisionMap[level], Map[level])
+        end
+        if level ~= level_num then
+            table.insert(system.stair[level], stairs:new("textures/dc-dngn/gateways/stone_stairs_down.png", "down", level, CollisionMap[level], Map[level]))
+        end
+        if level ~= 1 then
+            table.insert(system.stair[level], stairs:new("textures/dc-dngn/gateways/stone_stairs_up.png", "up", level, CollisionMap[level], Map[level]))
+        end
+    end
+
+    --on every level but the first, put the player on the up stairs to make
+    --it look like the actually went down the stairs
+    for level = 2, level_num do
+        for i, stairs in ipairs(system.stair[level]) do
+            if stairs.direction == 'up' then
+                Map[level].player_x = stairs.x
+                Map[level].player_y = stairs.y
+                Map[level].translate_x = (stairs.x - 416) * -1
+                Map[level].translate_y = (stairs.y - 288) * -1
+            end
+        end
+    end
+    
     return system
 end
 
