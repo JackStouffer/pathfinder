@@ -1,4 +1,4 @@
-Copyright (c) <2013> <Jack Stouffer>
+Copyright (c) 2013 Jack Stouffer
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
