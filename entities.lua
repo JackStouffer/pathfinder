@@ -14,6 +14,7 @@ function monster:__init(health, image, level, map, image_map)
     self.path = nil
     self.health = health
     self.image = love.graphics.newImage(image)
+    self.ap = 4
 
     self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 2
 end
@@ -40,8 +41,8 @@ function monster:turn()
         self.path = Astar:getPath()
         
         if self.path ~= nil then
-            self.x = (self.path[2].x * 32) - 32
-            self.y = (self.path[2].y * 32) - 32
+            self.x = (self.path[self.ap].x * 32) - 32
+            self.y = (self.path[self.ap].y * 32) - 32
             self.gridx = (self.x / 32) + 1
             self.gridy = (self.y / 32) + 1
             self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 2

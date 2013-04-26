@@ -7,8 +7,16 @@ function playerClass:__init(cave, dungeon, body, health, mana)
     self.max_health = health
     self.mana = mana
     self.max_mana = mana
+    self.ap = 6
 
     SoundManager.set_listener(self.x, self.y)
+end
+
+function playerClass:moveTo(system, grid_x, grid_y)
+    system.map[current_level].player_x = (grid_x * 32) - 32
+    system.map[current_level].player_y = (grid_y * 32) - 32
+    system.map[current_level].translate_x = (system.map[current_level].player_x - 416) * -1
+    system.map[current_level].translate_y = (system.map[current_level].player_y - 288) * -1
 end
 
 function playerClass:keypressed(key, system)
@@ -77,6 +85,65 @@ function playerClass:keypressed(key, system)
         --stairs down
         if system.collisionMap[current_level][(system.map[current_level].player_y / 32) + 1][(system.map[current_level].player_x / 32) + 1] == 5 then
             current_level = current_level + 1
+        end
+    end
+end
+
+function playerClass:mousepressed(x, y, button)
+    local grid_x
+    local grid_y
+    local cursor_path = nil
+    local node
+
+    if gameState == "cave" then
+        grid_x, grid_y = mouseToMapCoords(cave, x, y)
+        
+        if cave.collisionMap[current_level][grid_y][grid_x] == 0 and --if the spot is open 
+        cave.map[current_level][grid_y][grid_x].visibility ~= false then -- and the spot is not hidden
+            --check to see if the clicked location is close enough to get to in this turn
+            Astar:enableDiagonalMove()
+            Astar:setInitialNode((cave.map[current_level].player_x / 32) + 1, (cave.map[current_level].player_y / 32) + 1)
+            Astar:setFinalNode(grid_x, grid_y)
+            cursor_path = Astar:getPath()
+            
+            if cursor_path ~= nil and #cursor_path <= player.ap then 
+                cursor_nodes = {}
+                for nodes = 1, #cursor_path do
+                    node = {}
+                    node.x = (cursor_path[nodes].x * 32) - 32
+                    node.y = (cursor_path[nodes].y * 32) - 32
+                    table.insert(cursor_nodes, node)
+                end
+                player:moveTo(cave, cursor_path[#cursor_path].x, cursor_path[#cursor_path].y)
+                for x = 1, #cave.enemies[current_level] do
+                    cave.enemies[current_level][x]:turn()
+                end
+            end
+        end
+    elseif gameState == "dungeon" then
+        grid_x, grid_y = mouseToMapCoords(dungeon, x, y)
+        
+        if dungeon.collisionMap[current_level][grid_y][grid_x] == 0 and --if the spot is open
+        dungeon.map[current_level][grid_y][grid_x].visibility ~= false then -- and the spot is not hidden
+            --check to see if the clicked location is close enough to get to in this turn
+            Astar:enableDiagonalMove()
+            Astar:setInitialNode((dungeon.map[current_level].player_x / 32) + 1, (dungeon.map[current_level].player_y / 32) + 1)
+            Astar:setFinalNode(grid_x, grid_y)
+            cursor_path = Astar:getPath()
+            
+            if cursor_path ~= nil and #cursor_path <= player.ap then 
+                cursor_nodes = {}
+                for nodes = 1, #cursor_path do
+                    node = {}
+                    node.x = (cursor_path[nodes].x * 32) - 32
+                    node.y = (cursor_path[nodes].y * 32) - 32
+                    table.insert(cursor_nodes, node)
+                end
+                player:moveTo(dungeon, cursor_path[#cursor_path].x, cursor_path[#cursor_path].y)
+                for x = 1, #dungeon.enemies[current_level] do
+                    dungeon.enemies[current_level][x]:turn()
+                end
+            end
         end
     end
 end

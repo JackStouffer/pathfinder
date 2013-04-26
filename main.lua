@@ -18,6 +18,7 @@ require "player"
 require "states"
 require "gui"
 require "entities"
+require "utilities"
 
 function love.load()
     love.graphics.setMode(1024, 576, false, true, 0)
@@ -70,6 +71,8 @@ function love.load()
     ladder_img_down = love.graphics.newImage("textures/dc-dngn/gateways/stone_stairs_down.png")
     ladder_img_up = love.graphics.newImage("textures/dc-dngn/gateways/stone_stairs_up.png")
 
+    cursor_img = love.graphics.newImage("textures/dc-misc/cursor.png")
+
     state = Menu.create()   -- current game state
     gameState = "world"
 end
@@ -104,18 +107,4 @@ end
 
 function love.quit()
   print("Thanks for playing! Come back soon!")
-end
-
-function take_screenshot()
-    local screenshot = love.graphics.newScreenshot()
-
-    local time_string = os.date('%Y-%m-%d_%H-%M-%S')
-    local filename = 'warp_run_' .. time_string .. '.' .. ".png"
-
-    if not love.filesystem.exists('screenshots')
-      or not love.filesystem.isDirectory('screenshots') then
-        love.filesystem.mkdir('screenshots')
-    end
-
-    screenshot:encode('screenshots/' .. filename,".png")
 end
