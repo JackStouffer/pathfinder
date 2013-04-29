@@ -309,6 +309,13 @@ end
 
 function Game:update(dt)
     SoundManager.update()
+    if gameState == "cave" then
+        player:setTilePosition(cave)
+        player:move(cave, dt)
+    elseif gameState == "dungeon" then
+        player:setTilePosition(dungeon)
+        player:move(dungeon, dt)
+    end
 end
 
 function Game:mousepressed(x, y, button)

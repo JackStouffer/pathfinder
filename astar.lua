@@ -246,13 +246,13 @@ end
 function Astar:setFinalNode (x,y)
     local node = Node(x,y)
         if not node:inBound(self.map) then
-        error ('Location ('..node.x..','..node.y..') is out of the map!',2)
+            error('Location ('..node.x..','..node.y..') is out of the map!',2)
         end
         if not self:isWalkable(node) then
             if self:getSearchDepth() > 0 then
             local newLocation = getNewFreeNode(self,node)
                 if not newLocation then
-                error ('No walkable location found in the search area around Location ('..node.x..','..node.y..') !',2)
+                    print('No walkable location found in the search area around Location ('..node.x..','..node.y..') !',2)
                 else 
                 self.finalNode = newLocation
                 end
@@ -272,12 +272,6 @@ end
 
 -- Checks if a node is walkable
 function Astar:isWalkable(node)
-    -- for table_value = 1, #self.OBST_VALUE do
-    --     print(self.OBST_VALUE[table_value])
-    --     if self.map[node.y][node.x] == self.OBST_VALUE[table_value] then
-    --         return false
-    --     end
-    -- end
     return not (self.map[node.y][node.x] == self.OBST_VALUE)
 end
 

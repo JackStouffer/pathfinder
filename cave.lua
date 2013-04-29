@@ -198,6 +198,8 @@ function levelSystem(level_num, difficulty, Type)
 
     Map[1].player_x = player_x
     Map[1].player_y = player_y
+    Map[1].tile_x = start_x
+    Map[1].tile_y = start_y
     Map[1].translate_x = translate_x
     Map[1].translate_y = translate_y
 
@@ -231,6 +233,8 @@ function levelSystem(level_num, difficulty, Type)
             if stairs.direction == 'up' then
                 Map[level].player_x = stairs.x
                 Map[level].player_y = stairs.y
+                Map[level].tile_x = (stairs.x / 32) + 1
+                Map[level].tile_y = (stairs.y / 32) + 1
                 Map[level].translate_x = (stairs.x - 416) * -1
                 Map[level].translate_y = (stairs.y - 288) * -1
             end
@@ -241,46 +245,46 @@ function levelSystem(level_num, difficulty, Type)
 end
 
 function drawMap(system, mapDisplayW, mapDisplayH, radius, sight)
-    local startx = ((system.map[current_level].player_x / 32) + 1) - radius
-    local starty = ((system.map[current_level].player_y / 32) + 1) - radius
-    local endx = ((system.map[current_level].player_x / 32) + 1) + radius
-    local endy = ((system.map[current_level].player_y / 32) + 1) + radius
+    local startx = system.map[current_level].tile_x - radius
+    local starty = system.map[current_level].tile_y - radius
+    local endx = system.map[current_level].tile_x + radius
+    local endy = system.map[current_level].tile_y + radius
 
-    local start_x_sight = ((system.map[current_level].player_x / 32) + 1) - sight
-    local start_y_sight = ((system.map[current_level].player_y / 32) + 1) - sight
+    local start_x_sight = system.map[current_level].tile_x - sight
+    local start_y_sight = system.map[current_level].tile_y - sight
     local end_x_sight = ((system.map[current_level].player_x / 32) + 1) + sight
     local end_y_sight = ((system.map[current_level].player_y / 32) + 1) + sight
 
     
-    if ((system.map[current_level].player_x / 32) + 1) - radius < 1 then
+    if system.map[current_level].tile_x - radius < 1 then
         startx = 1
     end
 
-    if ((system.map[current_level].player_y / 32) + 1) - radius < 1 then
+    if system.map[current_level].tile_y - radius < 1 then
         starty = 1
     end
 
-    if ((system.map[current_level].player_x / 32) + 1) - sight < 1 then
+    if system.map[current_level].tile_x - sight < 1 then
         start_x_sight = 1
     end
 
-    if ((system.map[current_level].player_y / 32) + 1) - sight < 1 then
+    if system.map[current_level].tile_y - sight < 1 then
         start_y_sight = 1
     end
 
-    if ((system.map[current_level].player_x / 32) + 1) + radius > mapWidth then
+    if system.map[current_level].tile_x + radius > mapWidth then
         endx = mapWidth
     end
 
-    if ((system.map[current_level].player_y / 32) + 1) + radius > mapHeight then
+    if system.map[current_level].tile_y + radius > mapHeight then
         endy = mapHeight
     end
 
-    if ((system.map[current_level].player_x / 32) + 1) + sight > mapWidth then
+    if system.map[current_level].tile_x + sight > mapWidth then
         end_x_sight = mapWidth
     end
 
-    if ((system.map[current_level].player_y / 32) + 1) + sight > mapHeight then
+    if system.map[current_level].tile_y + sight > mapHeight then
         end_y_sight = mapHeight
     end
 
@@ -288,7 +292,7 @@ function drawMap(system, mapDisplayW, mapDisplayH, radius, sight)
         for x = startx, endx do
             if y >= start_y_sight and y <= end_y_sight and x >= start_x_sight and x <= end_x_sight then
                 
-                bresenham.los((system.map[current_level].player_x / 32) + 1,(system.map[current_level].player_y / 32) + 1, x, y, function(x,y)
+                bresenham.los(system.map[current_level].tile_x, system.map[current_level].tile_y, x, y, function(x,y)
                     if system.collisionMap[current_level][y][x] == 2 then 
                         system.map[current_level][y][x].visibility = true
                         return false

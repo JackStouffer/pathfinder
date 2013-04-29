@@ -37,12 +37,20 @@ function monster:turn()
         self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 0
         
         Astar:setInitialNode((self.x / 32) + 1, (self.y / 32) + 1)
-        Astar:setFinalNode((self.image_map.player_x / 32) + 1, (self.image_map.player_y / 32) + 1)
+        Astar:setFinalNode(self.image_map.tile_x, self.image_map.tile_y)
         self.path = Astar:getPath()
         
         if self.path ~= nil then
-            self.x = (self.path[self.ap].x * 32) - 32
-            self.y = (self.path[self.ap].y * 32) - 32
+            if #self.path > self.ap then
+                self.x = (self.path[self.ap].x * 32) - 32
+                self.y = (self.path[self.ap].y * 32) - 32
+            elseif #self.path == self.ap then
+                self.x = (self.path[self.ap - 1].x * 32) - 32
+                self.y = (self.path[self.ap - 1].y * 32) - 32
+            elseif #self.path < self.ap then
+                self.x = (self.path[#self.path - 1].x * 32) - 32
+                self.y = (self.path[#self.path - 1].y * 32) - 32
+            end
             self.gridx = (self.x / 32) + 1
             self.gridy = (self.y / 32) + 1
             self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 2

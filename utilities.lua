@@ -7,8 +7,11 @@ function mouseToMapCoords(system, x, y)
         mx, my = love.mouse.getPosition() 
     end
     
-    local _x = (math.floor(mx / 32) + 1) + ((system.map[current_level].translate_x / 32) * -1)
-    local _y = (math.floor(my / 32) + 1) + ((system.map[current_level].translate_y / 32) * -1)
+    local translation_x = system.map[current_level].translate_x - (system.map[current_level].translate_x % 32)
+    local translation_y = system.map[current_level].translate_y - (system.map[current_level].translate_y % 32)
+
+    local _x = (math.floor(mx / 32) + 1) + ((translation_x / 32) * -1)
+    local _y = (math.floor(my / 32) + 1) + ((translation_y / 32) * -1)
 
     if system.collisionMap[current_level][_y] and system.collisionMap[current_level][_y][_x]  then
         return _x, _y
