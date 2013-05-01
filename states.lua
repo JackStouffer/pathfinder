@@ -70,13 +70,13 @@ Instructions.__index = Instructions
 function Instructions.create()
 	local temp = {}
 	setmetatable(temp, Instructions)
-	temp.button = {	back = Button:new("Back", 350, 200) }
+	temp.button = {	back = Button:new("Back", 550, 500) }
 	return temp
 end
 
 function Instructions:draw()
-	love.graphics.setFont(smallFont)
-	love.graphics.printf("This is filler text yo", 50, 50, 600, "center")
+	love.graphics.setFont(mediumFont)
+	love.graphics.printf("Pathfinder is a mix between a rougelike and chess. The game is split into turns and the number of actions that you can take are dictated by your total number of AP, or action points, while your range of movement is dictated by your MP, or movement points. Click the mouse to select where to move and 'G' picks items up or activates items under you.", 150, 50, 700, "left")
 	
 	for n,b in pairs(self.button) do
 		b:draw()
@@ -195,13 +195,18 @@ function Game.create()
 	
     setmetatable(temp, Game)
 
+    temp.button = { turn = Button:new("Turn", 950, 500) }
+
     cave = levelSystem(level_num, "normal", "cave")
     print("cave")
 
-    dungeon = levelSystem(level_num, "normal", "dungeon")
+    dungeon = levelSystem(level_num, "hard", "dungeon")
     print("dungeon")
     
     player = playerClass:new(cave, dungeon, "textures/player/base/human_m.png", 100, 100)
+
+    current_player = 0
+    turn_state = 0
 
     cursor_nodes = {}
 
@@ -251,10 +256,6 @@ function Game:draw()
         love.graphics.pop()
         
         --gui
-        love.graphics.setColorMode("modulate")
-        love.graphics.setBlendMode("additive")
-        love.graphics.setBlendMode("alpha")
-
         love.graphics.setColor(0, 0, 0)
         love.graphics.rectangle("fill", 832, 0, 260, 576)
         love.graphics.setColor(255, 255, 255)
@@ -263,6 +264,10 @@ function Game:draw()
         love.graphics.setColor(0, 0, 255)
         love.graphics.rectangle("fill", 844, 45, 165 * (player.mana / player.max_mana), 15)
         love.graphics.setColor(255, 255, 255)
+
+        for n,b in pairs(self.button) do
+            b:draw()
+        end
     elseif gameState == "dungeon" then
         love.graphics.push()
             --have the player always centered
@@ -292,9 +297,6 @@ function Game:draw()
         love.graphics.pop()
         
         --gui
-        love.graphics.setBlendMode("additive")
-        love.graphics.setBlendMode("alpha")
-
         love.graphics.setColor(0, 0, 0)
         love.graphics.rectangle("fill", 832, 0, 260, 576)
         love.graphics.setColor(255, 255, 255)
@@ -303,6 +305,24 @@ function Game:draw()
         love.graphics.setColor(0, 0, 255)
         love.graphics.rectangle("fill", 844, 45, 165 * (player.mana/player.max_mana), 15)
         love.graphics.setColor(255, 255, 255)
+        
+        love.graphics.setFont(smallFont)
+        if current_player == 0 then
+            if turn_state == 0 then
+                love.graphics.print("movement", 860, 100)
+            elseif turn_state == 1 then
+                love.graphics.print("attack", 860, 100)
+            elseif turn_state == 3 then
+                love.graphics.print("end", 860, 100)
+            end
+        else
+            love.graphics.print("Enemy Turn", 860, 100)
+        end
+        love.graphics.setFont(mediumFont)
+
+        for n,b in pairs(self.button) do
+            b:draw()
+        end
     end
     love.graphics.setColor(255, 255, 255)
 end
@@ -310,11 +330,33 @@ end
 function Game:update(dt)
     SoundManager.update()
     if gameState == "cave" then
+        turnManager(cave)
+
         player:setTilePosition(cave)
         player:move(cave, dt)
+
+        for x = 1, #cave.enemies[current_level] do
+            cave.enemies[current_level][x]:setTilePosition(cave)
+            cave.enemies[current_level][x]:move(cave, dt)
+        end
+
+        for n,b in pairs(self.button) do
+            b:update(dt)
+        end
     elseif gameState == "dungeon" then
+        turnManager(dungeon)
+
         player:setTilePosition(dungeon)
         player:move(dungeon, dt)
+
+        for x = 1, #dungeon.enemies[current_level] do
+            dungeon.enemies[current_level][x]:setTilePosition(dungeon)
+            dungeon.enemies[current_level][x]:move(dungeon, dt)
+        end
+
+        for n,b in pairs(self.button) do
+            b:update(dt)
+        end
     end
 end
 
@@ -333,6 +375,15 @@ function Game:mousepressed(x, y, button)
         end
     else
         player:mousepressed(x, y, button)
+
+        for n,b in pairs(self.button) do
+            if b:mousepressed(x,y,button) then
+                if n == "turn" and current_player == 0 then
+                    print("press")
+                    turn_state = 3
+                end
+            end
+        end
     end
 end
 

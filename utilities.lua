@@ -58,6 +58,14 @@ function testMapEdge(system, x, y, mapW, mapH)
     return false
 end
 
+function crash()
+    --this function is for examining the console output by crashing the game because
+    --I need to examine print statements that are happening every frame and I need a way to stop the
+    --game without closing the console window
+
+    error("crash")
+end
+
 --this function is from Warp Run
 function take_screenshot()
     local screenshot = love.graphics.newScreenshot()

@@ -16,16 +16,16 @@ function playerClass:__init(cave, dungeon, body, health, mana)
 end
 
 function playerClass:setTilePosition(system)
-  system.map[current_level].tile_x = ((system.map[current_level].player_x - (system.map[current_level].player_x % 32)) / 32) + 1
-  system.map[current_level].tile_y = ((system.map[current_level].player_y - (system.map[current_level].player_y % 32)) / 32) + 1
+    system.map[current_level].tile_x = ((system.map[current_level].player_x - (system.map[current_level].player_x % 32)) / 32) + 1
+    system.map[current_level].tile_y = ((system.map[current_level].player_y - (system.map[current_level].player_y % 32)) / 32) + 1
 end
 
 --the movement code for the player thanks to Roland Yonaba
 function playerClass:orderMove(path)
-  self.path = path -- the path to follow
-  self.isMoving = true -- whether or not the player should start moving
-  self.cur = 1 -- indexes the current reached step on the path to follow
-  self.there = true -- whether or not the player has reached a step
+    self.path = path -- the path to follow
+    self.isMoving = true -- whether or not the player should start moving
+    self.cur = 1 -- indexes the current reached step on the path to follow
+    self.there = true -- whether or not the player has reached a step
 end
 
 function playerClass:moveToTile(goal_tile_x, goal_tile_y, dt, system)
@@ -88,8 +88,10 @@ function playerClass:move(system, dt)
                 self.there = false
             else
                 -- Reached the goal!
+                cursor_nodes = {}
                 self.isMoving = false
                 self.path = nil
+                turn_state = 1
             end        
         end
     end
@@ -105,6 +107,8 @@ function playerClass:keypressed(key, system)
         if system.collisionMap[current_level][system.map[current_level].tile_y][system.map[current_level].tile_x] == 5 then
             current_level = current_level + 1
         end
+    elseif key == "o" then
+        crash()
     end
 end
 
@@ -119,25 +123,18 @@ function playerClass:mousepressed(x, y, button)
         
         if cave.collisionMap[current_level][grid_y][grid_x] == 0 and --if the spot is open 
         cave.map[current_level][grid_y][grid_x].visibility ~= false and -- and the spot is not hidden
-        self.isMoving == false then -- and we are not already moving 
+        self.isMoving == false and -- and we are not already moving
+        current_player == 0 and -- and its our turn
+        turn_state == 0 then --and its the movement stage
+            
             --check to see if the clicked location is close enough to get to in this turn
             Astar:enableDiagonalMove()
-            Astar:setInitialNode((cave.map[current_level].player_x / 32) + 1, (cave.map[current_level].player_y / 32) + 1)
+            Astar:setInitialNode(cave.map[current_level].tile_x, cave.map[current_level].tile_y)
             Astar:setFinalNode(grid_x, grid_y)
             cursor_path = Astar:getPath()
             
             if cursor_path ~= nil and #cursor_path <= self.ap then 
-                cursor_nodes = {}
-                for nodes = 1, #cursor_path do
-                    node = {}
-                    node.x = (cursor_path[nodes].x * 32) - 32
-                    node.y = (cursor_path[nodes].y * 32) - 32
-                    table.insert(cursor_nodes, node)
-                end
                 self:orderMove(cursor_path)
-                for x = 1, #cave.enemies[current_level] do
-                    cave.enemies[current_level][x]:turn()
-                end
             end
         end
     elseif gameState == "dungeon" then
@@ -145,10 +142,12 @@ function playerClass:mousepressed(x, y, button)
         
         if dungeon.collisionMap[current_level][grid_y][grid_x] == 0 and --if the spot is open
         dungeon.map[current_level][grid_y][grid_x].visibility ~= false and -- and the spot is not hidden
-        self.isMoving == false then -- and we are not already moving
+        self.isMoving == false and -- and we are not already moving
+        current_player == 0 and -- and its our turn
+        turn_state == 0 then --and its the movement stage
             --check to see if the clicked location is close enough to get to in this turn
             Astar:enableDiagonalMove()
-            Astar:setInitialNode((dungeon.map[current_level].player_x / 32) + 1, (dungeon.map[current_level].player_y / 32) + 1)
+            Astar:setInitialNode(dungeon.map[current_level].tile_x, dungeon.map[current_level].tile_y)
             Astar:setFinalNode(grid_x, grid_y)
             cursor_path = Astar:getPath()
             
@@ -161,9 +160,6 @@ function playerClass:mousepressed(x, y, button)
                     table.insert(cursor_nodes, node)
                 end
                 self:orderMove(cursor_path)
-                for x = 1, #dungeon.enemies[current_level] do
-                    dungeon.enemies[current_level][x]:turn()
-                end
             end
         end
     end

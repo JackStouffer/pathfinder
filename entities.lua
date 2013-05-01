@@ -7,61 +7,158 @@ function monster:__init(health, image, level, map, image_map)
     self.map = map
     self.image_map = image_map
     self.startx, self.starty = getRandOpenTile(self.map, mapWidth, mapHeight)
-    self.gridx = self.startx - 1
-    self.gridy = self.starty - 1
+    self.grid_x = self.startx - 1
+    self.grid_y = self.starty - 1
     self.x = (self.startx * 32) - 32
     self.y = (self.starty * 32) - 32
-    self.path = nil
     self.health = health
     self.image = love.graphics.newImage(image)
-    self.ap = 4
+    self.mp = 4
+    self.path = nil
+    self.path_to_player = nil
+    self.isMoving = false
+    self.speed = 80
+    self.cur = nil
+    self.there = nil
 
     self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 2
 end
 
+function monster:setTilePosition(system)
+    self.grid_x = ((self.x - (self.x % 32)) / 32) + 1
+    self.grid_y = ((self.y - (self.y % 32)) / 32) + 1
+end
+
+function monster:orderMove(path)
+  print("orderMove")
+  self.path = path -- the path to follow
+  self.isMoving = true -- whether or not the player should start moving
+  self.cur = 1 -- indexes the current reached step on the path to follow
+  self.there = true -- whether or not the player has reached a step
+end
+
+function monster:turn()
+    local monster_path = {}
+    
+    if self.image_map[self.grid_y][self.grid_x].visibility == true then --if the monster can see us 
+        if self.isMoving == false then -- if we aren't already in a turn
+            --chase
+            self.map[self.grid_y][self.grid_x] = 0
+            
+            Astar:setInitialNode(self.grid_x, self.grid_y)
+            Astar:setFinalNode(self.image_map.tile_x, self.image_map.tile_y)
+            self.path_to_player = Astar:getPath()
+            
+            if self.path_to_player ~= nil then
+                if #self.path_to_player > self.mp then
+                    for nodes = 1, self.mp do
+                        node = {}
+                        node.x = self.path_to_player[nodes].x
+                        node.y = self.path_to_player[nodes].y
+                        table.insert(monster_path, node)
+                    end
+
+                    self:orderMove(monster_path)
+                elseif #self.path_to_player == self.mp then
+                    for nodes = 1, self.mp - 1 do
+                        node = {}
+                        node.x = self.path_to_player[nodes].x
+                        node.y = self.path_to_player[nodes].y
+                        table.insert(monster_path, node)
+                    end
+
+                    self:orderMove(monster_path)
+                elseif #self.path_to_player < self.mp then
+                    for nodes = 1, #self.path_to_player - 1 do
+                        node = {}
+                        node.x = self.path_to_player[nodes].x
+                        node.y = self.path_to_player[nodes].y
+                        table.insert(monster_path, node)
+                    end
+
+                    self:orderMove(monster_path)
+                end
+            end
+        end
+    else
+        turn_state = 3
+    end
+end
+
+function monster:moveToTile(goal_tile_x, goal_tile_y, dt, system)
+    -- Watches if the player has reached the goal on x/y
+    local reached_x, reached_y = false, false 
+  
+    -- Compute the goal location in pixels from the goal tile coordinates
+    local goal_x = (goal_tile_x * 32) - 32
+    local goal_y = (goal_tile_y * 32) - 32
+  
+    -- Computes the unit vector of move
+    local vx = (goal_x - self.x) / math.abs(goal_x - self.x)
+    local vy = (goal_y - self.y) / math.abs(goal_y - self.y)        
+
+    local dy, dx
+    -- Moves on the player on y-axis
+    if (self.y ~= goal_y) then
+        dy = dt * self.speed * vy
+        if vy > 0 then
+            self.y = self.y + math.min(dy, goal_y - self.y)
+        else
+            self.y = self.y + math.max(dy, goal_y - self.y)
+        end
+    else
+        self.y = goal_y
+        reached_y = true
+    end
+
+  
+    -- Moves on the player on x-axis
+    if (self.x ~= goal_x) then
+        dx = dt * self.speed * vx
+        if vx > 0 then
+            self.x = self.x + math.min(dx, goal_x - self.x)
+        else
+            self.x = self.x + math.max(dx, goal_x - self.x)
+        end
+    else 
+        self.x = goal_x
+        reached_x = true
+    end
+    
+    if (reached_x and reached_y) then 
+        self.there = true
+    end
+end
+
+function monster:move(system, dt)
+    if self.isMoving then
+        if not self.there then
+            -- Walk to the assigned location
+            self:moveToTile(self.path[self.cur].x, self.path[self.cur].y, dt, system)
+        else
+            -- Make the next step move
+            if self.path[self.cur + 1] then
+                self.cur = self.cur + 1
+                self.there = false
+            else
+                -- Reached the goal!
+                self.isMoving = false
+                self.path = nil
+                turn_state = 3
+                print("there")
+            end        
+        end
+    end
+end
+
 function monster:draw()
     --fog of war check
-    if self.image_map[self.gridy][self.gridx].visibility == true then
+    if self.image_map[self.grid_y][self.grid_x].visibility == true then
         love.graphics.draw(self.image, self.x, self.y)
     end
 end
 
-function monster:turn()
-    --use a simple vector magnitude to find the distance between the player and the monster
-    self.vector = {x = self.image_map.player_x - self.x, y = self.image_map.player_y - self.y}
-    self.distance = (self.vector.x * self.vector.x) + (self.vector.y * self.vector.y)
-    self.distance = math.sqrt(self.distance)
-    
-    if self.distance <= 400 then
-        --chase
-        self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 0
-        
-        Astar:setInitialNode((self.x / 32) + 1, (self.y / 32) + 1)
-        Astar:setFinalNode(self.image_map.tile_x, self.image_map.tile_y)
-        self.path = Astar:getPath()
-        
-        if self.path ~= nil then
-            if #self.path > self.ap then
-                self.x = (self.path[self.ap].x * 32) - 32
-                self.y = (self.path[self.ap].y * 32) - 32
-            elseif #self.path == self.ap then
-                self.x = (self.path[self.ap - 1].x * 32) - 32
-                self.y = (self.path[self.ap - 1].y * 32) - 32
-            elseif #self.path < self.ap then
-                self.x = (self.path[#self.path - 1].x * 32) - 32
-                self.y = (self.path[#self.path - 1].y * 32) - 32
-            end
-            self.gridx = (self.x / 32) + 1
-            self.gridy = (self.y / 32) + 1
-            self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 2
-        end
-        
-        self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 2
-    else
-        --wander
-    end
-end
-
+--base item class
 function item:__init(image, level, map, image_map)
     self.level = level
     self.map = map
