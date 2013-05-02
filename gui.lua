@@ -13,8 +13,13 @@ end
 
 function Button:draw()
 	love.graphics.setFont(mediumFont)
-	if self.hover then love.graphics.setColor(255, 255, 255)
-	else love.graphics.setColor(214, 169, 187) end
+	
+	if self.hover then 
+		love.graphics.setColor(255, 255, 255)
+	else 
+		love.graphics.setColor(214, 169, 187) 
+	end
+	
 	love.graphics.print(self.text, self.x, self.y-self.height)
 end
 

@@ -21,7 +21,7 @@ function monster:__init(health, image, level, map, image_map)
     self.cur = nil
     self.there = nil
 
-    self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 2
+    self.map[self.grid_y][self.grid_x] = 2
 end
 
 function monster:setTilePosition(system)
@@ -30,7 +30,6 @@ function monster:setTilePosition(system)
 end
 
 function monster:orderMove(path)
-  print("orderMove")
   self.path = path -- the path to follow
   self.isMoving = true -- whether or not the player should start moving
   self.cur = 1 -- indexes the current reached step on the path to follow
@@ -145,7 +144,7 @@ function monster:move(system, dt)
                 self.isMoving = false
                 self.path = nil
                 turn_state = 3
-                print("there")
+                self.map[self.grid_y][self.grid_x] = 2
             end        
         end
     end

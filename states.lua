@@ -42,11 +42,12 @@ function Menu:mousepressed(x,y,button)
 	for n,b in pairs(self.button) do
 		if b:mousepressed(x,y,button) then
 			if n == "new" then
-				state = Game.create()
+				createWorld()
+                state = Game.create()
 			elseif n == "instructions" then
-				state = Instructions.create()
+				state = Instructions.create(ftruealse)
 			elseif n == "options" then
-				state = Options.create()
+				state = Options.create(false)
 			elseif n == "quit" then
 				love.event.push("quit")
 			end
@@ -67,10 +68,11 @@ end
 Instructions = {}
 Instructions.__index = Instructions
 
-function Instructions.create()
+function Instructions.create(pause)
 	local temp = {}
 	setmetatable(temp, Instructions)
 	temp.button = {	back = Button:new("Back", 550, 500) }
+    temp.pause = pause
 	return temp
 end
 
@@ -97,7 +99,11 @@ function Instructions:mousepressed(x,y,button)
 	for n,b in pairs(self.button) do
 		if b:mousepressed(x,y,button) then
 			if n == "back" then
-				state = Menu.create()
+				if self.pause then
+                    state = Pause.create()
+                else
+                    state = Menu.create()
+                end
 			end
 		end
 	end
@@ -118,12 +124,13 @@ end
 Options = {}
 Options.__index = Options
 
-function Options.create()
+function Options.create(pause)
     local temp = {}
     setmetatable(temp, Options)
     temp.button = { on = Button:new("On", 425, 155),
                     off = Button:new("Off", 550, 155),
                     back = Button:new("Back", 550, 500)}
+    temp.pause = pause
     return temp
 end
 
@@ -167,7 +174,11 @@ function Options:mousepressed(x,y,button)
                 Settings.set("volume", 0)
                 SoundManager.pause_current()
             elseif n == "back" then
-                state = Menu.create()
+                if self.pause then
+                    state = Pause.create()
+                else
+                    state = Menu.create()
+                end
             end
         end
     end
@@ -197,22 +208,7 @@ function Game.create()
 
     temp.button = { turn = Button:new("Turn", 950, 500) }
 
-    cave = levelSystem(level_num, "normal", "cave")
-    print("cave")
-
-    dungeon = levelSystem(level_num, "hard", "dungeon")
-    print("dungeon")
-    
-    player = playerClass:new(cave, dungeon, "textures/player/base/human_m.png", 100, 100)
-
-    current_player = 0
-    turn_state = 0
-
     cursor_nodes = {}
-
-    terrain = makeTerrain()
-
-    SoundManager.load()
 
     menuMusic.source:stop()
     caveMusic.source:play()
@@ -301,9 +297,9 @@ function Game:draw()
         love.graphics.rectangle("fill", 832, 0, 260, 576)
         love.graphics.setColor(255, 255, 255)
         love.graphics.setColor(255, 0, 0)
-        love.graphics.rectangle("fill", 845, 20, 165 * (player.health/player.max_health), 15)
+        love.graphics.rectangle("fill", 845, 20, 165 * (player.health / player.max_health), 15)
         love.graphics.setColor(0, 0, 255)
-        love.graphics.rectangle("fill", 844, 45, 165 * (player.mana/player.max_mana), 15)
+        love.graphics.rectangle("fill", 844, 45, 165 * (player.mana / player.max_mana), 15)
         love.graphics.setColor(255, 255, 255)
         
         love.graphics.setFont(smallFont)
@@ -379,7 +375,6 @@ function Game:mousepressed(x, y, button)
         for n,b in pairs(self.button) do
             if b:mousepressed(x,y,button) then
                 if n == "turn" and current_player == 0 then
-                    print("press")
                     turn_state = 3
                 end
             end
@@ -414,9 +409,8 @@ function Game:keypressed(key)
         Astar:enableDiagonalMove()
     elseif key == "escape" then
         love.event.push("quit")
-    elseif key == "q" then
-        state = Menu.create()
-        gameState = "world"
+    elseif key == "q" or key == " " then
+        state = Pause.create()
     elseif key == "1" then
         current_level = 1
         if gameState == "cave" then
@@ -450,5 +444,59 @@ function Game:keypressed(key)
             Astar:setObstValue(2)
             Astar:enableDiagonalMove()
         end
+    end
+end
+
+-- Pause menu...
+Pause = {}
+Pause.__index = Pause
+
+function Pause.create()
+    local temp = {}
+    setmetatable(temp, Pause)
+
+    temp.button = { resume = Button:new("Resume Game", 512, 300),
+                    instructions = Button:new("Instructions", 512, 350),
+                    options = Button:new("Options", 512, 400),
+                    menu = Button:new("Main Menu", 512, 450) }
+    return temp
+end
+
+function Pause:draw()
+    for n,b in pairs(self.button) do
+        b:draw()
+    end
+    love.graphics.setColor(255, 255, 255)
+end
+
+function Pause:update(dt)
+    
+    for n,b in pairs(self.button) do
+        b:update(dt)
+    end
+    
+end
+
+function Pause:mousepressed(x,y,button)
+    
+    for n,b in pairs(self.button) do
+        if b:mousepressed(x,y,button) then
+            if n == "resume" then
+                state = Game.create()
+            elseif n == "instructions" then
+                state = Instructions.create(true)
+            elseif n == "options" then
+                state = Options.create(true)
+            elseif n == "menu" then
+                state = Menu.create()
+            end
+        end
+    end
+    
+end
+
+function Pause:keypressed(key)
+    if key == " " then
+        state = Game.create()
     end
 end

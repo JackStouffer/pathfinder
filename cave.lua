@@ -138,25 +138,6 @@ local function minerCave(Width, Height)
     return Map
 end
 
-function turnManager(system)
-    if turn_state == 0 then -- entity is in the moving stage of the turn.    
-        if current_player ~= 0 then
-            system.enemies[current_level][current_player]:turn()
-        end
-    elseif turn_state == 1 then -- entity is in the attack stage of the turn.    
-        --do stuff
-    elseif turn_state == 2 then --entity is in the final stage of the turn.    
-        --do stuff
-    elseif turn_state == 3 then --entity has ended their turn.    
-        --do end-of-turn stuff
-        current_player = current_player + 1
-        if current_player > #system.enemies[current_level] then       
-            current_player = 0
-        end
-        turn_state = 0
-    end
-end
-
 --function to generate multi-leveled caves
 --each level has its own item and enemies 
 function levelSystem(level_num, difficulty, Type)

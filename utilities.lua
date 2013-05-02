@@ -1,6 +1,41 @@
---Screen to tiles coordinates
---credit for this function goes to Yonaba on github
+function turnManager(system)
+    if turn_state == 0 then -- entity is in the moving stage of the turn.    
+        if current_player ~= 0 then
+            system.enemies[current_level][current_player]:turn()
+        end
+    elseif turn_state == 1 then -- entity is in the attack stage of the turn.    
+        --do stuff
+    elseif turn_state == 2 then --entity is in the final stage of the turn.    
+        --do stuff
+    elseif turn_state == 3 then --entity has ended their turn.    
+        --do end-of-turn stuff
+        current_player = current_player + 1
+        if current_player > #system.enemies[current_level] then       
+            current_player = 0
+        end
+        turn_state = 0
+    end
+end
+
+function createWorld()
+    cave = levelSystem(level_num, "normal", "cave")
+    print("cave")
+
+    dungeon = levelSystem(level_num, "hard", "dungeon")
+    print("dungeon")
+    
+    player = playerClass:new(cave, dungeon, "textures/player/base/human_m.png", 100, 100)
+
+    current_player = 0
+    turn_state = 0
+
+    terrain = makeTerrain()
+end
+
 function mouseToMapCoords(system, x, y)
+    --Screen to tiles coordinates
+    --credit for this function goes to Yonaba on github
+
     local mx, my = x, y
     
     if not mx or not my then 
@@ -66,8 +101,9 @@ function crash()
     error("crash")
 end
 
---this function is from Warp Run
+
 function take_screenshot()
+    --this function is from Warp Run
     local screenshot = love.graphics.newScreenshot()
 
     local time_string = os.date('%Y-%m-%d_%H-%M-%S')
