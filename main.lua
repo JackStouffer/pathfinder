@@ -5,12 +5,13 @@ mapWidth = 120
 mapHeight = 120
 current_level = 1
 
-class = require "30log"
+class = require "vendor/30log"
 Astar = require "astar"
 SoundManager = require 'sound_manager'
 Settings = require 'settings'
-bresenham = require 'bresenham'
-require "TSerial"
+bresenham = require 'vendor/bresenham'
+ROT = require 'vendor/rotLove/rot'
+require "vendor/TSerial"
 require "map"
 require "cave"
 require "dungeon"

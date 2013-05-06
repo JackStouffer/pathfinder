@@ -52,3 +52,33 @@ function Button:mousepressed(x, y, button)
 	
 	return false
 end
+
+function drawGUI(system)
+	love.graphics.setColor(0, 0, 0)
+    love.graphics.rectangle("fill", 832, 0, 260, 576)
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255, 0, 0)
+    love.graphics.rectangle("fill", 845, 20, 165 * (player.health / player.max_health), 15)
+    love.graphics.setColor(0, 0, 255)
+    love.graphics.rectangle("fill", 844, 45, 165 * (player.mana / player.max_mana), 15)
+    love.graphics.setColor(255, 255, 255)
+    
+    love.graphics.setFont(smallFont)
+    if current_player == 0 then
+        if turn_state == 0 then
+            love.graphics.print("movement", 860, 100)
+        elseif turn_state == 1 then
+            love.graphics.print("attack", 860, 100)
+        elseif turn_state == 3 then
+            love.graphics.print("end", 860, 100)
+        end
+    else
+        love.graphics.print("Enemy Turn", 860, 100)
+    end
+
+    if system.map[current_level].clear == true then
+        love.graphics.print("Level Clear", 860, 200)
+    end
+
+    love.graphics.setFont(mediumFont)
+end

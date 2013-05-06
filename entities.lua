@@ -17,9 +17,11 @@ function monster:__init(health, image, level, map, image_map)
     self.path = nil
     self.path_to_player = nil
     self.isMoving = false
+    self.isAttacking = false
     self.speed = 80
     self.cur = nil
     self.there = nil
+    self.dead = false
 
     self.map[self.grid_y][self.grid_x] = 2
 end
@@ -38,9 +40,10 @@ end
 
 function monster:turn()
     local monster_path = {}
+    local adjacent
     
-    if self.image_map[self.grid_y][self.grid_x].visibility == true then --if the monster can see us 
-        if self.isMoving == false then -- if we aren't already in a turn
+    if self.dead == false and self.image_map[self.grid_y][self.grid_x].visibility == true then --if the monster can see us 
+        if self.isMoving == false and turn_state == 0 then -- if we aren't already in a turn
             --chase
             self.map[self.grid_y][self.grid_x] = 0
             
@@ -77,6 +80,15 @@ function monster:turn()
 
                     self:orderMove(monster_path)
                 end
+            end
+        elseif turn_state == 1 then
+            print("state")
+            adjacent = getAdjacentTiles({x = self.x, y = self.y})
+            if table.containsTable(adjacent, {x = self.image_map.player_x, y = self.image_map.player_y}) == true then
+                player.health = player.health - 5
+                turn_state = 3
+            else
+                turn_state = 3
             end
         end
     else
@@ -143,16 +155,29 @@ function monster:move(system, dt)
                 -- Reached the goal!
                 self.isMoving = false
                 self.path = nil
-                turn_state = 3
+                turn_state = 1
+                print(turn_state)
                 self.map[self.grid_y][self.grid_x] = 2
             end        
         end
     end
 end
 
+function monster:update(dt, system)
+    self:setTilePosition(system)
+    self:move(system, dt)
+
+    if self.health <= 0 then
+        self.dead = true
+        self.map[self.grid_y][self.grid_x] = 0
+        self.x = 0
+        self.y = 0
+    end
+end
+
 function monster:draw()
     --fog of war check
-    if self.image_map[self.grid_y][self.grid_x].visibility == true then
+    if self.image_map[self.grid_y][self.grid_x].visibility == true and self.dead == false then
         love.graphics.draw(self.image, self.x, self.y)
     end
 end

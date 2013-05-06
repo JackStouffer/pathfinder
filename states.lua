@@ -45,7 +45,7 @@ function Menu:mousepressed(x,y,button)
 				createWorld()
                 state = Game.create()
 			elseif n == "instructions" then
-				state = Instructions.create(ftruealse)
+				state = Instructions.create(false)
 			elseif n == "options" then
 				state = Options.create(false)
 			elseif n == "quit" then
@@ -59,7 +59,9 @@ end
 function Menu:keypressed(key)
 	if key == "escape" then
 		love.event.push("q")
-	end
+	elseif key == " " or key == "enter" then
+        state = Game.create()
+    end
 end
 
 
@@ -78,7 +80,7 @@ end
 
 function Instructions:draw()
 	love.graphics.setFont(mediumFont)
-	love.graphics.printf("Pathfinder is a mix between a rougelike and chess. The game is split into turns and the number of actions that you can take are dictated by your total number of AP, or action points, while your range of movement is dictated by your MP, or movement points. Click the mouse to select where to move and 'G' picks items up or activates items under you.", 150, 50, 700, "left")
+	love.graphics.printf("Pathfinder is a mix between a rougelike and chess. The game is split into turns with one action per turn, e.g. attacking or drinking a potion, while your range of movement is dictated by your MP, or movement points. Click the mouse to select where to move and 'G' picks items up or activates items under you.", 150, 50, 700, "left")
 	
 	for n,b in pairs(self.button) do
 		b:draw()
@@ -251,15 +253,7 @@ function Game:draw()
             end
         love.graphics.pop()
         
-        --gui
-        love.graphics.setColor(0, 0, 0)
-        love.graphics.rectangle("fill", 832, 0, 260, 576)
-        love.graphics.setColor(255, 255, 255)
-        love.graphics.setColor(255, 0, 0)
-        love.graphics.rectangle("fill", 845, 20, 165 * (player.health / player.max_health), 15)
-        love.graphics.setColor(0, 0, 255)
-        love.graphics.rectangle("fill", 844, 45, 165 * (player.mana / player.max_mana), 15)
-        love.graphics.setColor(255, 255, 255)
+        drawGUI(cave)
 
         for n,b in pairs(self.button) do
             b:draw()
@@ -292,29 +286,7 @@ function Game:draw()
             end
         love.graphics.pop()
         
-        --gui
-        love.graphics.setColor(0, 0, 0)
-        love.graphics.rectangle("fill", 832, 0, 260, 576)
-        love.graphics.setColor(255, 255, 255)
-        love.graphics.setColor(255, 0, 0)
-        love.graphics.rectangle("fill", 845, 20, 165 * (player.health / player.max_health), 15)
-        love.graphics.setColor(0, 0, 255)
-        love.graphics.rectangle("fill", 844, 45, 165 * (player.mana / player.max_mana), 15)
-        love.graphics.setColor(255, 255, 255)
-        
-        love.graphics.setFont(smallFont)
-        if current_player == 0 then
-            if turn_state == 0 then
-                love.graphics.print("movement", 860, 100)
-            elseif turn_state == 1 then
-                love.graphics.print("attack", 860, 100)
-            elseif turn_state == 3 then
-                love.graphics.print("end", 860, 100)
-            end
-        else
-            love.graphics.print("Enemy Turn", 860, 100)
-        end
-        love.graphics.setFont(mediumFont)
+        drawGUI(dungeon)
 
         for n,b in pairs(self.button) do
             b:draw()
@@ -324,34 +296,81 @@ function Game:draw()
 end
 
 function Game:update(dt)
+    local num_dead
+    local num_clear
+
     SoundManager.update()
     if gameState == "cave" then
         turnManager(cave)
 
-        player:setTilePosition(cave)
-        player:move(cave, dt)
+        player:update(dt, cave)
 
+        num_dead = 0
         for x = 1, #cave.enemies[current_level] do
-            cave.enemies[current_level][x]:setTilePosition(cave)
-            cave.enemies[current_level][x]:move(cave, dt)
+            cave.enemies[current_level][x]:update(dt, cave)
+
+            if cave.enemies[current_level][x].dead == true then
+                num_dead = num_dead + 1
+            end
+
+            if num_dead == #cave.enemies[current_level] then
+                cave.map[current_level].clear = true
+            end
+        end
+
+        num_clear = 0
+        for level = 1, #cave.map do
+            if cave.map[level].clear == true then
+                num_clear = num_clear + 1
+            end
+
+            if num_clear == #cave.map then
+                cave.clear = true
+            end
         end
 
         for n,b in pairs(self.button) do
             b:update(dt)
+        end
+
+        if cave.clear == true then
+            gameState = 'world'
         end
     elseif gameState == "dungeon" then
         turnManager(dungeon)
 
-        player:setTilePosition(dungeon)
-        player:move(dungeon, dt)
+        player:update(dt, dungeon)
 
+        num_dead = 0
         for x = 1, #dungeon.enemies[current_level] do
-            dungeon.enemies[current_level][x]:setTilePosition(dungeon)
-            dungeon.enemies[current_level][x]:move(dungeon, dt)
+            dungeon.enemies[current_level][x]:update(dt, cave)
+
+            if dungeon.enemies[current_level][x].dead == true then
+                num_dead = num_dead + 1
+            end
+
+            if num_dead == #dungeon.enemies[current_level] then
+                dungeon.map[current_level].clear = true
+            end
+        end
+
+        num_clear = 0
+        for level = 1, #dungeon.map do
+            if dungeon.map[level].clear == true then
+                num_clear = num_clear + 1
+            end
+
+            if num_clear == #dungeon.map then
+                dungeon.clear = true
+            end
         end
 
         for n,b in pairs(self.button) do
             b:update(dt)
+        end
+
+        if dungeon.clear == true then
+            gameState = 'world'
         end
     end
 end
@@ -498,5 +517,56 @@ end
 function Pause:keypressed(key)
     if key == " " then
         state = Game.create()
+    end
+end
+
+-- Death screen
+Death = {}
+Death.__index = Pause
+
+function Death.create()
+    local temp = {}
+    setmetatable(temp, Pause)
+
+    temp.button = { menu = Button:new("Main Menu", 512, 300),
+                    quit = Button:new("Quit", 512, 350) }
+    return temp
+end
+
+function Death:draw()
+    for n,b in pairs(self.button) do
+        b:draw()
+    end
+
+    love.graphics.setFont(largeFont)
+    love.graphics.print("You Died", 512, 150)
+
+    love.graphics.setColor(255, 255, 255)
+end
+
+function Death:update(dt)
+    
+    for n,b in pairs(self.button) do
+        b:update(dt)
+    end
+    
+end
+
+function Death:mousepressed(x,y,button)
+    
+    for n,b in pairs(self.button) do
+        if b:mousepressed(x,y,button) then
+            if n == "menu" then
+                state = Menu.create()
+            elseif n == "quit" then
+                state = love.event.push("quit")
+            end
+        end
+    end
+end
+
+function Death:keypressed(key)
+    if key == " " then
+        state = Menu.create()
     end
 end

@@ -179,6 +179,7 @@ function levelSystem(level_num, difficulty, Type)
         enemies[level] = {}
         items[level] = {}
         stair[level] = {}
+        Map[level].clear = false
     end
 
     --difficulty settings
@@ -209,6 +210,7 @@ function levelSystem(level_num, difficulty, Type)
     system.enemies = enemies
     system.items = items
     system.stair = stair
+    system.clear = false
 
     --add in the entities in to the maps
     for level = 1, level_num do 

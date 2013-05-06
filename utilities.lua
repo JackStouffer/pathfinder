@@ -1,10 +1,13 @@
 function turnManager(system)
+    --credit for the pseudo code for this goes to spacecoote on reddit
     if turn_state == 0 then -- entity is in the moving stage of the turn.    
         if current_player ~= 0 then
             system.enemies[current_level][current_player]:turn()
         end
     elseif turn_state == 1 then -- entity is in the attack stage of the turn.    
-        --do stuff
+        if current_player ~= 0 then
+            system.enemies[current_level][current_player]:turn()
+        end
     elseif turn_state == 2 then --entity is in the final stage of the turn.    
         --do stuff
     elseif turn_state == 3 then --entity has ended their turn.    
@@ -70,27 +73,50 @@ function getRandOpenTile(Map, mapW, mapH)
     if found then return x,y end
 end
 
-function testCollisionTile(system, x, y)
-    -- I add an extra one due to the way lua handles table indexing with zero not being the first
-    -- number; what a stupid design decision
-    if system.collisionMap[current_level][system.map[current_level].player_y/32 + 1 + y][system.map[current_level].player_x/32 + 1 + x] == 2 then
-        return true
+function getAdjacentTiles(position)
+    --code adapted from Warp Run
+    --returns table of coords of all adjacent tiles
+    local result = {}
+    local tile
+    local dirs = {
+        north     = {x = 0, y = -32},
+        northeast = {x = 32, y = -32},
+        east      = {x = 32, y = 0},
+        southeast = {x = 32, y = 32},
+        south     = {x = 0, y = 32},
+        southwest = {x = -32, y = 32},
+        west      = {x = -32, y = 0},
+        northwest = {x = -32, y = -32}
+    }
+
+    for _, delta in pairs(dirs) do
+        tile = {}
+        tile.x = position.x + delta.x
+        tile.y = position.y + delta.y
+        table.insert(result, tile)
     end
-    
+
+    return result
+end
+
+function table.containsTable(table, element)
+    --adapted from Wookai on stackoverflow
+    for _, value in pairs(table) do
+        if compareTables(value, element) == true then
+            return true
+        end
+    end
     return false
 end
 
-function testMapEdge(system, x, y, mapW, mapH)
-    --if the player's input is going to send him off the map, then return true
-    --rather than an actual pixel amount, the x and y are vectors that represent the direction to be checked
-    if  system.map[current_level].player_x + x < 0 or
-        system.map[current_level].player_x + x == (mapW * 32) or
-        system.map[current_level].player_y + y < 0 or
-        system.map[current_level].player_y + y == (mapH * 32) then
-        return true
+function compareTables(t1, t2)
+    if #t1 ~= #t2 then return false end
+    
+    for k,v in pairs(t1) do
+        if t1[k] ~= t2[k] then return false end
     end
     
-    return false
+    return true
 end
 
 function crash()

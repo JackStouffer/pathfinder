@@ -109,6 +109,8 @@ function playerClass:keypressed(key, system)
         end
     elseif key == "o" then
         crash()
+    elseif key == "l" then
+        print(TSerial.pack(system.collisionMap))
     end
 end
 
@@ -117,6 +119,8 @@ function playerClass:mousepressed(x, y, button)
     local grid_y
     local cursor_path = nil
     local node
+    local position
+    local adjacent
 
     if gameState == "cave" then
         grid_x, grid_y = mouseToMapCoords(cave, x, y)
@@ -135,6 +139,24 @@ function playerClass:mousepressed(x, y, button)
             
             if cursor_path ~= nil and #cursor_path <= self.ap then 
                 self:orderMove(cursor_path)
+            end
+        elseif turn_state == 1 then
+            position = {x = cave.map[current_level].player_x, y = cave.map[current_level].player_y}
+            adjacent = getAdjacentTiles(position)
+            if table.containsTable(adjacent, {x = (grid_x * 32) - 32, y = (grid_y * 32) - 32}) == true then
+                --the selected tile is next to the player
+                for x = 1, #cave.enemies[current_level] do
+                    if  cave.enemies[current_level][x].grid_x == grid_x and
+                        cave.enemies[current_level][x].grid_y == grid_y then
+                            print("hit")
+                            cave.enemies[current_level][x].health = cave.enemies[current_level][x].health - 50
+                            turn_state = 3
+                    else
+                        --there is nothing in that tile
+                    end
+                end
+            else
+                --player clicked more than one tile away
             end
         end
     elseif gameState == "dungeon" then
@@ -161,10 +183,37 @@ function playerClass:mousepressed(x, y, button)
                 end
                 self:orderMove(cursor_path)
             end
+        elseif turn_state == 1 then
+            position = {x = dungeon.map[current_level].player_x, y = dungeon.map[current_level].player_y}
+            adjacent = getAdjacentTiles(position)
+            if table.containsTable(adjacent, {x = (grid_x * 32) - 32, y = (grid_y * 32) - 32}) == true then
+                --the selected tile is next to the player
+                for x = 1, #dungeon.enemies[current_level] do
+                    if  dungeon.enemies[current_level][x].grid_x == grid_x and
+                        dungeon.enemies[current_level][x].grid_y == grid_y then
+                            print("hit")
+                            dungeon.enemies[current_level][x].health = dungeon.enemies[current_level][x].health - 50
+                            turn_state = 3
+                    else
+                        --there is nothing in that tile
+                    end
+                end
+            else
+                --player clicked more than one tile away
+            end
         end
     end
 end
 
 function playerClass:draw(system)
     love.graphics.draw(self.body, system.map[current_level].player_x, system.map[current_level].player_y)
+end
+
+function playerClass:update(dt, system)
+    self:setTilePosition(system)
+    self:move(system, dt)
+
+    if self.health <= 0 then
+        state = Death.create()
+    end
 end
