@@ -18,6 +18,7 @@ function TSerial.pack(t)
 		elseif tv == "string" then v = string.format("%q", v)
 		elseif tv == "number" then	-- no change needed
 		elseif tv == "table" then v = TSerial.pack(v)
+		elseif tv == "userdata" then v = 0
 		else error("Attempted to Tserialize a table with an invalid value: "..tostring(v))
 		end
 		s = s..k.."="..v..","

@@ -109,8 +109,6 @@ function playerClass:keypressed(key, system)
         end
     elseif key == "o" then
         crash()
-    elseif key == "l" then
-        print(TSerial.pack(system.collisionMap))
     end
 end
 

@@ -127,7 +127,6 @@ function crash()
     error("crash")
 end
 
-
 function take_screenshot()
     --this function is from Warp Run
     local screenshot = love.graphics.newScreenshot()
