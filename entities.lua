@@ -3,17 +3,17 @@ item = class{image, level, map}
 stairs = class{image, level}
 
 function monster:__init(health, image, level, map, image_map)
-    self.level = level
-    self.map = map
-    self.image_map = image_map
+    self.level = level --int that represents its current level
+    self.map = map --the collision map
+    self.image_map = image_map --the system.map
     self.startx, self.starty = getRandOpenTile(self.map, mapWidth, mapHeight)
     self.grid_x = self.startx - 1
     self.grid_y = self.starty - 1
     self.x = (self.startx * 32) - 32
     self.y = (self.starty * 32) - 32
     self.health = health
-    self.image = love.graphics.newImage(image)
-    self.mp = 4
+    self.image = love.graphics.newImage(image) 
+    self.mp = 4 --movement points
     self.path = nil
     self.path_to_player = nil
     self.isMoving = false
@@ -23,10 +23,13 @@ function monster:__init(health, image, level, map, image_map)
     self.there = nil
     self.dead = false
 
+    --set the location of the monster as occupied in the collision map
     self.map[self.grid_y][self.grid_x] = 2
 end
 
 function monster:setTilePosition(system)
+    --function to update the monster's current tile when moving
+
     self.grid_x = ((self.x - (self.x % 32)) / 32) + 1
     self.grid_y = ((self.y - (self.y % 32)) / 32) + 1
 end
@@ -82,7 +85,6 @@ function monster:turn()
                 end
             end
         elseif turn_state == 1 then
-            print("state")
             adjacent = getAdjacentTiles({x = self.x, y = self.y})
             if table.containsTable(adjacent, {x = self.image_map.player_x, y = self.image_map.player_y}) == true then
                 player.health = player.health - 5
@@ -156,7 +158,6 @@ function monster:move(system, dt)
                 self.isMoving = false
                 self.path = nil
                 turn_state = 1
-                print(turn_state)
                 self.map[self.grid_y][self.grid_x] = 2
             end        
         end
@@ -182,8 +183,9 @@ function monster:draw()
     end
 end
 
---base item class
 function item:__init(image, level, map, image_map)
+    --base item class
+    
     self.level = level
     self.map = map
     self.image_map = image_map

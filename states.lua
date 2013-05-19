@@ -9,7 +9,7 @@ function Menu.create()
 
     menuMusic.source:play()
 
-    SoundManager.set_listener(512, 288)
+    SoundManager.set_listener(512, 288) --the middle of the screen
 	logoImage = love.graphics.newImage("textures/gui/logo.png")
     backgroundImage = love.graphics.newImage("textures/gui/background.png")
 	temp.button = {	new = Button:new("New Game", 512, 300),
@@ -80,7 +80,7 @@ end
 
 function Instructions:draw()
 	love.graphics.setFont(mediumFont)
-	love.graphics.printf("Pathfinder is a mix between a rougelike and chess. The game is split into turns with one action per turn, e.g. attacking or drinking a potion, while your range of movement is dictated by your MP, or movement points. Click the mouse to select where to move and 'G' picks items up or activates items under you.", 150, 50, 700, "left")
+	love.graphics.printf("Pathfinder is a mix between a rougelike and chess. The game is split into turns with one action per turn, e.g. attacking or drinking a potion, while your range of movement is dictated by your MP, or movement points. Click the mouse to select where to move and 'G' picks items up or activates things under you.", 150, 50, 700, "left")
 	
 	for n,b in pairs(self.button) do
 		b:draw()

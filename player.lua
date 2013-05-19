@@ -108,6 +108,7 @@ function playerClass:keypressed(key, system)
             current_level = current_level + 1
         end
     elseif key == "o" then
+        --this is explained in the crash() function doc
         crash()
     end
 end
@@ -146,7 +147,6 @@ function playerClass:mousepressed(x, y, button)
                 for x = 1, #cave.enemies[current_level] do
                     if  cave.enemies[current_level][x].grid_x == grid_x and
                         cave.enemies[current_level][x].grid_y == grid_y then
-                            print("hit")
                             cave.enemies[current_level][x].health = cave.enemies[current_level][x].health - 50
                             turn_state = 3
                     else
@@ -189,7 +189,6 @@ function playerClass:mousepressed(x, y, button)
                 for x = 1, #dungeon.enemies[current_level] do
                     if  dungeon.enemies[current_level][x].grid_x == grid_x and
                         dungeon.enemies[current_level][x].grid_y == grid_y then
-                            print("hit")
                             dungeon.enemies[current_level][x].health = dungeon.enemies[current_level][x].health - 50
                             turn_state = 3
                     else

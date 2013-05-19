@@ -14,6 +14,7 @@ ROT = require 'vendor/rotLove/rot'
 require "vendor/TSerial"
 require "map"
 require "cave"
+require "system"
 require "dungeon"
 require "player"
 require "states"

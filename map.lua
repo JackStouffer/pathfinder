@@ -1,9 +1,3 @@
---[[
-
-    PERLIN NOISE
-
---]]
-
 --Props go to middlerun on the LOVE forums for this awesome perlin code that
 --is much better than what I was making
 
@@ -24,8 +18,8 @@ local function rand(seed, n)
     return num - 0.5
 end
 
--- takes table of L values and returns N*(L-3) interpolated values
 local function round(num, idp)
+    -- takes table of L values and returns N*(L-3) interpolated values
     local mult = 10^(idp or 0)
     if num >= 0 then return math.floor(num * mult + 0.5) / mult
     else return math.ceil(num * mult - 0.5) / mult end
@@ -212,7 +206,7 @@ end
 function makeTerrain(seed)
     local terrain = {}
     
-    if seed == nil then seed = os.time() end
+    if seed == nil then seed = ROT.RNG:seed() end
     
     terrain.seed = seed
     terrain.perlin = perlin2D(seed, 341, 256, 0.55, 7, 1.5)
