@@ -7,6 +7,8 @@ The actual release is in the stable branch which includes all of the binary file
 
 Build Instructions
 ------------------
+Just to be clear, *This branch does not contain the binary files*, trying to build this without them will result in the program crashing when trying to open it.
+
 The love app is needed to run this which can be downloaded here: http://love2d.org/#download
 
 ###Windows###
