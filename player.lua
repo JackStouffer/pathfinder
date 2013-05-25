@@ -10,7 +10,8 @@ function playerClass:__init(cave, dungeon, body, health, mana)
     self.ap = 6
     self.path = nil
     self.isMoving = false
-    self.speed = 80
+    self.drawing_speed = 80
+    self.speed = 10
     self.cur = nil
     self.there = nil
 end
@@ -43,7 +44,7 @@ function playerClass:moveToTile(goal_tile_x, goal_tile_y, dt, system)
     local dy, dx
     -- Moves on the player on y-axis
     if (system.map[current_level].player_y ~= goal_y) then
-        dy = dt * self.speed * vy
+        dy = dt * self.drawing_speed * vy
         if vy > 0 then
             system.map[current_level].player_y = system.map[current_level].player_y + math.min(dy, goal_y - system.map[current_level].player_y)
         else 
@@ -57,7 +58,7 @@ function playerClass:moveToTile(goal_tile_x, goal_tile_y, dt, system)
   
     -- Moves on the player on x-axis
     if (system.map[current_level].player_x ~= goal_x) then
-        dx = dt * self.speed * vx
+        dx = dt * self.drawing_speed * vx
         if vx > 0 then
             system.map[current_level].player_x = system.map[current_level].player_x + math.min(dx, goal_x - system.map[current_level].player_x)
         else
@@ -97,6 +98,11 @@ function playerClass:move(system, dt)
     end
 end
 
+function playerClass:getSpeed()
+    --function for the speed based turn scheduler
+    return self.speed
+end
+
 function playerClass:keypressed(key, system)
     if key == 'g' then
         --stairs up
@@ -108,8 +114,7 @@ function playerClass:keypressed(key, system)
             current_level = current_level + 1
         end
     elseif key == "o" then
-        --this is explained in the crash() function doc
-        crash()
+        self.health = 0
     end
 end
 
@@ -124,7 +129,7 @@ function playerClass:mousepressed(x, y, button)
     if gameState == "cave" then
         grid_x, grid_y = mouseToMapCoords(cave, x, y)
         
-        if cave.collisionMap[current_level][grid_y][grid_x] == 0 and --if the spot is open 
+        if cave.collisionMap[current_level][grid_y][grid_x] ~= 2 and --if the spot is open 
         cave.map[current_level][grid_y][grid_x].visibility ~= false and -- and the spot is not hidden
         self.isMoving == false and -- and we are not already moving
         current_player == 0 and -- and its our turn
@@ -160,7 +165,7 @@ function playerClass:mousepressed(x, y, button)
     elseif gameState == "dungeon" then
         grid_x, grid_y = mouseToMapCoords(dungeon, x, y)
         
-        if dungeon.collisionMap[current_level][grid_y][grid_x] == 0 and --if the spot is open
+        if dungeon.collisionMap[current_level][grid_y][grid_x] ~= 2 and --if the spot is open
         dungeon.map[current_level][grid_y][grid_x].visibility ~= false and -- and the spot is not hidden
         self.isMoving == false and -- and we are not already moving
         current_player == 0 and -- and its our turn

@@ -6,21 +6,30 @@ function monster:__init(health, image, level, map, image_map)
     self.level = level --int that represents its current level
     self.map = map --the collision map
     self.image_map = image_map --the system.map
+    
     self.startx, self.starty = getRandOpenTile(self.map, mapWidth, mapHeight)
     self.grid_x = self.startx - 1
     self.grid_y = self.starty - 1
     self.x = (self.startx * 32) - 32
     self.y = (self.starty * 32) - 32
+    
     self.health = health
     self.image = love.graphics.newImage(image) 
+    
     self.mp = 4 --movement points
     self.path = nil
     self.path_to_player = nil
     self.isMoving = false
     self.isAttacking = false
-    self.speed = 80
+    
+    self.speed = 3 + math.random(0, 3)
+    
+    --speed at which the player is drawn moving from one tile to another
+    --has no bearing on the speed which is used to determine turn order
+    self.drawing_speed = 80 
     self.cur = nil
     self.there = nil
+    
     self.dead = false
 
     --set the location of the monster as occupied in the collision map
@@ -29,7 +38,6 @@ end
 
 function monster:setTilePosition(system)
     --function to update the monster's current tile when moving
-
     self.grid_x = ((self.x - (self.x % 32)) / 32) + 1
     self.grid_y = ((self.y - (self.y % 32)) / 32) + 1
 end
@@ -113,7 +121,7 @@ function monster:moveToTile(goal_tile_x, goal_tile_y, dt, system)
     local dy, dx
     -- Moves on the player on y-axis
     if (self.y ~= goal_y) then
-        dy = dt * self.speed * vy
+        dy = dt * self.drawing_speed * vy
         if vy > 0 then
             self.y = self.y + math.min(dy, goal_y - self.y)
         else
@@ -127,7 +135,7 @@ function monster:moveToTile(goal_tile_x, goal_tile_y, dt, system)
   
     -- Moves on the player on x-axis
     if (self.x ~= goal_x) then
-        dx = dt * self.speed * vx
+        dx = dt * self.drawing_speed * vx
         if vx > 0 then
             self.x = self.x + math.min(dx, goal_x - self.x)
         else
@@ -162,6 +170,11 @@ function monster:move(system, dt)
             end        
         end
     end
+end
+
+function monster:getSpeed()
+    --function for the speed based turn scheduler
+    return self.speed
 end
 
 function monster:update(dt, system)

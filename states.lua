@@ -154,19 +154,15 @@ function Options:draw()
     for n,b in pairs(self.button) do
         b:draw()
     end
-
 end
 
-function Options:update(dt)
-    
+function Options:update(dt)    
     for n,b in pairs(self.button) do
         b:update(dt)
     end
-    
 end
 
 function Options:mousepressed(x,y,button)
-    
     for n,b in pairs(self.button) do
         if b:mousepressed(x,y,button) then
             if n == "on" then
@@ -183,8 +179,7 @@ function Options:mousepressed(x,y,button)
                 end
             end
         end
-    end
-    
+    end 
 end
 
 function Options:keypressed(key)
@@ -233,10 +228,6 @@ function Game:draw()
             drawMap(cave, mapWidth, mapHeight, 15, 6)
             
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
-            
-            for x = 1, #cave.enemies[current_level] do
-                cave.enemies[current_level][x]:draw()
-            end
 
             for x = 1, #cave.items[current_level] do
                 cave.items[current_level][x]:draw()
@@ -244,6 +235,10 @@ function Game:draw()
 
             for x = 1, #cave.stair[current_level] do
                 cave.stair[current_level][x]:draw()
+            end
+
+            for x = 1, #cave.enemies[current_level] do
+                cave.enemies[current_level][x]:draw()
             end
 
             player:draw(cave)
@@ -266,10 +261,6 @@ function Game:draw()
             drawMap(dungeon, mapWidth, mapHeight, 15, 6)
             
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
-            
-            for x = 1, #dungeon.enemies[current_level] do
-                dungeon.enemies[current_level][x]:draw()
-            end
 
             for x = 1, #dungeon.items[current_level] do
                 dungeon.items[current_level][x]:draw()
@@ -277,6 +268,10 @@ function Game:draw()
 
             for x = 1, #dungeon.stair[current_level] do
                 dungeon.stair[current_level][x]:draw()
+            end
+
+            for x = 1, #dungeon.enemies[current_level] do
+                dungeon.enemies[current_level][x]:draw()
             end
 
             player:draw(dungeon)
@@ -528,8 +523,7 @@ function Death.create()
     local temp = {}
     setmetatable(temp, Pause)
 
-    temp.button = { menu = Button:new("Main Menu", 512, 300),
-                    quit = Button:new("Quit", 512, 350) }
+    temp.button = { menu = Button:new("Main Menu", 512, 300) }
     return temp
 end
 
@@ -538,10 +532,8 @@ function Death:draw()
         b:draw()
     end
 
-    love.graphics.setFont(largeFont)
-    love.graphics.print("You Died", 512, 150)
-
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setFont(mediumFont)
+    love.graphics.print("You Died", 100, 100)
 end
 
 function Death:update(dt)
@@ -558,8 +550,6 @@ function Death:mousepressed(x,y,button)
         if b:mousepressed(x,y,button) then
             if n == "menu" then
                 state = Menu.create()
-            elseif n == "quit" then
-                state = love.event.push("quit")
             end
         end
     end

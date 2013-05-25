@@ -11,7 +11,7 @@ local function NewMiner(x,y)
     table.insert(MinerList,t)
 end
 
-local function minerCave(Width, Height)
+function minerCave(Width, Height)
     --cave generation based around "miners" that "grow" the cave from a starting point
     --this is superior to the previous cellular automaton method because it is not possible for this to produce closed areas
     --credit where credit is due: https://love2d.org/forums/viewtopic.php?f=5&t=7473

@@ -1,14 +1,19 @@
+--- Mersenne Twister. A random number generator based on RandomLua
+-- @module ROT.RNG.Twister
+
 local Twister_PATH =({...})[1]:gsub("[%.\\/]twister$", "") .. '/'
 local class  =require (Twister_PATH .. 'vendor/30log')
 
 local Twister=ROT.RNG:extends { __name, mt, index, _seed }
-
+Twister.__name='Twister'
 function Twister:__init()
-	self.__name='Twister'
     self.mt={}
     self.index=0
 end
 
+--- Seed.
+-- seed the rng
+-- @tparam[opt=os.clock()] number s A number to base the rng from
 function Twister:randomseed(s)
     if not s then s = self:seed() end
     self._seed=s
@@ -18,6 +23,11 @@ function Twister:randomseed(s)
     end
 end
 
+--- Random.
+-- get a random number
+-- @tparam[opt=0] int a lower threshold for random numbers
+-- @tparam[opt=1] int b upper threshold for random numbers
+-- @treturn number a random number
 function Twister:random(a, b)
     local y
     if self.index == 0 then
@@ -44,14 +54,21 @@ function Twister:random(a, b)
     end
 end
 
+--- Get current rng state
+-- Returns a table that can be given to the rng to return it to this state.
+-- Any RNG of the same type will always produce the same values from this state.
+-- @treturn table A table that represents the current state of the rng
 function Twister:getState()
-	local newmt={}
-	for i=0,623 do
-		newmt[i]=self.mt[i]
-	end
+    local newmt={}
+    for i=0,623 do
+        newmt[i]=self.mt[i]
+    end
     return { mt=newmt, index=self.index, _seed=self._seed}
 end
 
+--- Set current rng state
+-- used to return an rng to a known/previous state
+-- @tparam table stateTable The table retrieved from .getState()
 function Twister:setState(stateTable)
     assert(stateTable.mt, 'bad state table: need stateTable.mt')
     assert(stateTable.index, 'bad state table: need stateTable.index')

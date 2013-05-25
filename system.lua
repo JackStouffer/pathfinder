@@ -21,7 +21,8 @@ function levelSystem(level_num, difficulty, Type)
         end
 
         
-        -- when assigning a value to value that is a table, lua does not set the original value to the table, but rather as a pointer to the table
+        -- when assigning a value to value that is a table, lua does not set the original value to the table, 
+        --but rather as a pointer to the table
         --so if I change collisionMap.x = 5 the map.x = 5 as well
         --that's why I do this abomination of code
         CollisionMap[level] = TSerial.unpack(TSerial.pack(Map[level])) --disgusting right?
@@ -36,12 +37,6 @@ function levelSystem(level_num, difficulty, Type)
                 Map[level][y][x].visibility = false
             end
         end
-        Map[level].fov = ROT.FOV.Precise:new(function(fov, x, y)
-            if CollisionMap[level][y][x] then
-                return CollisionMap[level][y][x] == 0
-            end
-            return false
-        end)
 
         enemies[level] = {}
         items[level] = {}
@@ -82,17 +77,40 @@ function levelSystem(level_num, difficulty, Type)
 
     --add in the entities in to the maps
     for level = 1, level_num do 
-        for num=1, enemy_num do
-            system.enemies[level][num] = monster:new(100, "textures/dc-mon/acid_blob.png", level, CollisionMap[level], Map[level])
+        for num = 1, enemy_num do
+            system.enemies[level][num] = monster:new(100, 
+                "textures/dc-mon/acid_blob.png", 
+                level, 
+                CollisionMap[level], 
+                Map[level])
         end
-        for num=1, 20 do
-            system.items[level][num] = item:new("textures/item/potion/ruby.png", level, CollisionMap[level], Map[level])
+
+        --organize the entities based on speed
+        table.sort(system.enemies[level], function(a, b) return a:getSpeed() < b:getSpeed() end)
+
+        for num = 1, 20 do
+            system.items[level][num] = item:new("textures/item/potion/ruby.png", 
+                level,
+                CollisionMap[level], 
+                Map[level])
         end
+
         if level ~= level_num then
-            table.insert(system.stair[level], stairs:new("textures/dc-dngn/gateways/stone_stairs_down.png", "down", level, CollisionMap[level], Map[level]))
+            table.insert(system.stair[level], 
+                stairs:new("textures/dc-dngn/gateways/stone_stairs_down.png", 
+                "down", 
+                level, 
+                CollisionMap[level], 
+                Map[level]))
         end
+        
         if level ~= 1 then
-            table.insert(system.stair[level], stairs:new("textures/dc-dngn/gateways/stone_stairs_up.png", "up", level, CollisionMap[level], Map[level]))
+            table.insert(system.stair[level], 
+                stairs:new("textures/dc-dngn/gateways/stone_stairs_up.png", 
+                "up", 
+                level, 
+                CollisionMap[level], 
+                Map[level]))
         end
     end
 
@@ -176,7 +194,8 @@ function drawMap(system, mapDisplayW, mapDisplayH, radius, sight)
                     return true
                 end)
 
-            elseif not(y >= start_y_sight and y <= end_y_sight and x >= start_x_sight and x <= end_x_sight) and system.map[current_level][y][x].visibility == true then
+            elseif not(y >= start_y_sight and y <= end_y_sight and x >= start_x_sight and x <= end_x_sight) and 
+            system.map[current_level][y][x].visibility == true then
                 system.map[current_level][y][x].visibility = "fog"
             elseif system.map[current_level][y][x].visibility == "fog" then
                 -- don't do anything to the fog

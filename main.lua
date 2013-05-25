@@ -30,7 +30,7 @@ function love.load()
 
     Settings.load()
     SoundManager.load()
-
+    
     love.keyboard.setKeyRepeat(0.01, 0.1)
 
     smallFont = love.graphics.newFont("textures/gui/visitor.ttf", 12)
