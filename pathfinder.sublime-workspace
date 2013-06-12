@@ -4,8 +4,48 @@
 		"selected_items":
 		[
 			[
+				"instructions_",
+				"instructions_tabs"
+			],
+			[
+				"In",
+				"Instructions"
+			],
+			[
+				"in",
+				"instructions"
+			],
+			[
+				"ins",
+				"instructions"
+			],
+			[
+				"men",
+				"menu_new"
+			],
+			[
+				"O",
+				"Options"
+			],
+			[
+				"st",
+				"stairs"
+			],
+			[
+				"get",
+				"getSpeed"
+			],
+			[
+				"mon",
+				"monster"
+			],
+			[
+				"sp",
+				"speed"
+			],
+			[
 				"re",
-				"require"
+				"return"
 			],
 			[
 				"tr",
@@ -88,10 +128,6 @@
 				"position"
 			],
 			[
-				"ins",
-				"insert"
-			],
-			[
 				"po",
 				"position"
 			],
@@ -126,10 +162,6 @@
 			[
 				"pla",
 				"player"
-			],
-			[
-				"mon",
-				"monster_path"
 			],
 			[
 				"T",
@@ -208,20 +240,12 @@
 				"gameState"
 			],
 			[
-				"st",
-				"stairs"
-			],
-			[
 				"lev",
 				"level"
 			],
 			[
 				"it",
 				"items"
-			],
-			[
-				"get",
-				"getRandOpenTile"
 			],
 			[
 				"level",
@@ -278,10 +302,6 @@
 			[
 				"roo",
 				"roomList"
-			],
-			[
-				"in",
-				"insert"
 			],
 			[
 				"r",
@@ -494,26 +514,6 @@
 			[
 				"l",
 				"li"
-			],
-			[
-				"fon",
-				"font-size"
-			],
-			[
-				"padd",
-				"padding-top"
-			],
-			[
-				"di",
-				"display"
-			],
-			[
-				"spider",
-				"spider"
-			],
-			[
-				"pl",
-				"player"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 3895,
+				"buffer_size": 4983,
 				"line_ending": "Unix"
 			}
 		},
@@ -531,7 +531,7 @@
 			"file": "states.lua",
 			"settings":
 			{
-				"buffer_size": 14527,
+				"buffer_size": 14776,
 				"line_ending": "Windows"
 			}
 		},
@@ -539,15 +539,23 @@
 			"file": "player.lua",
 			"settings":
 			{
-				"buffer_size": 8923,
+				"buffer_size": 9021,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "gui.lua",
+			"settings":
+			{
+				"buffer_size": 4683,
+				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "entities.lua",
 			"settings":
 			{
-				"buffer_size": 7558,
+				"buffer_size": 7882,
 				"line_ending": "Unix"
 			}
 		},
@@ -560,26 +568,18 @@
 			}
 		},
 		{
-			"file": "cave.lua",
-			"settings":
-			{
-				"buffer_size": 3927,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "system.lua",
 			"settings":
 			{
-				"buffer_size": 7532,
+				"buffer_size": 7746,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "TODO.md",
+			"file": "map.lua",
 			"settings":
 			{
-				"buffer_size": 95,
+				"buffer_size": 9123,
 				"line_ending": "Unix"
 			}
 		}
@@ -708,15 +708,20 @@
 	},
 	"file_history":
 	[
+		"/Users/lego/Documents/gamedev/love2d/rougelike/Changelog.md",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/TODO.md",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/cave.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/vendor/bresenham.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/vendor/rotLove/twister.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/map.lua",
-		"/Users/lego/Documents/gamedev/love2d/rougelike/README.md",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/system.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/utilities.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/gui.lua",
+		"/Users/lego/Documents/gamedev/love2d/rougelike/README.md",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/vendor/TSerial.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/.gitignore",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/settings.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/sound_manager.lua",
-		"/Users/lego/Documents/gamedev/love2d/rougelike/gui.lua",
-		"/Users/lego/Documents/gamedev/love2d/rougelike/TODO.md",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/vendor/rotLove/rot.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/TSerial.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/30log.lua",
@@ -727,7 +732,6 @@
 		"/Users/lego/Desktop/weather.xml",
 		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/Users/lego/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
-		"/Users/lego/Documents/gamedev/love2d/rougelike/cave.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/bresenham.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/entities.lua",
 		"/Users/lego/Documents/gamedev/love2d/rougelike/dungeon.lus",
@@ -831,11 +835,7 @@
 		"/Users/lego/Downloads/webtop.co/mc.js",
 		"/Users/lego/Documents/game-off-2012/level.json",
 		"/Users/lego/Documents/game-off-2012/crafty.js",
-		"/Users/lego/Documents/game-off-2012/main.css",
-		"/Users/lego/Documents/love2d/grid/main.lua",
-		"/Users/lego/Library/Caches/Cleanup At Startup/Transmit/0735332E-E2A7-4765-88D3-EC4415E68638/info.php",
-		"/Users/lego/Library/Caches/Cleanup At Startup/Transmit/767DFBBF-C1ED-4E80-B4CC-A6F95F0FAA29/index.html",
-		"/Users/lego/Library/Caches/Cleanup At Startup/Transmit/364F44DA-7422-4CD1-A420-5EB96D0EA8CC/test.php"
+		"/Users/lego/Documents/game-off-2012/main.css"
 	],
 	"find":
 	{
@@ -853,6 +853,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"terr",
+			"class{",
+			"class",
+			"speed",
 			"print",
 			"FOV",
 			"turn_state",
@@ -1004,7 +1008,7 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -1012,15 +1016,15 @@
 					"file": "main.lua",
 					"settings":
 					{
-						"buffer_size": 3895,
+						"buffer_size": 4983,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								354,
-								354
+								4396,
+								4396
 							]
 						],
 						"settings":
@@ -1163,7 +1167,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 962.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1173,15 +1177,15 @@
 					"file": "states.lua",
 					"settings":
 					{
-						"buffer_size": 14527,
+						"buffer_size": 14776,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2118,
-								2118
+								2201,
+								2201
 							]
 						],
 						"settings":
@@ -1323,8 +1327,8 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 2250.0,
-						"translation.y": 1681.0,
+						"translation.x": 0.0,
+						"translation.y": 1752.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1334,15 +1338,15 @@
 					"file": "player.lua",
 					"settings":
 					{
-						"buffer_size": 8923,
+						"buffer_size": 9021,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4301,
-								4301
+								67,
+								67
 							]
 						],
 						"settings":
@@ -1484,175 +1488,336 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 2588.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "entities.lua",
-					"settings":
-					{
-						"buffer_size": 7558,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6214,
-								6214
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"bh_regions":
-							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/SublimeLove/Love.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
+						"translation.x": 7.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
+					"buffer": 3,
+					"file": "gui.lua",
+					"settings":
+					{
+						"buffer_size": 4683,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3497,
+								3497
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/SublimeLove/Love.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2813.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
 					"buffer": 4,
+					"file": "entities.lua",
+					"settings":
+					{
+						"buffer_size": 7882,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								70,
+								70
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/SublimeLove/Love.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4289.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
 					"file": "dungeon.lua",
 					"settings":
 					{
@@ -1813,19 +1978,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "cave.lua",
+					"buffer": 6,
+					"file": "system.lua",
 					"settings":
 					{
-						"buffer_size": 3927,
+						"buffer_size": 7746,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3276,
-								3276
+								6795,
+								6795
 							]
 						],
 						"settings":
@@ -1969,185 +2134,24 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "system.lua",
-					"settings":
-					{
-						"buffer_size": 7532,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3308,
-								3308
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"bh_regions":
-							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/SublimeLove/Love.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 423.0,
-						"translation.y": 2456.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 7,
-					"file": "TODO.md",
+					"file": "map.lua",
 					"settings":
 					{
-						"buffer_size": 95,
+						"buffer_size": 9123,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								95,
-								95
+								5721,
+								5721
 							]
 						],
 						"settings":
@@ -2285,10 +2289,12 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+							"syntax": "Packages/SublimeLove/Love.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 4329.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

@@ -1,6 +1,6 @@
-playerClass = class{x, y, body, health, mana}
+playerClass = class('playerClass')
 
-function playerClass:__init(cave, dungeon, body, health, mana)
+function playerClass:initialize(cave, dungeon, body, health, mana)
     self.scale = 1
     self.body = love.graphics.newImage(body)
     self.health = health

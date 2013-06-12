@@ -12,48 +12,30 @@ function Menu.create()
     SoundManager.set_listener(512, 288) --the middle of the screen
 	logoImage = love.graphics.newImage("textures/gui/logo.png")
     backgroundImage = love.graphics.newImage("textures/gui/background.png")
-	temp.button = {	new = Button:new("New Game", 512, 300),
-					instructions = Button:new("Instructions", 512, 350),
-					options = Button:new("Options", 512, 400),
-					quit = Button:new("Quit", 512, 450) }
+
+    loveframes.SetState("menu")
+
 	return temp
 end
 
 function Menu:draw()
     love.graphics.draw(backgroundImage, 0, 0)
-	for n,b in pairs(self.button) do
-		b:draw()
-	end
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.draw(logoImage, 200, 50)
 
+    loveframes.draw()
 end
 
 function Menu:update(dt)
-	
-	for n,b in pairs(self.button) do
-		b:update(dt)
-	end
-	
+    loveframes.update(dt)
 end
 
-function Menu:mousepressed(x,y,button)
-	
-	for n,b in pairs(self.button) do
-		if b:mousepressed(x,y,button) then
-			if n == "new" then
-				createWorld()
-                state = Game.create()
-			elseif n == "instructions" then
-				state = Instructions.create(false)
-			elseif n == "options" then
-				state = Options.create(false)
-			elseif n == "quit" then
-				love.event.push("quit")
-			end
-		end
-	end
-	
+function Menu:mousepressed(x, y, button)
+    loveframes.mousepressed(x, y, button)
+end
+
+function Menu:mousereleased(x, y, button)
+    loveframes.mousereleased(x, y, button)
 end
 
 function Menu:keypressed(key)
@@ -62,8 +44,13 @@ function Menu:keypressed(key)
 	elseif key == " " or key == "enter" then
         state = Game.create()
     end
+
+    loveframes.keypressed(key, unicode)
 end
 
+function Menu:keyreleased(key)
+    loveframes.keyreleased(key)
+end
 
 -- Instructions State
 -- Shows the instructions
@@ -73,53 +60,42 @@ Instructions.__index = Instructions
 function Instructions.create(pause)
 	local temp = {}
 	setmetatable(temp, Instructions)
-	temp.button = {	back = Button:new("Back", 550, 500) }
-    temp.pause = pause
+
+    if pause == true then
+        loveframes.SetState("instructions_pause")
+    else
+        loveframes.SetState("instructions")
+    end
+
 	return temp
 end
 
 function Instructions:draw()
-	love.graphics.setFont(mediumFont)
-	love.graphics.printf("Pathfinder is a mix between a rougelike and chess. The game is split into turns with one action per turn, e.g. attacking or drinking a potion, while your range of movement is dictated by your MP, or movement points. Click the mouse to select where to move and 'G' picks items up or activates things under you.", 150, 50, 700, "left")
-	
-	for n,b in pairs(self.button) do
-		b:draw()
-	end
-
+    loveframes.draw()
 end
 
 function Instructions:update(dt)
-	
-	for n,b in pairs(self.button) do
-		b:update(dt)
-	end
-	
+    loveframes.update(dt)
 end
 
-function Instructions:mousepressed(x,y,button)
-	
-	for n,b in pairs(self.button) do
-		if b:mousepressed(x,y,button) then
-			if n == "back" then
-				if self.pause then
-                    state = Pause.create()
-                else
-                    state = Menu.create()
-                end
-			end
-		end
-	end
-	
+function Instructions:mousepressed(x, y, button)
+    loveframes.mousepressed(x, y, button)
+end
+
+function Instructions:mousereleased(x, y, button)
+    loveframes.mousereleased(x, y, button)
 end
 
 function Instructions:keypressed(key)
-	
 	if key == "escape" then
 		state = Menu.create()
 	end
-	
+    loveframes.keypressed(key, unicode)
 end
 
+function Instructions:keyreleased(key)
+    loveframes.keyreleased(key)
+end
 
 -- Options State
 -- Shows the options
@@ -129,67 +105,42 @@ Options.__index = Options
 function Options.create(pause)
     local temp = {}
     setmetatable(temp, Options)
-    temp.button = { on = Button:new("On", 425, 155),
-                    off = Button:new("Off", 550, 155),
-                    back = Button:new("Back", 550, 500)}
-    temp.pause = pause
+
+    if pause == true then
+        loveframes.SetState("options_pause")
+    else
+        loveframes.SetState("options")
+    end
+
     return temp
 end
 
 function Options:draw()
-    love.graphics.setColor(214, 169, 187)
-    love.graphics.print("Audio:", 250, 100)
-    love.graphics.print("Controls:", 179, 170)
-    
-    love.graphics.setLine(4, "rough")
-
-    if not Settings.is_mute() then
-        love.graphics.line(380,135,430,135)
-    else
-        love.graphics.line(493,135,543,135)
-    end
-    
-    --love.graphics.line(360+((size-5)*50),380,390+((size-5)*50),380)
-    
-    for n,b in pairs(self.button) do
-        b:draw()
-    end
+    loveframes.draw()
 end
 
-function Options:update(dt)    
-    for n,b in pairs(self.button) do
-        b:update(dt)
-    end
+function Options:update(dt)
+    loveframes.update(dt)
 end
 
-function Options:mousepressed(x,y,button)
-    for n,b in pairs(self.button) do
-        if b:mousepressed(x,y,button) then
-            if n == "on" then
-                Settings.set("volume", 1)
-                SoundManager.resume()
-            elseif n == "off" then
-                Settings.set("volume", 0)
-                SoundManager.pause_current()
-            elseif n == "back" then
-                if self.pause then
-                    state = Pause.create()
-                else
-                    state = Menu.create()
-                end
-            end
-        end
-    end 
+function Options:mousepressed(x, y, button)
+    loveframes.mousepressed(x, y, button)
+end
+
+function Options:mousereleased(x, y, button)
+    loveframes.mousereleased(x, y, button)
 end
 
 function Options:keypressed(key)
-    
     if key == "escape" then
         state = Menu.create()
     end
-    
+    loveframes.keypressed(key, unicode)
 end
 
+function Options:keyreleased(key)
+    loveframes.keyreleased(key)
+end
 
 -- Game State
 -- Where the actual playing takes place
@@ -203,13 +154,11 @@ function Game.create()
 	
     setmetatable(temp, Game)
 
-    temp.button = { turn = Button:new("Turn", 950, 500) }
-
     cursor_nodes = {}
 
     menuMusic.source:stop()
     caveMusic.source:play()
-
+    loveframes.SetState("game")
 	return temp
 end
 
@@ -225,7 +174,7 @@ function Game:draw()
             love.graphics.translate(cave.map[current_level].translate_x, cave.map[current_level].translate_y)
             love.graphics.scale(player.scale, player.scale)
             
-            drawMap(cave, mapWidth, mapHeight, 15, 6)
+            drawMap(cave, mapWidth, mapHeight, 19, 9)
             
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
 
@@ -249,16 +198,13 @@ function Game:draw()
         love.graphics.pop()
         
         drawGUI(cave)
-
-        for n,b in pairs(self.button) do
-            b:draw()
-        end
+        loveframes.draw()
     elseif gameState == "dungeon" then
         love.graphics.push()
             --have the player always centered
             love.graphics.translate(dungeon.map[current_level].translate_x, dungeon.map[current_level].translate_y)
             
-            drawMap(dungeon, mapWidth, mapHeight, 15, 6)
+            drawMap(dungeon, mapWidth, mapHeight, 19, 9)
             
             love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
 
@@ -282,10 +228,7 @@ function Game:draw()
         love.graphics.pop()
         
         drawGUI(dungeon)
-
-        for n,b in pairs(self.button) do
-            b:draw()
-        end
+        loveframes.draw()
     end
     love.graphics.setColor(255, 255, 255)
 end
@@ -324,9 +267,7 @@ function Game:update(dt)
             end
         end
 
-        for n,b in pairs(self.button) do
-            b:update(dt)
-        end
+        loveframes.update(dt)
 
         if cave.clear == true then
             gameState = 'world'
@@ -360,9 +301,7 @@ function Game:update(dt)
             end
         end
 
-        for n,b in pairs(self.button) do
-            b:update(dt)
-        end
+        loveframes.update(dt)
 
         if dungeon.clear == true then
             gameState = 'world'
@@ -386,14 +325,12 @@ function Game:mousepressed(x, y, button)
     else
         player:mousepressed(x, y, button)
 
-        for n,b in pairs(self.button) do
-            if b:mousepressed(x,y,button) then
-                if n == "turn" and current_player == 0 then
-                    turn_state = 3
-                end
-            end
-        end
+        loveframes.mousepressed(x, y, button)
     end
+end
+
+function Game:mousereleased(x, y, button)
+    loveframes.mousereleased(x, y, button)
 end
 
 function Game:keypressed(key)
@@ -459,6 +396,11 @@ function Game:keypressed(key)
             Astar:enableDiagonalMove()
         end
     end
+    loveframes.keypressed(key, unicode)
+end
+
+function Game:keyreleased(key)
+    loveframes.keyreleased(key)
 end
 
 -- Pause menu...
@@ -469,50 +411,36 @@ function Pause.create()
     local temp = {}
     setmetatable(temp, Pause)
 
-    temp.button = { resume = Button:new("Resume Game", 512, 300),
-                    instructions = Button:new("Instructions", 512, 350),
-                    options = Button:new("Options", 512, 400),
-                    menu = Button:new("Main Menu", 512, 450) }
+    loveframes.SetState("pause")
     return temp
 end
 
 function Pause:draw()
-    for n,b in pairs(self.button) do
-        b:draw()
-    end
     love.graphics.setColor(255, 255, 255)
+    loveframes.draw()
 end
 
 function Pause:update(dt)
-    
-    for n,b in pairs(self.button) do
-        b:update(dt)
-    end
-    
+    loveframes.update(dt)
 end
 
-function Pause:mousepressed(x,y,button)
-    
-    for n,b in pairs(self.button) do
-        if b:mousepressed(x,y,button) then
-            if n == "resume" then
-                state = Game.create()
-            elseif n == "instructions" then
-                state = Instructions.create(true)
-            elseif n == "options" then
-                state = Options.create(true)
-            elseif n == "menu" then
-                state = Menu.create()
-            end
-        end
-    end
-    
+function Pause:mousepressed(x, y, button)
+    loveframes.mousepressed(x, y, button)
+end
+
+function Pause:mousereleased(x, y, button)
+    loveframes.mousereleased(x, y, button)
 end
 
 function Pause:keypressed(key)
     if key == " " then
         state = Game.create()
     end
+    loveframes.keypressed(key, unicode)
+end
+
+function Pause:keyreleased(key)
+    loveframes.keyreleased(key)
 end
 
 -- Death screen
@@ -522,41 +450,37 @@ Death.__index = Pause
 function Death.create()
     local temp = {}
     setmetatable(temp, Pause)
-
-    temp.button = { menu = Button:new("Main Menu", 512, 300) }
+    loveframes.SetState("death")
     return temp
 end
 
 function Death:draw()
-    for n,b in pairs(self.button) do
-        b:draw()
-    end
-
+    love.graphics.setColor(255, 255, 255)
     love.graphics.setFont(mediumFont)
     love.graphics.print("You Died", 100, 100)
+
+    loveframes.draw()
 end
 
 function Death:update(dt)
-    
-    for n,b in pairs(self.button) do
-        b:update(dt)
-    end
-    
+    loveframes.update(dt)
 end
 
-function Death:mousepressed(x,y,button)
-    
-    for n,b in pairs(self.button) do
-        if b:mousepressed(x,y,button) then
-            if n == "menu" then
-                state = Menu.create()
-            end
-        end
-    end
+function Death:mousepressed(x, y, button)
+    loveframes.mousepressed(x, y, button)
+end
+
+function Death:mousereleased(x, y, button)
+    loveframes.mousereleased(x, y, button)
 end
 
 function Death:keypressed(key)
     if key == " " then
         state = Menu.create()
     end
+    loveframes.keypressed(key, unicode)
+end
+
+function Death:keyreleased(key)
+    loveframes.keyreleased(key)
 end

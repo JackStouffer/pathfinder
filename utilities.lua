@@ -59,7 +59,7 @@ function mouseToMapCoords(system, x, y)
 end
 
 function getRandOpenTile(Map, mapW, mapH)
-    --find a open tile randomly on the map
+    -- find a open tile randomly on the map
     local found = false
     local x = 0
     local y = 0
@@ -74,8 +74,8 @@ function getRandOpenTile(Map, mapW, mapH)
 end
 
 function getAdjacentTiles(position)
-    --code adapted from Warp Run
-    --returns table of coords of all adjacent tiles
+    -- code adapted from Warp Run
+    -- returns table of coords of all adjacent tiles
     local result = {}
     local tile
     local dirs = {

@@ -1,8 +1,8 @@
-monster = class{health, image, level, map}
-item = class{image, level, map}
-stairs = class{image, level}
+monster = class('monster')
+item = class('item')
+stairs = class('stairs')
 
-function monster:__init(health, image, level, map, image_map)
+function monster:initialize(health, image, level, map, image_map)
     self.level = level --int that represents its current level
     self.map = map --the collision map
     self.image_map = image_map --the system.map
@@ -196,7 +196,7 @@ function monster:draw()
     end
 end
 
-function item:__init(image, level, map, image_map)
+function item:initialize(image, level, map, image_map)
     --base item class
     
     self.level = level
@@ -218,7 +218,7 @@ function item:draw()
     end
 end
 
-function stairs:__init(image, direction, level, map, image_map)
+function stairs:initialize(image, direction, level, map, image_map)
     self.level = level
     self.direction = direction
     self.map = map
