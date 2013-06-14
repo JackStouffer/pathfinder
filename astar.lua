@@ -204,23 +204,31 @@ function Astar:init(map,obstvalue)
 end
 
 -- Sets the unwalkable value
-function Astar:setObstValue(value)  self.OBST_VALUE = value end
+function Astar:setObstValue(value)  
+    self.OBST_VALUE = value 
+end
 
 -- Returns the unwalkable value
-function Astar:getObstValue() return self.OBST_VALUE end
+function Astar:getObstValue() 
+    return self.OBST_VALUE 
+end
 
 -- Enables diagonal moves
-function Astar:enableDiagonalMove() self.diagonalMove = true end
+function Astar:enableDiagonalMove() 
+    self.diagonalMove = true 
+end
 
 -- Disables diagonal moves
-function Astar:disableDiagonalMove() self.diagonalMove = false end
+function Astar:disableDiagonalMove() 
+    self.diagonalMove = false 
+end
 
 -- Sets the search area depth
 function Astar:setSearchDepth(value)
     if math.abs(value) >= math.min(self.mapSizeX,self.mapSizeY) then
-        error ('Depth '..math.abs(value)..' should be lower than '..math.min(mapSizeX,mapSizeY))
+        error('Depth '..math.abs(value)..' should be lower than '..math.min(mapSizeX,mapSizeY))
     else
-    self.searchDepth = math.abs(value)
+        self.searchDepth = math.abs(value)
     end
 end
 
@@ -231,14 +239,17 @@ function Astar:getSearchDepth() return self.searchDepth end
 function Astar:setInitialNode (x,y)
     local node = Node(x,y)
     if not node:inBound(self.map) or not self:isWalkable(node) then
-    print('Location ('..node.x..','..node.y..') is unwalkable or not valid!',2)
+        print('Location ('..node.x..','..node.y..') is unwalkable or not valid!', 2)
+        return false
     end
     self.initialNode = node
 end
 
 -- Returns initial Node x,y values or false
 function Astar:getInitialNode() 
-    if self.initialNode then return self.initialNode.x,self.initialNode.y end
+    if self.initialNode then 
+        return self.initialNode.x,self.initialNode.y 
+    end
     return false
 end
 
@@ -260,13 +271,15 @@ function Astar:setFinalNode (x,y)
                 print('Location ('..node.x..','..node.y..') is unwalkable!',2) 
             end
         else
-        self.finalNode = node
+            self.finalNode = node
         end
 end
 
 -- Returns final Node x,y values or false
 function Astar:getFinalNode() 
-    if self.finalNode then return self.finalNode.x,self.finalNode.y end
+    if self.finalNode then 
+        return self.finalNode.x,self.finalNode.y 
+    end
     return false
 end
 

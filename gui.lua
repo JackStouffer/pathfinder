@@ -9,7 +9,7 @@ function drawGUI(system)
 
     -- health indicator
     love.graphics.setColor(255, 255, 255)
-    love.graphics.print(player.health .. "/" .. player.max_health, 80, 512)
+    love.graphics.print(player.health .. "/" .. player.max_health, 85, 512)
 
     -- mana bar
     love.graphics.setColor(0, 0, 255)
@@ -17,12 +17,14 @@ function drawGUI(system)
 
     -- mana indicator
     love.graphics.setColor(255, 255, 255)
-    love.graphics.print(player.mana .. "/" .. player.max_mana, 80, 542)
+    love.graphics.print(player.mana .. "/" .. player.max_mana, 85, 542)
     
+    -- turn state indicator label
     love.graphics.setColor(255, 255, 255)
     love.graphics.setFont(smallFont)
     love.graphics.print("Turn State:", 200, 510)
 
+    -- turn state indicator
     if current_player == 0 then
         if turn_state == 0 then
             love.graphics.print("Movement", 280, 510)
@@ -46,7 +48,7 @@ end
 
 --[[
 
-Menu
+    Menu
 
 ]]--
 
@@ -297,7 +299,7 @@ end
 
 --[[
 
-Game GUI
+    Game GUI
 
 ]]--
 
@@ -321,7 +323,7 @@ end
 
 --[[
 
-Pause Screen
+    Pause Screen
 
 ]]--
 
@@ -391,7 +393,7 @@ end
 
 --[[
 
-Death Screen
+    Death Screen
 
 ]]--
 

@@ -78,7 +78,7 @@ function levelSystem(level_num, difficulty, Type)
     --add in the entities in to the maps
     for level = 1, level_num do 
         for num = 1, enemy_num do
-            system.enemies[level][num] = monster:new(100, 
+            system.enemies[level][num] = monster:new(30, 
                 "textures/dc-mon/acid_blob.png", 
                 level, 
                 CollisionMap[level], 

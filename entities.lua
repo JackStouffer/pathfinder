@@ -3,9 +3,9 @@ item = class('item')
 stairs = class('stairs')
 
 function monster:initialize(health, image, level, map, image_map)
-    self.level = level --int that represents its current level
-    self.map = map --the collision map
-    self.image_map = image_map --the system.map
+    self.level = level -- int that represents its current level
+    self.map = map -- the collision map
+    self.image_map = image_map -- the system.map
     
     self.startx, self.starty = getRandOpenTile(self.map, mapWidth, mapHeight)
     self.grid_x = self.startx - 1
@@ -14,30 +14,33 @@ function monster:initialize(health, image, level, map, image_map)
     self.y = (self.starty * 32) - 32
     
     self.health = health
-    self.image = love.graphics.newImage(image) 
+    self.image = love.graphics.newImage(image)
+
+    self.speed = 3 + math.random(0, 3) -- determines movement order in each turn
+    self.perception = 8 -- crit chance in %
+    self.strength = 15 -- base attack score
+    self.defense = 5 -- base defense score
     
-    self.mp = 4 --movement points
+    self.mp = 4 -- movement points
     self.path = nil
     self.path_to_player = nil
     self.isMoving = false
     self.isAttacking = false
     
-    self.speed = 3 + math.random(0, 3)
-    
-    --speed at which the player is drawn moving from one tile to another
-    --has no bearing on the speed which is used to determine turn order
+    -- speed at which the entity is drawn moving from one tile to another
+    -- has no bearing on the speed which is used to determine turn order
     self.drawing_speed = 80 
     self.cur = nil
     self.there = nil
     
     self.dead = false
 
-    --set the location of the monster as occupied in the collision map
+    -- set the location of the monster as occupied in the collision map
     self.map[self.grid_y][self.grid_x] = 2
 end
 
 function monster:setTilePosition(system)
-    --function to update the monster's current tile when moving
+    -- function to update the monster's current tile when moving
     self.grid_x = ((self.x - (self.x % 32)) / 32) + 1
     self.grid_y = ((self.y - (self.y % 32)) / 32) + 1
 end
@@ -52,13 +55,18 @@ end
 function monster:turn()
     local monster_path = {}
     local adjacent
+    local base_attack
     
     if self.dead == false and self.image_map[self.grid_y][self.grid_x].visibility == true then --if the monster can see us 
         if self.isMoving == false and turn_state == 0 then -- if we aren't already in a turn
             --chase
             self.map[self.grid_y][self.grid_x] = 0
             
-            Astar:setInitialNode(self.grid_x, self.grid_y)
+            if Astar:setInitialNode(self.grid_x, self.grid_y) == false then
+                self.dead = true
+                turn_state = 3
+                return
+            end
             Astar:setFinalNode(self.image_map.tile_x, self.image_map.tile_y)
             self.path_to_player = Astar:getPath()
             
@@ -95,7 +103,12 @@ function monster:turn()
         elseif turn_state == 1 then
             adjacent = getAdjacentTiles({x = self.x, y = self.y})
             if table.containsTable(adjacent, {x = self.image_map.player_x, y = self.image_map.player_y}) == true then
-                player.health = player.health - 5
+                if math.random(0, 99) < self.perception then
+                    base_attack = self.strength
+                else
+                    base_attack = self.strength / 2
+                end
+                player.health = player.health - (base_attack - player.defense)
                 turn_state = 3
             else
                 turn_state = 3

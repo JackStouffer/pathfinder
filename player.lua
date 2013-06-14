@@ -2,16 +2,23 @@ playerClass = class('playerClass')
 
 function playerClass:initialize(cave, dungeon, body, health, mana)
     self.scale = 1
+
     self.body = love.graphics.newImage(body)
-    self.health = health
-    self.max_health = health
-    self.mana = mana
-    self.max_mana = mana
-    self.ap = 6
+
+    self.health = health -- current health
+    self.max_health = health -- base health
+    self.mana = mana -- current mana
+    self.max_mana = mana -- base mana
+    self.mp = 7 -- movement points
+
+    self.agility = 10 -- determines turn placement
+    self.perception = 8 -- crit chance in %
+    self.strength = 30 -- base attack score
+    self.defense = 2 -- base defense score
+
     self.path = nil
     self.isMoving = false
     self.drawing_speed = 80
-    self.speed = 10
     self.cur = nil
     self.there = nil
 end
@@ -21,8 +28,8 @@ function playerClass:setTilePosition(system)
     system.map[current_level].tile_y = ((system.map[current_level].player_y - (system.map[current_level].player_y % 32)) / 32) + 1
 end
 
---the movement code for the player thanks to Roland Yonaba
 function playerClass:orderMove(path)
+    -- the movement code for the player thanks to Roland Yonaba
     self.path = path -- the path to follow
     self.isMoving = true -- whether or not the player should start moving
     self.cur = 1 -- indexes the current reached step on the path to follow
@@ -100,7 +107,7 @@ end
 
 function playerClass:getSpeed()
     --function for the speed based turn scheduler
-    return self.speed
+    return self.agility
 end
 
 function playerClass:keypressed(key, system)
@@ -125,6 +132,7 @@ function playerClass:mousepressed(x, y, button)
     local node
     local position
     local adjacent
+    local base_attack
 
     if gameState == "cave" then
         grid_x, grid_y = mouseToMapCoords(cave, x, y)
@@ -141,7 +149,7 @@ function playerClass:mousepressed(x, y, button)
             Astar:setFinalNode(grid_x, grid_y)
             cursor_path = Astar:getPath()
             
-            if cursor_path ~= nil and #cursor_path <= self.ap then 
+            if cursor_path ~= nil and #cursor_path <= self.mp then 
                 self:orderMove(cursor_path)
             end
         elseif turn_state == 1 then
@@ -152,7 +160,13 @@ function playerClass:mousepressed(x, y, button)
                 for x = 1, #cave.enemies[current_level] do
                     if  cave.enemies[current_level][x].grid_x == grid_x and
                         cave.enemies[current_level][x].grid_y == grid_y then
-                            cave.enemies[current_level][x].health = cave.enemies[current_level][x].health - 50
+                            if math.random(0, 99) < self.perception then
+                                print("crit")
+                                base_attack = self.strength -- eventually will add weapon damage to this as well
+                            else
+                                base_attack = self.strength / 2 -- eventually will add weapon damage to this as well
+                            end
+                            cave.enemies[current_level][x].health = cave.enemies[current_level][x].health - (base_attack - cave.enemies[current_level][x].defense) -- base attack minus the defense
                             turn_state = 3
                     else
                         --there is nothing in that tile
@@ -176,7 +190,7 @@ function playerClass:mousepressed(x, y, button)
             Astar:setFinalNode(grid_x, grid_y)
             cursor_path = Astar:getPath()
             
-            if cursor_path ~= nil and #cursor_path <= self.ap then 
+            if cursor_path ~= nil and #cursor_path <= self.mp then 
                 cursor_nodes = {}
                 for nodes = 1, #cursor_path do
                     node = {}
@@ -194,7 +208,13 @@ function playerClass:mousepressed(x, y, button)
                 for x = 1, #dungeon.enemies[current_level] do
                     if  dungeon.enemies[current_level][x].grid_x == grid_x and
                         dungeon.enemies[current_level][x].grid_y == grid_y then
-                            dungeon.enemies[current_level][x].health = dungeon.enemies[current_level][x].health - 50
+                            if math.random(0, 99) < self.perception then
+                                print("crit")
+                                base_attack = self.strength -- eventually will add weapon damage to this as well
+                            else
+                                base_attack = self.strength / 2 -- eventually will add weapon damage to this as well
+                            end
+                            dungeon.enemies[current_level][x].health = dungeon.enemies[current_level][x].health - (base_attack - dungeon.enemies[current_level][x].defense) -- base attack minus the defense
                             turn_state = 3
                     else
                         --there is nothing in that tile
