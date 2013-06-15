@@ -187,7 +187,7 @@ function drawMap(system, mapDisplayW, mapDisplayH, radius, sight)
                     system.map[current_level][y][x].visibility = "fog"
                 end
 
-                --calculate what the player can see with the bresenham line algorithm
+                -- calculate what the player can see with the bresenham line algorithm
                 bresenham.los(system.map[current_level].tile_x, system.map[current_level].tile_y, x, y, function(x,y)
                     if system.collisionMap[current_level][y][x] == 2 then --we still want the walls to be lit
                         system.map[current_level][y][x].visibility = true

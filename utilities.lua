@@ -37,7 +37,7 @@ end
 
 function mouseToMapCoords(system, x, y)
     --Screen to tiles coordinates
-    --credit for this function goes to Yonaba on github
+    --credit for the original function goes to Yonaba on github
 
     local mx, my = x, y
     

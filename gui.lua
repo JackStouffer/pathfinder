@@ -37,7 +37,7 @@ function drawGUI(system)
         love.graphics.print("Enemy Turn", 280, 510)
     end
 
-    love.graphics.print("Current Level:   " .. current_level .. "/3", 200, 530)
+    love.graphics.print("Current Level:   " .. current_level, 200, 530)
 
     if system.map[current_level].clear == true then
         love.graphics.print("Level Clear", 200, 545)

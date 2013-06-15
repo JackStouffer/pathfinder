@@ -1,7 +1,4 @@
-* player stats (done)
-* enemy stats (done)
-* damage calculations (done)
-* speed/agility based turn ordering (done)
-
-* fix bug where fov is not recalculated after each move on already lit spaces (done)
-* fix bug with monster movement crashing when it cannot find a path (done)
+* Use tileset rendering instead of individual images
+* Restructure gameState so that I don't have to keep creating if-else's for every different location I want to have
+* Change collision detection and lighting so that there can be objects that are not walkable but light goes through them
+* Add support for different sized dungeon levels

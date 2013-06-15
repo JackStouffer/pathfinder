@@ -176,7 +176,7 @@ function Game:draw()
             
             drawMap(cave, mapWidth, mapHeight, 19, 9)
             
-            love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
+            love.graphics.setColor(255, 255, 255)
 
             for x = 1, #cave.items[current_level] do
                 cave.items[current_level][x]:draw()
@@ -206,7 +206,7 @@ function Game:draw()
             
             drawMap(dungeon, mapWidth, mapHeight, 19, 9)
             
-            love.graphics.setColor(255, 255, 255) --because the button script sets the color to a slight blue
+            love.graphics.setColor(255, 255, 255)
 
             for x = 1, #dungeon.items[current_level] do
                 dungeon.items[current_level][x]:draw()
