@@ -1,5 +1,6 @@
 function turnManager(system)
     --credit for the pseudo code for this goes to spacecoote on reddit
+    
     if turn_state == 0 then -- entity is in the moving stage of the turn.    
         if current_player ~= 0 then
             system.enemies[current_level][current_player]:turn()

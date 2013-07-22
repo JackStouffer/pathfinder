@@ -134,7 +134,7 @@ function playerClass:mousepressed(x, y, button)
     local adjacent
     local base_attack
 
-    if gameState == "cave" then
+    if game_state == "cave" then
         grid_x, grid_y = mouseToMapCoords(cave, x, y)
         
         if cave.collisionMap[current_level][grid_y][grid_x] ~= 2 and --if the spot is open 
@@ -176,8 +176,10 @@ function playerClass:mousepressed(x, y, button)
                 --player clicked more than one tile away
             end
         end
-    elseif gameState == "dungeon" then
+    elseif game_state == "dungeon" then
         grid_x, grid_y = mouseToMapCoords(dungeon, x, y)
+
+        print(dungeon.collisionMap[current_level][grid_y][grid_x])
         
         if dungeon.collisionMap[current_level][grid_y][grid_x] ~= 2 and --if the spot is open
         dungeon.map[current_level][grid_y][grid_x].visibility ~= false and -- and the spot is not hidden
@@ -209,7 +211,6 @@ function playerClass:mousepressed(x, y, button)
                     if  dungeon.enemies[current_level][x].grid_x == grid_x and
                         dungeon.enemies[current_level][x].grid_y == grid_y then
                             if math.random(0, 99) < self.perception then
-                                print("crit")
                                 base_attack = self.strength -- eventually will add weapon damage to this as well
                             else
                                 base_attack = self.strength / 2 -- eventually will add weapon damage to this as well

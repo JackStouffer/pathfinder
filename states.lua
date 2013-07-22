@@ -163,12 +163,12 @@ function Game.create()
 end
 
 function Game:draw()
-    if gameState == "world" then
+    if game_state == "world" then
         if showPerlin == 1 then plot2D(terrain.perlin)
         else
             drawTerrain(terrain)
         end
-    elseif gameState == "cave" then
+    elseif game_state == "cave" then
         love.graphics.push()
         	--have the player always centered
             love.graphics.translate(cave.map[current_level].translate_x, cave.map[current_level].translate_y)
@@ -199,7 +199,7 @@ function Game:draw()
         
         drawGUI(cave)
         loveframes.draw()
-    elseif gameState == "dungeon" then
+    elseif game_state == "dungeon" then
         love.graphics.push()
             --have the player always centered
             love.graphics.translate(dungeon.map[current_level].translate_x, dungeon.map[current_level].translate_y)
@@ -238,7 +238,7 @@ function Game:update(dt)
     local num_clear
 
     SoundManager.update()
-    if gameState == "cave" then
+    if game_state == "cave" then
         turnManager(cave)
 
         player:update(dt, cave)
@@ -270,9 +270,9 @@ function Game:update(dt)
         loveframes.update(dt)
 
         if cave.clear == true then
-            gameState = 'world'
+            game_state = 'world'
         end
-    elseif gameState == "dungeon" then
+    elseif game_state == "dungeon" then
         turnManager(dungeon)
 
         player:update(dt, dungeon)
@@ -304,23 +304,23 @@ function Game:update(dt)
         loveframes.update(dt)
 
         if dungeon.clear == true then
-            gameState = 'world'
+            game_state = 'world'
         end
     end
 end
 
 function Game:mousepressed(x, y, button)
-	if gameState == "world" then
+	if game_state == "world" then
         if x >= terrain.locations.cave.x and 
             x <= terrain.locations.cave.x + 32 and 
             y <= terrain.locations.cave.y + 32 and 
             y >= terrain.locations.cave.y then
-            gameState = "cave"
+            game_state = "cave"
         elseif x >= terrain.locations.dungeon.x and 
             x <= terrain.locations.dungeon.x + 32 and 
             y <= terrain.locations.dungeon.y + 32 and 
             y >= terrain.locations.dungeon.y then
-            gameState = "dungeon"
+            game_state = "dungeon"
         end
     else
         player:mousepressed(x, y, button)
@@ -334,9 +334,9 @@ function Game:mousereleased(x, y, button)
 end
 
 function Game:keypressed(key)
-    if gameState == "cave" then
+    if game_state == "cave" then
         player:keypressed(key, cave)
-    elseif gameState == "dungeon" then 
+    elseif game_state == "dungeon" then 
         player:keypressed(key, dungeon)
     end
 
@@ -349,12 +349,12 @@ function Game:keypressed(key)
     elseif key == "p" then
         showPerlin = 1 - showPerlin
     elseif key == "c" then
-        gameState = "cave"
+        game_state = "cave"
         Astar(cave.collisionMap[current_level])
         Astar:setObstValue(2)
         Astar:enableDiagonalMove()
     elseif key == "d" then
-        gameState = "dungeon"
+        game_state = "dungeon"
         Astar(dungeon.collisionMap[current_level])
         Astar:setObstValue(2)
         Astar:enableDiagonalMove()
@@ -364,33 +364,33 @@ function Game:keypressed(key)
         state = Pause.create()
     elseif key == "1" then
         current_level = 1
-        if gameState == "cave" then
+        if game_state == "cave" then
             Astar(cave.collisionMap[current_level])
             Astar:setObstValue(2)
             Astar:enableDiagonalMove()
-        elseif gameState == "dungeon" then
+        elseif game_state == "dungeon" then
             Astar(dungeon.collisionMap[current_level])
             Astar:setObstValue(2)
             Astar:enableDiagonalMove()
         end
     elseif key == "2" then
         current_level = 2
-        if gameState == "cave" then
+        if game_state == "cave" then
             Astar(cave.collisionMap[current_level])
             Astar:setObstValue(2)
             Astar:enableDiagonalMove()
-        elseif gameState == "dungeon" then
+        elseif game_state == "dungeon" then
             Astar(dungeon.collisionMap[current_level])
             Astar:setObstValue(2)
             Astar:enableDiagonalMove()
         end
     elseif key == "3" then
         current_level = 3
-        if gameState == "cave" then
+        if game_state == "cave" then
             Astar(cave.collisionMap[current_level])
             Astar:setObstValue(2)
             Astar:enableDiagonalMove()
-        elseif gameState == "dungeon" then
+        elseif game_state == "dungeon" then
             Astar(dungeon.collisionMap[current_level])
             Astar:setObstValue(2)
             Astar:enableDiagonalMove()

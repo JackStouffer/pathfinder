@@ -7,16 +7,16 @@ function monster:initialize(health, image, level, map, image_map)
     self.map = map -- the collision map
     self.image_map = image_map -- the system.map
     
-    self.startx, self.starty = getRandOpenTile(self.map, mapWidth, mapHeight)
-    self.grid_x = self.startx - 1
-    self.grid_y = self.starty - 1
-    self.x = (self.startx * 32) - 32
-    self.y = (self.starty * 32) - 32
+    self.start_x, self.start_y = getRandOpenTile(self.map, mapWidth, mapHeight)
+    self.grid_x = self.start_x - 1
+    self.grid_y = self.start_y - 1
+    self.x = (self.start_x * 32) - 32
+    self.y = (self.start_y * 32) - 32
     
     self.health = health
     self.image = love.graphics.newImage(image)
 
-    self.speed = 3 + math.random(0, 3) -- determines movement order in each turn
+    self.speed = 3 + math.random(0, 2) -- determines movement order in each turn
     self.perception = 8 -- crit chance in %
     self.strength = 15 -- base attack score
     self.defense = 5 -- base defense score
@@ -215,11 +215,11 @@ function item:initialize(image, level, map, image_map)
     self.level = level
     self.map = map
     self.image_map = image_map
-    self.startx, self.starty = getRandOpenTile(self.map, mapWidth, mapHeight)
-    self.x = (self.startx * 32) - 32
-    self.y = (self.starty * 32) - 32
-    self.gridx = self.startx
-    self.gridy = self.starty
+    self.start_x, self.start_y = getRandOpenTile(self.map, mapWidth, mapHeight)
+    self.x = (self.start_x * 32) - 32
+    self.y = (self.start_y * 32) - 32
+    self.gridx = self.start_x
+    self.gridy = self.start_y
     self.image = love.graphics.newImage(image)
 
     self.map[(self.y / 32) + 1][(self.x / 32) + 1] = 3
@@ -236,11 +236,11 @@ function stairs:initialize(image, direction, level, map, image_map)
     self.direction = direction
     self.map = map
     self.image_map = image_map
-    self.startx, self.starty = getRandOpenTile(self.map, mapWidth, mapHeight)
-    self.x = (self.startx * 32) - 32
-    self.y = (self.starty * 32) - 32
-    self.gridx = self.startx
-    self.gridy = self.starty
+    self.start_x, self.start_y = getRandOpenTile(self.map, mapWidth, mapHeight)
+    self.x = (self.start_x * 32) - 32
+    self.y = (self.start_y * 32) - 32
+    self.gridx = self.start_x
+    self.gridy = self.start_y
     self.image = love.graphics.newImage(image)
 
     if self.direction == "up" then 

@@ -41,10 +41,10 @@ require "vendor/TSerial"
 Settings.load()
 SoundManager.load()
 
-
 bresenham = require 'vendor/bresenham'
 ROT = require 'vendor/rotLove/rot'
 require "vendor.loveframes"
+
 require "map"
 require "cave"
 require "system"
@@ -106,7 +106,7 @@ function love.load()
     cursor_img = love.graphics.newImage("textures/dc-misc/cursor.png")
 
     state = Menu.create()   -- current game state
-    gameState = "world"
+    game_state = "world"
 end
 
 function love.draw()

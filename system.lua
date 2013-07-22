@@ -1,4 +1,5 @@
 function levelSystem(level_num, difficulty, Type)
+    --the Type argument is capitalized due to type being a keyword in Lua
     --function to generate multi-floored levels
     --each level has its own item and enemies 
 
