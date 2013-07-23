@@ -239,7 +239,7 @@ function Game:update(dt)
 
     SoundManager.update()
     if game_state == "cave" then
-        turnManager(cave)
+        
 
         player:update(dt, cave)
 

@@ -60,6 +60,8 @@ function love.load()
     love.graphics.setCaption("Pathfinder")
 
     level_num = 3
+    current_player = 0
+    turn_state = 0
 
     love.keyboard.setKeyRepeat(0.01, 0.1)
 
